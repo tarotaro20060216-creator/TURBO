@@ -451,7 +451,8 @@
   function msOf(t) {
     if (!t) return NaN;
     if (t.dateTime) return Date.parse(t.dateTime);
-    if (t.date) return Date.parse(t.date + 'T00:00:00+09:00');
+    // 終日の予定は "2026-12-04" または "2026-12-04T00:00:00Z" で返ってくる
+    if (t.date) return Date.parse(String(t.date).slice(0, 10) + 'T00:00:00+09:00');
     return NaN;
   }
 
@@ -556,7 +557,12 @@
       const my = ScheduleParser.findMyStatus(ev, me);
       const rg = rangeOf(ev);
       const input = { summary: summaryOf(ev), timeZone: 'Asia/Tokyo', startTime: rg.start, endTime: rg.end };
-      if (ev.allDay) input.allDay = true;
+      if (ev.allDay) {
+        // 終日の予定は日付部分だけが使われる。+09:00 を付けると UTC に直されて前日になるため Z で渡す
+        input.allDay = true;
+        input.startTime = ev.date + 'T00:00:00Z';
+        input.endTime = nextDayIso(ev).slice(0, 10) + 'T00:00:00Z';
+      }
       if (colorId) input.colorId = colorId;
       if (ev.place) input.location = ev.place;
       const desc = descriptionOf(ev, my);
