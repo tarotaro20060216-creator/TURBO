@@ -188,6 +188,10 @@
       </div>
     </div>
     <p class="status" id="status" role="status"></p>
+    <div class="howto" id="googleHint" hidden>
+      <h3>はじめて使うとき</h3>
+      <p>ボタンを押すとGoogleのログイン画面が出ます。「このアプリはGoogleで確認されていません」と表示されたら、「詳細」→「（このページ）に移動」を選んでください。カレンダーの内容はこのページとGoogleの間でだけやり取りされ、どこにも保存されません。</p>
+    </div>
     <div class="howto" id="icsHint" hidden>
       <h3>まとめて追加のしかた</h3>
       <p>iPhone: ボタンを押してファイルを開き、「すべてを追加」を選ぶとiPhoneのカレンダーに入ります。追加先にGoogleのカレンダーを選べば、Googleカレンダーにも表示されます。</p>
@@ -201,6 +205,7 @@
   </section>
 </div>
 
+<script src="config.js"></script>
 <script src="parser.js"></script>
 <script>
 (function () {
@@ -402,8 +407,8 @@
   function updateButton() {
     const n = targets().length;
     $('addAll').textContent = n ? 'Googleカレンダーに' + n + '件まとめて登録' : '登録する予定がありません';
-    $('addAll').disabled = busy || !n || !mcp;
-    $('check').disabled = busy || !n || !mcp;
+    $('addAll').disabled = busy || !n || !cal;
+    $('check').disabled = busy || !n || !cal;
   }
 
   function setStatus(msg, kind) {
@@ -411,9 +416,125 @@
     statusEl.className = 'status' + (kind ? ' ' + kind : '');
   }
 
-  // --- Googleカレンダーへの一括登録（claude.ai のコネクタ経由） ---
-  let mcp = null, busy = false;
+  // --- Googleカレンダーとのやり取り ---
+  // claude.ai 上ではコネクタ（mcp）、公開ページでは Google ログイン（OAuth）を使う。
+  // どちらも list(from, to) で既存の予定、create(fields) で登録。
+  let cal = null, busy = false;
   const SERVER = 'Google Calendar';
+
+  function mcpCalendar(mcp) {
+    return {
+      async prepare() {},
+      async list(from, to) {
+        const out = [];
+        let token = null;
+        for (let page = 0; page < 10; page++) {
+          const input = { startTime: from, endTime: to, pageSize: 250, orderBy: 'startTime', timeZone: 'Asia/Tokyo' };
+          if (token) input.pageToken = token;
+          const res = await mcp.callTool(SERVER, 'list_events', input, { cache: false });
+          let p = res && res.payload;
+          if (typeof p === 'string') { try { p = JSON.parse(p); } catch (e) { p = null; } }
+          out.push(...((p && Array.isArray(p.events)) ? p.events : []));
+          token = p && p.nextPageToken;
+          if (!token) break;
+        }
+        return out;
+      },
+      async create(f) {
+        const input = { summary: f.summary, timeZone: 'Asia/Tokyo', startTime: f.start, endTime: f.end };
+        if (f.allDay) {
+          // 終日の予定は日付部分だけが使われる。+09:00 を付けると UTC に直されて前日になるため Z で渡す
+          input.allDay = true;
+          input.startTime = f.startDate + 'T00:00:00Z';
+          input.endTime = f.endDate + 'T00:00:00Z';
+        }
+        if (f.colorId) input.colorId = f.colorId;
+        if (f.location) input.location = f.location;
+        if (f.description) input.description = f.description;
+        await mcp.callTool(SERVER, 'create_event', input, { cache: false });
+      },
+    };
+  }
+
+  function googleCalendar(clientId) {
+    const API = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
+    let token = null, expires = 0, client = null, pending = null;
+    function tokenClient() {
+      if (client) return client;
+      if (!(window.google && google.accounts && google.accounts.oauth2)) {
+        throw { code: 'google_login', message: 'ログイン画面を読み込めませんでした。ページを開き直してください。' };
+      }
+      client = google.accounts.oauth2.initTokenClient({
+        client_id: clientId,
+        scope: 'https://www.googleapis.com/auth/calendar.events',
+        callback: (r) => {
+          const p = pending; pending = null;
+          if (!p) return;
+          if (r && r.access_token) {
+            token = r.access_token;
+            expires = Date.now() + (Number(r.expires_in) || 3600) * 1000 - 60000;
+            p.resolve();
+          } else {
+            p.reject({ code: 'google_login', message: (r && (r.error_description || r.error)) || '' });
+          }
+        },
+        error_callback: (e) => {
+          const p = pending; pending = null;
+          if (p) p.reject({ code: 'google_login', message: (e && e.type) || '' });
+        },
+      });
+      return client;
+    }
+    async function call(url, init) {
+      const res = await fetch(url, Object.assign({}, init, {
+        headers: Object.assign({ Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' }, (init && init.headers) || {}),
+      }));
+      const body = await res.json().catch(() => null);
+      if (res.status === 401) token = null;
+      if (!res.ok) throw { code: 'google_http', status: res.status, message: (body && body.error && body.error.message) || '' };
+      return body;
+    }
+    return {
+      // ログイン画面はボタンを押した直後にしか開けないので、クリック処理の最初に呼ぶ
+      prepare() {
+        if (token && Date.now() < expires) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+          try {
+            const c = tokenClient();
+            pending = { resolve, reject };
+            c.requestAccessToken();
+          } catch (e) { reject(e); }
+        });
+      },
+      async list(from, to) {
+        const out = [];
+        let pageToken = null;
+        for (let page = 0; page < 10; page++) {
+          const q = new URLSearchParams({ timeMin: from, timeMax: to, singleEvents: 'true', orderBy: 'startTime', maxResults: '250' });
+          if (pageToken) q.set('pageToken', pageToken);
+          const p = await call(API + '?' + q.toString());
+          out.push(...((p && p.items) || []));
+          pageToken = p && p.nextPageToken;
+          if (!pageToken) break;
+        }
+        return out;
+      },
+      async create(f) {
+        const body = { summary: f.summary };
+        if (f.allDay) {
+          body.start = { date: f.startDate };
+          body.end = { date: f.endDate };
+        } else {
+          body.start = { dateTime: f.start, timeZone: 'Asia/Tokyo' };
+          body.end = { dateTime: f.end, timeZone: 'Asia/Tokyo' };
+        }
+        if (f.colorId) body.colorId = f.colorId;
+        if (f.location) body.location = f.location;
+        if (f.description) body.description = f.description;
+        await call(API, { method: 'POST', body: JSON.stringify(body) });
+      },
+    };
+  }
 
   function explain(err) {
     switch (err && err.code) {
@@ -434,13 +555,21 @@
       case 'server_unavailable':
       case 'upstream_error':
         return 'Googleカレンダーから応答がありませんでした。登録されたか分からないため、カレンダーを確認してから必要な分だけ押し直してください。';
+      case 'google_login':
+        return 'Googleにログインできませんでした。もう一度ボタンを押してログインしてください。' + (err.message ? '（' + err.message + '）' : '');
+      case 'google_http':
+        if (err.status === 401) return 'Googleのログインが切れました。もう一度ボタンを押してください。';
+        if (err.status === 403) return 'Googleカレンダーを使う許可がありません。ログインするときに、カレンダーへのアクセスを許可してください。';
+        return 'Googleカレンダーでエラーが起きました（' + err.status + '）。' + (err.message || '');
       default:
         return '登録できませんでした（' + ((err && err.code) || '不明なエラー') + '）。';
     }
   }
 
   const STOP = new Set(['server_not_connected', 'server_not_found', 'needs_reauth', 'selection_required',
-    'not_in_manifest', 'blocked_by_policy', 'approval_required', 'not_granted', 'capability_disabled', 'capability_removed']);
+    'not_in_manifest', 'blocked_by_policy', 'approval_required', 'not_granted', 'capability_disabled', 'capability_removed',
+    'google_login']);
+  const isStop = (err) => STOP.has(err && err.code) || (err && err.code === 'google_http' && (err.status === 401 || err.status === 403));
 
   // 終日の予定の終わり（最終日の翌日）。「11/14-15」なら 11/16
   function nextDayIso(ev) {
@@ -467,28 +596,11 @@
     return NaN;
   }
 
-  async function fetchExisting(from, to) {
-    const out = [];
-    let token = null;
-    for (let page = 0; page < 10; page++) {
-      const input = { startTime: from, endTime: to, pageSize: 250, orderBy: 'startTime', timeZone: 'Asia/Tokyo' };
-      if (token) input.pageToken = token;
-      const res = await mcp.callTool(SERVER, 'list_events', input, { cache: false });
-      let p = res && res.payload;
-      if (typeof p === 'string') { try { p = JSON.parse(p); } catch (e) { p = null; } }
-      const items = (p && Array.isArray(p.events)) ? p.events : [];
-      out.push(...items);
-      token = p && p.nextPageToken;
-      if (!token) break;
-    }
-    return out;
-  }
-
   async function checkConflicts(list) {
     const ranges = list.map(rangeOf);
     const from = ranges.reduce((a, r) => (Date.parse(r.start) < Date.parse(a) ? r.start : a), ranges[0].start);
     const to = ranges.reduce((a, r) => (Date.parse(r.end) > Date.parse(a) ? r.end : a), ranges[0].end);
-    const existing = (await fetchExisting(from, to)).filter((x) =>
+    const existing = (await cal.list(from, to)).filter((x) =>
       x && x.status !== 'cancelled' && x.transparency !== 'transparent');
     list.forEach((ev, i) => {
       const s0 = Date.parse(ranges[i].start), e0 = Date.parse(ranges[i].end);
@@ -518,10 +630,11 @@
 
   async function runCheck() {
     const list = targets();
-    if (!mcp || busy || !list.length) return null;
+    if (!cal || busy || !list.length) return null;
     busy = true; updateButton(); hideConfirm();
     setStatus('Googleカレンダーの予定と重なっていないか確認中…');
     try {
+      await cal.prepare();
       await checkConflicts(list);
       return list;
     } catch (err) {
@@ -557,9 +670,16 @@
   }
 
   async function register(list) {
-    if (!mcp || busy || !list.length) return;
+    if (!cal || busy || !list.length) return;
     hideConfirm();
     busy = true; updateButton();
+    try {
+      await cal.prepare();
+    } catch (err) {
+      busy = false; render();
+      setStatus(explain(err), 'bad');
+      return;
+    }
     const me = meEl.value.trim();
     let ok = 0, lastErr = null;
     for (let i = 0; i < list.length; i++) {
@@ -567,24 +687,18 @@
       setStatus('登録中… ' + (i + 1) + ' / ' + list.length);
       const my = ScheduleParser.findMyStatus(ev, me);
       const rg = rangeOf(ev);
-      const input = { summary: summaryOf(ev), timeZone: 'Asia/Tokyo', startTime: rg.start, endTime: rg.end };
-      if (ev.allDay) {
-        // 終日の予定は日付部分だけが使われる。+09:00 を付けると UTC に直されて前日になるため Z で渡す
-        input.allDay = true;
-        input.startTime = ev.date + 'T00:00:00Z';
-        input.endTime = nextDayIso(ev).slice(0, 10) + 'T00:00:00Z';
-      }
-      if (colorId) input.colorId = colorId;
-      if (ev.place) input.location = ev.place;
-      const desc = descriptionOf(ev, my);
-      if (desc) input.description = desc;
+      const fields = {
+        summary: summaryOf(ev), allDay: ev.allDay, start: rg.start, end: rg.end,
+        startDate: ev.date, endDate: nextDayIso(ev).slice(0, 10),
+        colorId, location: ev.place, description: descriptionOf(ev, my),
+      };
       try {
-        await mcp.callTool(SERVER, 'create_event', input, { cache: false });
+        await cal.create(fields);
         registered.set(keyOf(ev), 'done'); ok++;
       } catch (err) {
         lastErr = err;
         registered.set(keyOf(ev), '失敗');
-        if (STOP.has(err && err.code)) break;
+        if (isStop(err)) break;
       }
       render();
     }
@@ -683,10 +797,22 @@
   if (window.claude && typeof window.claude.use === 'function') {
     $('addAll').disabled = true;
     window.claude.use('mcp').then((m) => {
-      mcp = m;
-      if (!mcp) { $('addAll').hidden = true; $('check').hidden = true; $('fallbackHint').hidden = false; }
+      cal = m ? mcpCalendar(m) : null;
+      if (!m) { $('addAll').hidden = true; $('check').hidden = true; $('fallbackHint').hidden = false; }
       updateButton();
     });
+  } else if ((window.PRACTICE_CONFIG || {}).googleClientId) {
+    // 公開ページ: Googleにログインして直接登録・重なり確認
+    cal = googleCalendar(window.PRACTICE_CONFIG.googleClientId);
+    const gsi = document.createElement('script');
+    gsi.src = 'https://accounts.google.com/gsi/client';
+    gsi.async = true;
+    document.head.append(gsi);
+    $('ics').hidden = false;
+    $('ics').classList.add('ghost');
+    $('ics').textContent = '.icsファイルで追加';
+    $('googleHint').hidden = false;
+    updateButton();
   } else {
     // claude.ai の外（普通のブラウザ）では .ics を使う
     $('addAll').hidden = true;
