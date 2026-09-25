@@ -103,6 +103,15 @@
   .chip.warn { background: var(--warn-soft); color: var(--warn); }
   .chip.done { background: transparent; border: 1px solid var(--done); color: var(--done); }
   .chip.bad { background: transparent; border: 1px solid var(--bad); color: var(--bad); }
+  .ev.clash { border-color: var(--bad); }
+  .clashes { display: grid; gap: 2px; font-size: 13px; color: var(--bad); margin: 0; padding: 0; list-style: none; }
+  .clashes li { overflow-wrap: anywhere; }
+  .clashes .t { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .confirm {
+    background: var(--surface); border: 1px solid var(--bad); border-radius: 12px; padding: 14px 16px;
+    display: grid; gap: 10px;
+  }
+  .confirm p { margin: 0; }
   .ev a.gcal { font-size: 13px; color: var(--accent); justify-self: start; }
   .empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; padding: 18px; color: var(--muted); }
 
@@ -167,7 +176,16 @@
     <h2><span class="n">3</span>カレンダーに登録</h2>
     <div class="actions">
       <button id="addAll" type="button">Googleカレンダーにまとめて登録</button>
+      <button id="check" type="button" class="ghost">重なりだけ確認</button>
       <button id="ics" type="button" class="ghost" hidden>.icsファイルをダウンロード</button>
+    </div>
+    <div class="confirm" id="confirm" hidden>
+      <p id="confirmText"></p>
+      <div class="actions">
+        <button id="skipClash" type="button">重なる日を外して登録</button>
+        <button id="forceAdd" type="button" class="ghost">そのまま全部登録</button>
+        <button id="cancelAdd" type="button" class="ghost">やめる</button>
+      </div>
     </div>
     <p class="status" id="status" role="status"></p>
     <p class="hint" id="fallbackHint" hidden>まとめて登録が使えない場合は、各予定の「Googleカレンダーで開く」から1件ずつ保存できます（この方法では色は保存画面で選んでください）。</p>
@@ -326,7 +344,21 @@
       const r = registered.get(k);
       if (r === 'done') chips.append(el('span', 'chip done', '登録済み'));
       if (r && r !== 'done') chips.append(el('span', 'chip bad', r));
+      const cs = conflicts.get(k) || [];
+      if (cs.some((c) => c.same)) chips.append(el('span', 'chip bad', '同じ予定がすでにあります'));
+      else if (cs.length) chips.append(el('span', 'chip bad', 'ダブルブッキング'));
+      if (checked.has(k) && !cs.length) chips.append(el('span', 'chip done', '重なりなし'));
       if (chips.children.length) body.append(chips);
+      if (cs.length) {
+        card.classList.add('clash');
+        const ul = el('ul', 'clashes');
+        cs.forEach((c) => {
+          const li = el('li');
+          li.append(el('span', 't', c.label), document.createTextNode(' ' + (c.summary || '（タイトルなし）')));
+          ul.append(li);
+        });
+        body.append(ul);
+      }
       if (ev.notes.length) body.append(el('div', 'notes', ev.notes.join(' / ')));
       const a = el('a', 'gcal', 'Googleカレンダーで開く ↗');
       a.href = gcalUrl(ev, my); a.target = '_blank'; a.rel = 'noopener';
@@ -346,6 +378,7 @@
     const n = targets().length;
     $('addAll').textContent = n ? 'Googleカレンダーに' + n + '件まとめて登録' : '登録する予定がありません';
     $('addAll').disabled = busy || !n || !mcp;
+    $('check').disabled = busy || !n || !mcp;
   }
 
   function setStatus(msg, kind) {
@@ -384,10 +417,120 @@
   const STOP = new Set(['server_not_connected', 'server_not_found', 'needs_reauth', 'selection_required',
     'not_in_manifest', 'blocked_by_policy', 'approval_required', 'not_granted', 'capability_disabled', 'capability_removed']);
 
-  async function addAll() {
-    if (!mcp || busy) return;
+  function nextDayIso(ev) {
+    const n = new Date(ev.year, ev.month - 1, ev.day + 1);
+    return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0') + 'T00:00:00+09:00';
+  }
+  function rangeOf(ev) {
+    return ev.allDay
+      ? { start: ev.date + 'T00:00:00+09:00', end: nextDayIso(ev) }
+      : { start: ev.start, end: ev.end };
+  }
+
+  // --- ダブルブッキングの確認 ---
+  const conflicts = new Map(); // 予定 → 重なっている既存の予定
+  const checked = new Set();
+  const hm = (ms) => new Date(ms).toLocaleTimeString('ja-JP', { timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit' });
+
+  function msOf(t) {
+    if (!t) return NaN;
+    if (t.dateTime) return Date.parse(t.dateTime);
+    if (t.date) return Date.parse(t.date + 'T00:00:00+09:00');
+    return NaN;
+  }
+
+  async function fetchExisting(from, to) {
+    const out = [];
+    let token = null;
+    for (let page = 0; page < 10; page++) {
+      const input = { startTime: from, endTime: to, pageSize: 250, orderBy: 'startTime', timeZone: 'Asia/Tokyo' };
+      if (token) input.pageToken = token;
+      const res = await mcp.callTool(SERVER, 'list_events', input, { cache: false });
+      let p = res && res.payload;
+      if (typeof p === 'string') { try { p = JSON.parse(p); } catch (e) { p = null; } }
+      const items = (p && Array.isArray(p.events)) ? p.events : [];
+      out.push(...items);
+      token = p && p.nextPageToken;
+      if (!token) break;
+    }
+    return out;
+  }
+
+  async function checkConflicts(list) {
+    const ranges = list.map(rangeOf);
+    const from = ranges.reduce((a, r) => (Date.parse(r.start) < Date.parse(a) ? r.start : a), ranges[0].start);
+    const to = ranges.reduce((a, r) => (Date.parse(r.end) > Date.parse(a) ? r.end : a), ranges[0].end);
+    const existing = (await fetchExisting(from, to)).filter((x) =>
+      x && x.status !== 'cancelled' && x.transparency !== 'transparent');
+    list.forEach((ev, i) => {
+      const s0 = Date.parse(ranges[i].start), e0 = Date.parse(ranges[i].end);
+      const hits = [];
+      existing.forEach((x) => {
+        const s1 = msOf(x.start), e1 = msOf(x.end);
+        if (!(s1 < e0 && s0 < e1)) return;
+        const allDay = !(x.start && x.start.dateTime);
+        hits.push({
+          summary: x.summary || '',
+          label: allDay ? '終日' : hm(s1) + '–' + hm(e1),
+          same: s1 === s0 && e1 === e0 && (x.summary || '') === summaryOf(ev),
+        });
+      });
+      conflicts.set(keyOf(ev), hits);
+      checked.add(keyOf(ev));
+    });
+  }
+
+  function hideConfirm() { $('confirm').hidden = true; }
+
+  function showConfirm(text, canSkip) {
+    $('confirmText').textContent = text;
+    $('skipClash').hidden = !canSkip;
+    $('confirm').hidden = false;
+  }
+
+  async function runCheck() {
     const list = targets();
-    if (!list.length) return;
+    if (!mcp || busy || !list.length) return null;
+    busy = true; updateButton(); hideConfirm();
+    setStatus('Googleカレンダーの予定と重なっていないか確認中…');
+    try {
+      await checkConflicts(list);
+      return list;
+    } catch (err) {
+      return err;
+    } finally {
+      busy = false; render();
+    }
+  }
+
+  async function checkOnly() {
+    const r = await runCheck();
+    if (!r) return;
+    if (!Array.isArray(r)) { setStatus('重なりを確認できませんでした。' + explain(r), 'bad'); return; }
+    const n = r.filter((ev) => (conflicts.get(keyOf(ev)) || []).length).length;
+    setStatus(n ? n + '件が既存の予定と重なっています。' : '重なっている予定はありません。', n ? 'bad' : 'good');
+  }
+
+  async function addAll() {
+    const r = await runCheck();
+    if (!r) return;
+    if (!Array.isArray(r)) {
+      setStatus('');
+      showConfirm('重なりを確認できませんでした。' + explain(r) + ' 確認せずに登録しますか？', false);
+      return;
+    }
+    const n = r.filter((ev) => (conflicts.get(keyOf(ev)) || []).length).length;
+    if (n) {
+      setStatus('');
+      showConfirm(n + '件が既存の予定と重なっています（赤枠の日）。どうしますか？', true);
+      return;
+    }
+    await register(r);
+  }
+
+  async function register(list) {
+    if (!mcp || busy || !list.length) return;
+    hideConfirm();
     busy = true; updateButton();
     const me = meEl.value.trim();
     let ok = 0, lastErr = null;
@@ -395,17 +538,10 @@
       const ev = list[i];
       setStatus('登録中… ' + (i + 1) + ' / ' + list.length);
       const my = ScheduleParser.findMyStatus(ev, me);
-      const input = { summary: summaryOf(ev), timeZone: 'Asia/Tokyo' };
+      const rg = rangeOf(ev);
+      const input = { summary: summaryOf(ev), timeZone: 'Asia/Tokyo', startTime: rg.start, endTime: rg.end };
+      if (ev.allDay) input.allDay = true;
       if (colorId) input.colorId = colorId;
-      if (ev.allDay) {
-        input.allDay = true;
-        input.startTime = ev.date + 'T00:00:00+09:00';
-        const n = new Date(ev.year, ev.month - 1, ev.day + 1);
-        input.endTime = n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0') + 'T00:00:00+09:00';
-      } else {
-        input.startTime = ev.start;
-        input.endTime = ev.end;
-      }
       if (ev.place) input.location = ev.place;
       const desc = descriptionOf(ev, my);
       if (desc) input.description = desc;
@@ -497,6 +633,14 @@
   meEl.addEventListener('input', () => { store('me', meEl.value); render(); });
   yearEl.addEventListener('input', render);
   $('addAll').addEventListener('click', addAll);
+  $('check').addEventListener('click', checkOnly);
+  $('skipClash').addEventListener('click', () => {
+    const rest = targets().filter((ev) => !(conflicts.get(keyOf(ev)) || []).length);
+    if (rest.length) register(rest);
+    else { hideConfirm(); setStatus('重なっていない予定がないため、登録しませんでした。', 'bad'); }
+  });
+  $('forceAdd').addEventListener('click', () => register(targets()));
+  $('cancelAdd').addEventListener('click', () => { hideConfirm(); setStatus(''); });
   $('ics').addEventListener('click', downloadIcs);
 
   render();
@@ -505,12 +649,13 @@
     $('addAll').disabled = true;
     window.claude.use('mcp').then((m) => {
       mcp = m;
-      if (!mcp) { $('addAll').hidden = true; $('fallbackHint').hidden = false; }
+      if (!mcp) { $('addAll').hidden = true; $('check').hidden = true; $('fallbackHint').hidden = false; }
       updateButton();
     });
   } else {
     // claude.ai の外（普通のブラウザ）では .ics を使う
     $('addAll').hidden = true;
+    $('check').hidden = true;
     $('ics').hidden = false;
     $('fallbackHint').hidden = false;
   }
