@@ -56,7 +56,9 @@
   textarea { min-height: 220px; resize: vertical; }
   .src-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
   .src-bar .sample-tag { justify-self: auto; }
-  button.small { font-size: 13px; padding: 6px 14px; margin-left: auto; }
+  button.small { font-size: 13px; padding: 6px 14px; }
+  .src-btns { display: flex; gap: 8px; margin-left: auto; }
+  .paste-hint { font-size: 13px; color: var(--accent); margin: 0; font-weight: 700; }
   textarea:focus, input:focus, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .fields { display: grid; grid-template-columns: 2fr 1fr 1.4fr; gap: 12px; }
   @media (max-width: 560px) { .fields { grid-template-columns: 1fr 1fr; } .fields .wide { grid-column: 1 / -1; } }
@@ -130,8 +132,12 @@
     <h2><span class="n">1</span>日程を貼り付け</h2>
     <div class="src-bar">
       <span class="sample-tag" id="sampleTag">例として入力済み。自分の日程に貼り替えてください</span>
-      <button type="button" class="ghost small" id="clear">入力を全部消す</button>
+      <div class="src-btns">
+        <button type="button" class="small" id="paste">貼り付け</button>
+        <button type="button" class="ghost small" id="clear">入力を全部消す</button>
+      </div>
     </div>
+    <p class="paste-hint" id="pasteHint" hidden>入力欄を長押しして「ペースト」を選んでください。前の内容と入れ替わります。</p>
     <textarea id="src" spellcheck="false" aria-label="練習日程のテキスト"></textarea>
     <div class="fields">
       <label class="wide">予定のタイトル
@@ -450,6 +456,36 @@
   }
 
   src.addEventListener('input', () => { $('sampleTag').hidden = true; render(); });
+  // 「貼り付け」: クリップボードを読めればそのまま入れる。
+  // 読めない環境（claude.ai 上など）では欄を空けて、次のペーストで全体を入れ替える。
+  let replaceOnPaste = false;
+  function setSource(text) {
+    src.value = text;
+    replaceOnPaste = false;
+    $('pasteHint').hidden = true;
+    $('sampleTag').hidden = true;
+    setStatus('');
+    render();
+  }
+  $('paste').addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text && text.trim()) { setSource(text); return; }
+    } catch (e) {}
+    src.value = '';
+    $('sampleTag').hidden = true;
+    render();
+    replaceOnPaste = true;
+    $('pasteHint').hidden = false;
+    src.focus();
+  });
+  src.addEventListener('paste', (e) => {
+    if (!replaceOnPaste) return;
+    const text = e.clipboardData && e.clipboardData.getData('text');
+    if (!text) return;
+    e.preventDefault();
+    setSource(text);
+  });
   $('clear').addEventListener('click', () => {
     src.value = '';
     $('sampleTag').hidden = true;
