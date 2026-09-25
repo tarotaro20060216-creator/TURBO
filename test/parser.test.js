@@ -49,4 +49,34 @@ assert.strictEqual(c[0].year, 2027);
 assert.strictEqual(c[0].end, '2027-01-11T01:00:00+09:00');
 assert.strictEqual(c[0].place, '渋谷');
 assert.strictEqual(parse('12/24 本番', { today })[0].allDay, true);
+const k = `【練習日程】
+
+1️⃣ 10/3 14-17 @STUDIOFLAG 高田馬場
+→ファスユニ
+2️⃣ 10/10 14-17 @ソニズ東高円寺F
+→ラスユニ
+5️⃣ 10/31 14-17 @スパイラル2F
+→パート・構成
+
+6️⃣ 11/7 14-17 @スパイラル3F
+→構成・通し
+🔟 11/28 14-17 @スパイラル3F
+
+欠席、早退、遅刻あれば早めにコメントお願いします📝 （当日の連絡はグループに！）`;
+const ek = parse(k, { today });
+assert.strictEqual(ek.length, 5);
+assert.strictEqual(ek[0].start, '2026-10-03T14:00:00+09:00');
+assert.strictEqual(ek[0].end, '2026-10-03T17:00:00+09:00');
+assert.strictEqual(ek[0].place, 'STUDIOFLAG 高田馬場');
+assert.deepStrictEqual(ek[0].notes, ['ファスユニ']);
+assert.deepStrictEqual(ek[2].notes, ['パート・構成']);
+assert.strictEqual(ek[3].date, '2026-11-07');
+assert.strictEqual(ek[4].date, '2026-11-28');
+assert.deepStrictEqual(ek[4].notes, []);
+
+for (const line of ['第3回 10/3 14-17', '【10/3】14-17', '3. 10/3 14-17', '▶10/3 14-17', '#️⃣10/3 14-17']) {
+  const e = parse(line, { today });
+  assert.strictEqual(e.length, 1, line);
+  assert.strictEqual(e[0].start, '2026-10-03T14:00:00+09:00', line);
+}
 console.log('ok');

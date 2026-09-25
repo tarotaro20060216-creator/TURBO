@@ -3,9 +3,18 @@
 (function (root) {
   const CIRCLED = '①-⑳㉑-㉟㊱-㊿';
   // 行頭の日付: 「①10/4」「10/1」「10月4日」「1. 10/4(日)」など
+  // 日付の前に付く番号や記号: 「1️⃣」「🔟」「①」「1.」「第1回」「【」など
+  const PREFIX =
+    '(?:[\\s' + CIRCLED + '・•*＊\\-【\\[（(]' +
+    '|[0-9#]\\uFE0F?\\u20E3' +
+    '|\\p{Extended_Pictographic}|\\uFE0F' +
+    '|第?\\d{1,2}回目?[:：]?' +
+    '|\\d{1,2}[.)．）])*';
   const DATE_RE = new RegExp(
-    '^[\\s' + CIRCLED + '・•*＊\\-]*(?:\\d{1,2}[.)．）]\\s*)?(\\d{1,2})\\s*[/／月]\\s*(\\d{1,2})日?'
+    '^' + PREFIX + '(\\d{1,2})\\s*[/／月]\\s*(\\d{1,2})日?[】\\]]?', 'u'
   );
+  // 補足行の先頭の矢印: 「→ファスユニ」
+  const ARROW_RE = /^[→⇒➡️▶︎▷>＞\s]+/u;
   // 時刻: 「21-23」「11:00~14:00」「12時〜14時半」など
   const TIME_RE =
     /(\d{1,2})(?:[:：](\d{2})|時(半)?)?\s*[-~〜～ー−–—]\s*(\d{1,2})(?:[:：](\d{2})|時(半)?)?/;
@@ -74,7 +83,7 @@
       if (cur) {
         const pl = line.match(PLACE_LINE_RE);
         if (pl && !cur.place) cur.place = pl[1].trim();
-        else cur.notes.push(line);
+        else cur.notes.push(line.replace(ARROW_RE, '') || line);
       }
     }
     return events;
