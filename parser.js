@@ -18,7 +18,9 @@
   // 時刻: 「21-23」「11:00~14:00」「12時〜14時半」など
   const TIME_RE =
     /(\d{1,2})(?:[:：](\d{2})|時(半)?)?\s*[-~〜～ー−–—]\s*(\d{1,2})(?:[:：](\d{2})|時(半)?)?/;
-  const PLACE_RE = /[@＠]\s*(.+)$/;
+  const PLACE_RE = /(?:[@＠]|📍)\s*(.+)$/u;
+  // 「11/14-15」の「-15」（2日にまたがる予定）
+  const RANGE_DAY_RE = /^\s*[-~〜～]\s*(?:(\d{1,2})\s*[/／月]\s*)?(\d{1,2})日?(?![\d:：時])\s*(?:[(（][月火水木金土日祝・]+[)）])?/;
   const PLACE_LINE_RE = /^\s*(?:場所|会場|スタジオ)\s*[:：]\s*(.+)$/;
   const WEEKDAY_RE = /^\s*[(（][月火水木金土日祝・]+[)）]/;
 
@@ -85,6 +87,18 @@
           place: '', label: '', notes: [], warning: /⚠/.test(rest),
           tentative: false, placeTbd: false, maybeOff: false,
         };
+        // 「11/14-15」: 2日目の日付
+        let second = null;
+        const rd = rest.match(RANGE_DAY_RE);
+        if (rd) {
+          const m2 = rd[1] ? +rd[1] : month, d2 = +rd[2];
+          const y2 = m2 < month ? year + 1 : year;
+          if (m2 >= 1 && m2 <= 12 && d2 >= 1 && d2 <= 31 &&
+              Date.UTC(y2, m2 - 1, d2) > Date.UTC(year, month - 1, day)) {
+            second = { year: y2, month: m2, day: d2 };
+            rest = rest.slice(rd[0].length);
+          }
+        }
         const pm = rest.match(PLACE_RE);
         if (pm) {
           // 「@未定、一橋祭前日なので無いかも。」→ 場所「未定」＋メモ
@@ -101,6 +115,15 @@
           applyTime(ev, t);
           rest = rest.slice(0, tm.index) + rest.slice(tm.index + tm[0].length);
         }
+        // 「深夜」だけで時刻がない → 0:00-6:00。「11/14-15 深夜」なら 11/15 の 0:00-6:00
+        if (!t && /深夜/.test(rest)) {
+          if (second) Object.assign(ev, second);
+          applyTime(ev, { sh: 0, sm: 0, eh: 6, em: 0 });
+          ev.lateNight = true;
+          second = null;
+        }
+        // 時刻のない「11/14-15」は2日間の終日予定
+        if (second && ev.allDay) ev.lastDay = second;
         rest = rest.replace(/⚠️?/g, '').trim();
         // 「11/28か29にリハ」のように日付が決まっていない
         const alt = rest.match(/^(?:か|or|／|\/)\s*(\d{1,2})日?\s*(.*)$/i);
@@ -111,7 +134,7 @@
         }
         // 「12/4(金)にラスリハ」→ 予定名「ラスリハ」
         ev.label = rest.replace(/^(?:に|は|で|:|：|-|–)\s*/, '').replace(/[。．]$/, '').trim();
-        ev.date = year + '-' + z(month) + '-' + z(day);
+        ev.date = ev.year + '-' + z(ev.month) + '-' + z(ev.day);
         events.push(ev);
         cur = ev;
         continue;

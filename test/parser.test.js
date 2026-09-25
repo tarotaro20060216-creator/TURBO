@@ -121,4 +121,34 @@ assert.strictEqual(o[1].start, '2026-10-11T12:00:00+09:00');
 const o2 = parse('毎週日曜11-14\n（10/11のみ12-14）\n\n10/11 @B', { today });
 assert.strictEqual(o2.length, 1);
 assert.strictEqual(o2[0].start, '2026-10-11T12:00:00+09:00');
+const n = parse(`🧑🏽‍🦲練習日程￼👨🏼‍🦲
+10/15 21-23 📍STUDIO CDA TACHIKAWA
+10/26 21-23 📍ププスタジオ 立川
+11/7 20-22 📍ひっぱのスタジオ？
+11/14-15 深夜　📍吉祥寺tonic
+11/20 19-21📍未定
+欠席早退遅刻コメントへ⤵︎`, { today });
+assert.strictEqual(n.length, 5);
+assert.strictEqual(n[0].place, 'STUDIO CDA TACHIKAWA');
+assert.strictEqual(n[0].label, '');
+assert.strictEqual(n[0].start, '2026-10-15T21:00:00+09:00');
+assert.strictEqual(n[3].date, '2026-11-15');
+assert.strictEqual(n[3].start, '2026-11-15T00:00:00+09:00');
+assert.strictEqual(n[3].end, '2026-11-15T06:00:00+09:00');
+assert.strictEqual(n[3].place, '吉祥寺tonic');
+assert.strictEqual(n[3].lateNight, true);
+assert.strictEqual(n[4].placeTbd, true);
+assert.strictEqual(n[4].start, '2026-11-20T19:00:00+09:00');
+
+const s1 = parse('11/14深夜 @tonic', { today })[0];
+assert.strictEqual(s1.start, '2026-11-14T00:00:00+09:00');
+assert.strictEqual(s1.end, '2026-11-14T06:00:00+09:00');
+const s2 = parse('10/31(土)-11/1(日) 深夜', { today })[0];
+assert.strictEqual(s2.start, '2026-11-01T00:00:00+09:00');
+const s3 = parse('11/14 深夜 25-29', { today })[0];
+assert.strictEqual(s3.start, '2026-11-15T01:00:00+09:00');
+const s4 = parse('11/14-15 合宿', { today })[0];
+assert.strictEqual(s4.allDay, true);
+assert.deepStrictEqual(s4.lastDay, { year: 2026, month: 11, day: 15 });
+assert.strictEqual(s4.label, '合宿');
 console.log('ok');

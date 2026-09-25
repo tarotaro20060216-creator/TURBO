@@ -290,7 +290,8 @@
     const p = new URLSearchParams({ action: 'TEMPLATE', text: summaryOf(ev), ctz: 'Asia/Tokyo' });
     if (ev.allDay) {
       const d = ev.date.replace(/-/g, '');
-      const next = new Date(ev.year, ev.month - 1, ev.day + 1);
+      const last = ev.lastDay || ev;
+      const next = new Date(last.year, last.month - 1, last.day + 1);
       const n = next.getFullYear() + String(next.getMonth() + 1).padStart(2, '0') + String(next.getDate()).padStart(2, '0');
       p.set('dates', d + '/' + n);
     } else {
@@ -352,6 +353,9 @@
       const chips = el('div', 'chips');
       if (ev.warning) chips.append(el('span', 'chip warn', '⚠ 時間がいつもと違う'));
       if (ev.commonTime) chips.append(el('span', 'chip', '共通の時間'));
+      if (ev.lateNight) chips.append(el('span', 'chip', '深夜 0:00–6:00'));
+      if (ev.lastDay) chips.append(el('span', 'chip', ev.lastDay.month + '/' + ev.lastDay.day + 'までの' +
+        (Math.round((Date.UTC(ev.lastDay.year, ev.lastDay.month - 1, ev.lastDay.day) - Date.UTC(ev.year, ev.month - 1, ev.day)) / 864e5) + 1) + '日間'));
       if (ev.label) chips.append(el('span', 'chip', ev.label));
       if (ev.tentative) chips.append(el('span', 'chip warn', '日付未定（チェックなし）'));
       if (ev.placeTbd) chips.append(el('span', 'chip warn', '場所未定'));
@@ -433,8 +437,10 @@
   const STOP = new Set(['server_not_connected', 'server_not_found', 'needs_reauth', 'selection_required',
     'not_in_manifest', 'blocked_by_policy', 'approval_required', 'not_granted', 'capability_disabled', 'capability_removed']);
 
+  // 終日の予定の終わり（最終日の翌日）。「11/14-15」なら 11/16
   function nextDayIso(ev) {
-    const n = new Date(ev.year, ev.month - 1, ev.day + 1);
+    const last = ev.lastDay || ev;
+    const n = new Date(last.year, last.month - 1, last.day + 1);
     return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0') + 'T00:00:00+09:00';
   }
   function rangeOf(ev) {
@@ -592,7 +598,7 @@
     const out = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//practice-schedule//JA', 'CALSCALE:GREGORIAN'];
     events.filter((ev) => !unchecked.has(keyOf(ev))).forEach((ev, i) => {
       out.push('BEGIN:VEVENT', 'UID:' + stamp + '-' + i + '@practice-schedule', 'DTSTAMP:' + stamp);
-      if (ev.allDay) out.push('DTSTART;VALUE=DATE:' + ev.date.replace(/-/g, ''));
+      if (ev.allDay) out.push('DTSTART;VALUE=DATE:' + ev.date.replace(/-/g, ''), 'DTEND;VALUE=DATE:' + nextDayIso(ev).slice(0, 10).replace(/-/g, ''));
       else out.push('DTSTART;TZID=Asia/Tokyo:' + compact(ev.start), 'DTEND;TZID=Asia/Tokyo:' + compact(ev.end));
       out.push('SUMMARY:' + esc(summaryOf(ev)));
       if (ev.place) out.push('LOCATION:' + esc(ev.place));
