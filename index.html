@@ -220,6 +220,8 @@
   // 登録済みの予定（同じ内容を二重登録しないため）
   const registered = new Map();
   const unchecked = new Set();
+  // 一度表示した予定（日付未定の予定を最初だけチェックなしにするため）
+  const seen = new Set();
 
   function store(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
   function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
@@ -268,12 +270,16 @@
   function keyOf(ev) { return ev.date + '|' + (ev.start || '') + '|' + ev.place; }
 
   function summaryOf(ev) {
-    const t = titleEl.value.trim() || '練習';
+    let t = titleEl.value.trim() || '練習';
+    if (ev.label) t += ' ' + ev.label;
+    if (ev.tentative) t += '（日付未定）';
+    else if (ev.maybeOff) t += '（中止かも）';
     return ev.warning ? t + '（時間注意）' : t;
   }
 
   function descriptionOf(ev, my) {
     const lines = ev.notes.slice();
+    if (ev.placeTbd) lines.unshift('場所: 未定');
     if (my) lines.unshift('★自分: ' + my);
     return lines.join('\n');
   }
@@ -306,6 +312,11 @@
   function render() {
     const year = parseInt(yearEl.value, 10);
     events = ScheduleParser.parse(src.value, { year: year > 2000 ? year : undefined });
+    events.forEach((ev) => {
+      const k = keyOf(ev);
+      if (!seen.has(k) && ev.tentative) unchecked.add(k);
+      seen.add(k);
+    });
     listEl.replaceChildren();
     $('colorName').textContent = currentColor().name + (colorId ? '' : '：カレンダー本体の色のまま');
     if (!events.length) {
@@ -340,6 +351,11 @@
       body.append(row1);
       const chips = el('div', 'chips');
       if (ev.warning) chips.append(el('span', 'chip warn', '⚠ 時間がいつもと違う'));
+      if (ev.commonTime) chips.append(el('span', 'chip', '共通の時間'));
+      if (ev.label) chips.append(el('span', 'chip', ev.label));
+      if (ev.tentative) chips.append(el('span', 'chip warn', '日付未定（チェックなし）'));
+      if (ev.placeTbd) chips.append(el('span', 'chip warn', '場所未定'));
+      if (ev.maybeOff) chips.append(el('span', 'chip warn', '中止かも'));
       if (my) chips.append(el('span', 'chip warn', '自分: ' + my));
       const r = registered.get(k);
       if (r === 'done') chips.append(el('span', 'chip done', '登録済み'));

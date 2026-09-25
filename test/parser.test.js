@@ -79,4 +79,46 @@ for (const line of ['第3回 10/3 14-17', '【10/3】14-17', '3. 10/3 14-17', '�
   assert.strictEqual(e.length, 1, line);
   assert.strictEqual(e[0].start, '2026-10-03T14:00:00+09:00', line);
 }
+const m = `【練習日程】
+全体練除いて全14回
+時間は全て18:00-20:00です！
+欠席遅刻連絡はコメントへ！
+
+9/21(月)	@チェリひろ
+9/28(月)@チェリひろ
+10/26(月) @未定
+11/20(金) @未定、一橋祭前日なので無いかも。
+11/27(金) @未定
+
+11/28か29にリハ
+
+11/30(月) @未定
+
+12/4(金)にラスリハ`;
+const em2 = parse(m, { today });
+assert.strictEqual(em2.length, 8);
+assert.strictEqual(em2[0].start, '2026-09-21T18:00:00+09:00');
+assert.strictEqual(em2[0].end, '2026-09-21T20:00:00+09:00');
+assert.strictEqual(em2[0].place, 'チェリひろ');
+assert.strictEqual(em2[0].commonTime, true);
+assert.strictEqual(em2[2].place, '');
+assert.strictEqual(em2[2].placeTbd, true);
+assert.strictEqual(em2[2].allDay, false);
+assert.deepStrictEqual(em2[3].notes, ['一橋祭前日なので無いかも。']);
+assert.strictEqual(em2[3].maybeOff, true);
+assert.strictEqual(em2[5].tentative, true);
+assert.strictEqual(em2[5].label, 'リハ');
+assert.strictEqual(em2[5].allDay, true);
+assert.strictEqual(em2[6].start, '2026-11-30T18:00:00+09:00');
+assert.strictEqual(em2[7].label, 'ラスリハ');
+assert.strictEqual(em2[7].allDay, true);
+
+// 「10/11のみ」の時間が共通の時間より優先される
+const o = parse('全７回、毎週日曜11:00~14:00です！（10/11のみ12:00~14:00）\n\n①10/4 @A\n②10/11 @B', { today });
+assert.strictEqual(o.length, 2);
+assert.strictEqual(o[0].start, '2026-10-04T11:00:00+09:00');
+assert.strictEqual(o[1].start, '2026-10-11T12:00:00+09:00');
+const o2 = parse('毎週日曜11-14\n（10/11のみ12-14）\n\n10/11 @B', { today });
+assert.strictEqual(o2.length, 1);
+assert.strictEqual(o2[0].start, '2026-10-11T12:00:00+09:00');
 console.log('ok');
