@@ -59,6 +59,23 @@
   @media (max-width: 560px) { .fields { grid-template-columns: 1fr 1fr; } .fields .wide { grid-column: 1 / -1; } }
   label { display: grid; gap: 4px; font-size: 12px; color: var(--muted); letter-spacing: .04em; }
   .hint { font-size: 13px; color: var(--muted); margin: 0; }
+  .colors { border: 0; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .colors legend { font-size: 12px; color: var(--muted); letter-spacing: .04em; padding: 0; margin-bottom: 4px; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+  .swatch { position: relative; display: block; }
+  .swatch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .swatch span {
+    display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+    background: var(--c); border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line);
+    cursor: pointer; font-size: 11px; color: var(--muted);
+  }
+  .swatch.none span { background: var(--surface); border-style: dashed; border-color: var(--line); }
+  .swatch input:checked + span { box-shadow: 0 0 0 2px var(--ink); }
+  .swatch input:checked + span::after { content: "✓"; color: #fff; font-size: 16px; font-weight: 700; }
+  .swatch.none input:checked + span::after { content: ""; }
+  .swatch input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .color-name { font-size: 13px; color: var(--muted); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: var(--c); align-self: center; }
   .sample-tag { font-size: 12px; color: var(--warn); background: var(--warn-soft); border-radius: 999px; padding: 2px 10px; justify-self: start; }
 
   .list { display: grid; gap: 10px; }
@@ -121,6 +138,11 @@
         <input type="text" id="me" placeholder="例: なな">
       </label>
     </div>
+    <fieldset class="colors">
+      <legend>予定の色</legend>
+      <div class="swatches" id="swatches"></div>
+      <span class="color-name" id="colorName"></span>
+    </fieldset>
     <p class="hint">名前を入れると、欠席・遅刻・早退の欄に自分が書かれている日に印が付きます。</p>
   </section>
 
@@ -136,7 +158,7 @@
       <button id="ics" type="button" class="ghost" hidden>.icsファイルをダウンロード</button>
     </div>
     <p class="status" id="status" role="status"></p>
-    <p class="hint" id="fallbackHint" hidden>まとめて登録が使えない場合は、各予定の「Googleカレンダーで開く」から1件ずつ保存できます。</p>
+    <p class="hint" id="fallbackHint" hidden>まとめて登録が使えない場合は、各予定の「Googleカレンダーで開く」から1件ずつ保存できます（この方法では色は保存画面で選んでください）。</p>
     <div class="howto">
       <h3>TimeTreeに表示したいとき</h3>
       <p>TimeTreeには外部ファイルの取り込み機能がありません。iPhoneの「設定 → カレンダー → アカウント」でGoogleアカウントを追加しておくと、登録した予定がiPhoneの標準カレンダーに表示されます。</p>
@@ -175,6 +197,41 @@
   src.value = SAMPLE;
   titleEl.value = load('title') || titleEl.value;
   meEl.value = load('me') || '';
+
+  // Googleカレンダーの予定の色（colorId と表示名）
+  const COLORS = [
+    { id: '', name: 'カレンダーの色（青など）', hex: '' },
+    { id: '11', name: 'トマト', hex: '#d50000' },
+    { id: '4', name: 'フラミンゴ', hex: '#e67c73' },
+    { id: '6', name: 'ミカン', hex: '#f4511e' },
+    { id: '5', name: 'バナナ', hex: '#f6bf26' },
+    { id: '2', name: 'セージ', hex: '#33b679' },
+    { id: '10', name: 'バジル', hex: '#0b8043' },
+    { id: '7', name: 'ピーコック', hex: '#039be5' },
+    { id: '9', name: 'ブルーベリー', hex: '#3f51b5' },
+    { id: '1', name: 'ラベンダー', hex: '#7986cb' },
+    { id: '3', name: 'ブドウ', hex: '#8e24aa' },
+    { id: '8', name: 'グラファイト', hex: '#616161' },
+  ];
+  let colorId = load('colorId') || '';
+  if (!COLORS.some((c) => c.id === colorId)) colorId = '';
+  function currentColor() { return COLORS.find((c) => c.id === colorId); }
+  COLORS.forEach((c) => {
+    const lab = document.createElement('label');
+    lab.className = 'swatch' + (c.id ? '' : ' none');
+    lab.title = c.name;
+    const r = document.createElement('input');
+    r.type = 'radio'; r.name = 'color'; r.id = 'color-' + (c.id || 'default'); r.value = c.id;
+    r.checked = c.id === colorId;
+    r.setAttribute('aria-label', c.name);
+    r.addEventListener('change', () => {
+      colorId = c.id; store('colorId', colorId); render();
+    });
+    const sp = document.createElement('span');
+    if (c.hex) sp.style.setProperty('--c', c.hex); else sp.textContent = '標準';
+    lab.append(r, sp);
+    $('swatches').append(lab);
+  });
   yearEl.value = '';
   yearEl.placeholder = String(new Date().getFullYear()) + '（自動）';
 
@@ -220,6 +277,7 @@
     const year = parseInt(yearEl.value, 10);
     events = ScheduleParser.parse(src.value, { year: year > 2000 ? year : undefined });
     listEl.replaceChildren();
+    $('colorName').textContent = currentColor().name + (colorId ? '' : '：カレンダー本体の色のまま');
     if (!events.length) {
       listEl.append(el('div', 'empty', '日付が見つかりません。「10/4 11-14 @場所」のように、行の先頭に日付がある形式に対応しています。'));
     }
@@ -242,6 +300,11 @@
 
       const body = el('div', 'body');
       const row1 = el('div', 'row1');
+      if (colorId) {
+        const dot = el('span', 'dot');
+        dot.style.setProperty('--c', currentColor().hex);
+        row1.append(dot);
+      }
       row1.append(el('span', 'time', ev.allDay ? '終日' : ev.timeLabel));
       if (ev.place) row1.append(el('span', 'place', '@ ' + ev.place));
       body.append(row1);
@@ -321,6 +384,7 @@
       setStatus('登録中… ' + (i + 1) + ' / ' + list.length);
       const my = ScheduleParser.findMyStatus(ev, me);
       const input = { summary: summaryOf(ev), timeZone: 'Asia/Tokyo' };
+      if (colorId) input.colorId = colorId;
       if (ev.allDay) {
         input.allDay = true;
         input.startTime = ev.date + 'T00:00:00+09:00';
