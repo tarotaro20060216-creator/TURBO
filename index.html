@@ -54,6 +54,9 @@
     border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
   }
   textarea { min-height: 220px; resize: vertical; }
+  .src-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+  .src-bar .sample-tag { justify-self: auto; }
+  button.small { font-size: 13px; padding: 6px 14px; margin-left: auto; }
   textarea:focus, input:focus, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .fields { display: grid; grid-template-columns: 2fr 1fr 1.4fr; gap: 12px; }
   @media (max-width: 560px) { .fields { grid-template-columns: 1fr 1fr; } .fields .wide { grid-column: 1 / -1; } }
@@ -125,7 +128,10 @@
 
   <section class="step">
     <h2><span class="n">1</span>日程を貼り付け</h2>
-    <span class="sample-tag" id="sampleTag">例として入力済み。自分の日程に貼り替えてください</span>
+    <div class="src-bar">
+      <span class="sample-tag" id="sampleTag">例として入力済み。自分の日程に貼り替えてください</span>
+      <button type="button" class="ghost small" id="clear">入力を全部消す</button>
+    </div>
     <textarea id="src" spellcheck="false" aria-label="練習日程のテキスト"></textarea>
     <div class="fields">
       <label class="wide">予定のタイトル
@@ -444,6 +450,13 @@
   }
 
   src.addEventListener('input', () => { $('sampleTag').hidden = true; render(); });
+  $('clear').addEventListener('click', () => {
+    src.value = '';
+    $('sampleTag').hidden = true;
+    setStatus('');
+    render();
+    src.focus();
+  });
   titleEl.addEventListener('input', () => { store('title', titleEl.value); render(); });
   meEl.addEventListener('input', () => { store('me', meEl.value); render(); });
   yearEl.addEventListener('input', render);
