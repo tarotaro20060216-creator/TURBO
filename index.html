@@ -177,7 +177,7 @@
     <div class="actions">
       <button id="addAll" type="button">Googleカレンダーにまとめて登録</button>
       <button id="check" type="button" class="ghost">重なりだけ確認</button>
-      <button id="ics" type="button" class="ghost" hidden>.icsファイルをダウンロード</button>
+      <button id="ics" type="button" hidden>カレンダーにまとめて追加（.ics）</button>
     </div>
     <div class="confirm" id="confirm" hidden>
       <p id="confirmText"></p>
@@ -188,6 +188,11 @@
       </div>
     </div>
     <p class="status" id="status" role="status"></p>
+    <div class="howto" id="icsHint" hidden>
+      <h3>まとめて追加のしかた</h3>
+      <p>iPhone: ボタンを押してファイルを開き、「すべてを追加」を選ぶとiPhoneのカレンダーに入ります。追加先にGoogleのカレンダーを選べば、Googleカレンダーにも表示されます。</p>
+      <p>Android・パソコン: ダウンロードしたファイルを、パソコン版Googleカレンダーの「設定 → インポート」から読み込みます。</p>
+    </div>
     <p class="hint" id="fallbackHint" hidden>まとめて登録が使えない場合は、各予定の「Googleカレンダーで開く」から1件ずつ保存できます（この方法では色は保存画面で選んでください）。</p>
     <div class="howto">
       <h3>TimeTreeに表示したいとき</h3>
@@ -615,7 +620,9 @@
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'practice.ics';
+    document.body.append(a);
     a.click();
+    a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }
 
@@ -685,7 +692,10 @@
     $('addAll').hidden = true;
     $('check').hidden = true;
     $('ics').hidden = false;
+    $('icsHint').hidden = false;
     $('fallbackHint').hidden = false;
+    // 色の指定はGoogleカレンダーへの直接登録でしか使えない
+    document.querySelector('.colors').hidden = true;
   }
 })();
 </script>
