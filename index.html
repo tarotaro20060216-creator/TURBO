@@ -206,8 +206,9 @@
       <p class="hint"><strong>まとめて入れたいとき:</strong> iPhoneの「設定 → アプリ → カレンダー → カレンダーアカウント」でGoogleアカウントを追加しておき、下の「iPhoneのカレンダーにまとめて追加」で追加先にGoogleのカレンダーを選ぶと、Googleカレンダーに全部入ります。パソコンなら、そのファイルをGoogleカレンダーの「設定 → インポート」で読み込めます。</p>
     </div>
     <div class="way" id="wayIphone" hidden>
-      <h3>iPhoneのカレンダーを使う人</h3>
-      <p class="hint">Safariで開いてボタンを押すと、カレンダーへの追加画面が開きます。「すべてを追加」を押し、追加先のカレンダーを選ぶと、チェックした予定がまとめて入ります。</p>
+      <h3 id="wayIphoneTitle">iPhoneのカレンダーを使う人</h3>
+      <p class="hint" id="androidHint" hidden>Androidでは予定のファイルがダウンロードされます。通知やダウンロード一覧からファイルを開き、Galaxyのカレンダーなど対応しているアプリを選ぶと、まとめて追加できます。Googleカレンダーの人は、上の「Googleカレンダーを使う人」のボタンを使ってください。</p>
+      <p class="hint" id="iosHint">Safariで開いてボタンを押すと、カレンダーへの追加画面が開きます。「すべてを追加」を押し、追加先のカレンダーを選ぶと、チェックした予定がまとめて入ります。</p>
       <div class="safari" id="safariHint" hidden>
         <p><strong>このブラウザでは、iPhoneのカレンダーに追加できません。</strong>ChromeやLINEの中のブラウザは、カレンダーのファイルをカレンダーアプリに渡せないためです。</p>
         <p>下のボタンでこのページのリンクをコピーし、Safariのアドレス欄に貼り付けて開いてから、もう一度押してください（貼った日程も一緒に引き継がれます）。</p>
@@ -787,6 +788,14 @@
   const IS_IOS = /iPhone|iPad|iPod/.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   const IS_IOS_SAFARI = IS_IOS && /Safari\//.test(UA) &&
     !/CriOS|FxiOS|EdgiOS|OPiOS|GSA\/|Line\/|Instagram|FBAN|FBAV|YJApp|DuckDuckGo/.test(UA);
+
+  const IS_ANDROID = /Android/.test(UA);
+  if (IS_ANDROID) {
+    $('wayIphoneTitle').textContent = 'スマホのカレンダーアプリを使う人';
+    $('ics').textContent = 'カレンダーのファイルで追加（.ics）';
+    $('androidHint').hidden = false;
+    $('iosHint').hidden = true;
+  }
 
   // 日程を引き継いだリンク（Safariで開き直す用）
   function shareLink() {
