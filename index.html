@@ -177,7 +177,7 @@
     <div class="actions">
       <button id="addAll" type="button">Googleカレンダーにまとめて登録</button>
       <button id="check" type="button" class="ghost">重なりだけ確認</button>
-      <button id="ics" type="button" hidden>カレンダーにまとめて追加（.ics）</button>
+      <button id="ics" type="button" hidden>iPhoneのカレンダーにまとめて追加（.ics）</button>
     </div>
     <div class="confirm" id="confirm" hidden>
       <p id="confirmText"></p>
@@ -810,8 +810,10 @@
     document.head.append(gsi);
     $('ics').hidden = false;
     $('ics').classList.add('ghost');
-    $('ics').textContent = '.icsファイルで追加';
+    $('ics').textContent = 'iPhoneのカレンダーに追加（.ics）';
     $('googleHint').hidden = false;
+    // Googleカレンダーを使わない人向けに .ics の説明も出す
+    $('icsHint').hidden = false;
     updateButton();
   } else {
     // claude.ai の外（普通のブラウザ）では .ics を使う
