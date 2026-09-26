@@ -127,6 +127,9 @@
   .way { display: grid; gap: 8px; justify-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
   .way h3 { margin: 0; font-size: 15px; }
   .way .hint { margin: 0; }
+  .safari { display: grid; gap: 8px; justify-items: start; border: 1px solid var(--warn); background: var(--warn-soft); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+  .safari p { margin: 0; }
+  .copy-done { color: var(--done); font-weight: 700; }
   button.link { background: none; border: 0; padding: 0; color: var(--accent); font: 13px var(--body); text-decoration: underline; }
   button.ghost { background: transparent; color: var(--accent); }
   button:disabled { opacity: .45; cursor: default; }
@@ -204,7 +207,13 @@
     </div>
     <div class="way" id="wayIphone" hidden>
       <h3>iPhoneのカレンダーを使う人</h3>
-      <p class="hint">ボタンを押してファイルを開き、「すべてを追加」を選ぶと、チェックした予定がまとめて入ります。</p>
+      <p class="hint">Safariで開いてボタンを押すと、カレンダーへの追加画面が開きます。「すべてを追加」を押し、追加先のカレンダーを選ぶと、チェックした予定がまとめて入ります。</p>
+      <div class="safari" id="safariHint" hidden>
+        <p><strong>このブラウザでは、iPhoneのカレンダーに追加できません。</strong>ChromeやLINEの中のブラウザは、カレンダーのファイルをカレンダーアプリに渡せないためです。</p>
+        <p>下のボタンでこのページのリンクをコピーし、Safariのアドレス欄に貼り付けて開いてから、もう一度押してください（貼った日程も一緒に引き継がれます）。</p>
+        <button type="button" class="ghost small" id="copyLink">Safari用のリンクをコピー</button>
+        <p class="copy-done" id="copyDone" hidden>コピーしました。Safariを開いてアドレス欄に貼り付けてください。</p>
+      </div>
     </div>
     <p class="status" id="status" role="status"></p>
     <div class="howto" id="googleHint" hidden>
@@ -251,6 +260,14 @@
   function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
 
   src.value = SAMPLE;
+  // Safari用リンク（?t=日程）から開いたときは、その日程を入れる
+  let fromLink = false;
+  try {
+    const q = new URLSearchParams(location.search);
+    if (q.get('t')) { src.value = q.get('t'); fromLink = true; }
+    if (q.get('title')) store('title', q.get('title'));
+  } catch (e) {}
+  if (fromLink) $('sampleTag').hidden = true;
   titleEl.value = load('title') || titleEl.value;
   meEl.value = load('me') || '';
 
@@ -765,7 +782,33 @@
     return out.join('\r\n');
   }
 
+  // iPhoneでは Safari だけが .ics をカレンダーアプリに渡せる
+  const UA = navigator.userAgent;
+  const IS_IOS = /iPhone|iPad|iPod/.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const IS_IOS_SAFARI = IS_IOS && /Safari\//.test(UA) &&
+    !/CriOS|FxiOS|EdgiOS|OPiOS|GSA\/|Line\/|Instagram|FBAN|FBAV|YJApp|DuckDuckGo/.test(UA);
+
+  // 日程を引き継いだリンク（Safariで開き直す用）
+  function shareLink() {
+    const base = location.href.split('#')[0].split('?')[0];
+    const q = new URLSearchParams();
+    if (src.value.trim()) q.set('t', src.value);
+    if (titleEl.value.trim()) q.set('title', titleEl.value.trim());
+    const qs = q.toString();
+    return qs ? base + '?' + qs : base;
+  }
+
   function downloadIcs() {
+    if (IS_IOS && !IS_IOS_SAFARI) {
+      $('safariHint').hidden = false;
+      $('safariHint').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      return;
+    }
+    if (IS_IOS_SAFARI) {
+      // Safari は text/calendar の data: URL を開くと、そのまま「カレンダーに追加」画面を出す
+      location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsText());
+      return;
+    }
     const blob = new Blob([icsText()], { type: 'text/calendar' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -827,6 +870,18 @@
   $('forceAdd').addEventListener('click', () => register(targets()));
   $('cancelAdd').addEventListener('click', () => { hideConfirm(); setStatus(''); });
   $('ics').addEventListener('click', downloadIcs);
+  $('copyLink').addEventListener('click', async () => {
+    const link = shareLink();
+    try {
+      await navigator.clipboard.writeText(link);
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = link; document.body.append(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e2) {}
+      ta.remove();
+    }
+    $('copyDone').hidden = false;
+  });
   $('gNext').addEventListener('click', () => {
     const k = $('gNext').dataset.key;
     // 新しいタブが開いてから次の予定に進める
