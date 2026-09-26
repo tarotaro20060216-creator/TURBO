@@ -36,6 +36,8 @@
     --warn: #ffb65c; --warn-soft: #3a2a12; --bad: #ff8a80; --done: #81c784;
   }
   * { box-sizing: border-box; }
+  /* 公開ページ（claude.ai の外）でも hidden を確実に効かせる */
+  [hidden] { display: none !important; }
   body {
     margin: 0; background: var(--bg); color: var(--ink);
     font: 15px/1.7 var(--body);
@@ -116,10 +118,16 @@
   .empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; padding: 18px; color: var(--muted); }
 
   .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  button {
+  button, a.btn {
     font: 700 15px var(--body); border-radius: 10px; padding: 12px 18px; cursor: pointer;
     border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
   }
+  a.btn { display: inline-block; text-decoration: none; text-align: center; }
+  a.btn.off { opacity: .45; pointer-events: none; }
+  .way { display: grid; gap: 8px; justify-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .way h3 { margin: 0; font-size: 15px; }
+  .way .hint { margin: 0; }
+  button.link { background: none; border: 0; padding: 0; color: var(--accent); font: 13px var(--body); text-decoration: underline; }
   button.ghost { background: transparent; color: var(--accent); }
   button:disabled { opacity: .45; cursor: default; }
   .status { font-size: 14px; margin: 0; }
@@ -187,15 +195,20 @@
         <button id="cancelAdd" type="button" class="ghost">やめる</button>
       </div>
     </div>
+    <div class="way" id="wayGoogle" hidden>
+      <h3>Googleカレンダーを使う人</h3>
+      <a class="btn" id="gNext" target="_blank" rel="noopener">Googleカレンダーに追加</a>
+      <p class="hint">押すとGoogleカレンダーの保存画面が開くので、「保存」を押します。このページに戻ってもう一度押すと、次の予定に進みます。</p>
+      <button type="button" class="link" id="gReset" hidden>最初の予定からやり直す</button>
+    </div>
+    <div class="way" id="wayIphone" hidden>
+      <h3>iPhoneのカレンダーを使う人</h3>
+      <p class="hint">ボタンを押してファイルを開き、「すべてを追加」を選ぶと、チェックした予定がまとめて入ります。</p>
+    </div>
     <p class="status" id="status" role="status"></p>
     <div class="howto" id="googleHint" hidden>
       <h3>はじめて使うとき</h3>
       <p>ボタンを押すとGoogleのログイン画面が出ます。「このアプリはGoogleで確認されていません」と表示されたら、「詳細」→「（このページ）に移動」を選んでください。カレンダーの内容はこのページとGoogleの間でだけやり取りされ、どこにも保存されません。</p>
-    </div>
-    <div class="howto" id="icsHint" hidden>
-      <h3>まとめて追加のしかた</h3>
-      <p>iPhone: ボタンを押してファイルを開き、「すべてを追加」を選ぶとiPhoneのカレンダーに入ります。追加先にGoogleのカレンダーを選べば、Googleカレンダーにも表示されます。</p>
-      <p>Android・パソコン: ダウンロードしたファイルを、パソコン版Googleカレンダーの「設定 → インポート」から読み込みます。</p>
     </div>
     <p class="hint" id="fallbackHint" hidden>まとめて登録が使えない場合は、各予定の「Googleカレンダーで開く」から1件ずつ保存できます（この方法では色は保存画面で選んでください）。</p>
     <div class="howto">
@@ -373,6 +386,7 @@
       if (my) chips.append(el('span', 'chip warn', '自分: ' + my));
       const r = registered.get(k);
       if (r === 'done') chips.append(el('span', 'chip done', '登録済み'));
+      if (opened.has(k)) chips.append(el('span', 'chip done', 'Googleで開いた'));
       if (r && r !== 'done') chips.append(el('span', 'chip bad', r));
       const cs = conflicts.get(k) || [];
       if (cs.some((c) => c.same)) chips.append(el('span', 'chip bad', '同じ予定がすでにあります'));
@@ -404,7 +418,28 @@
     return events.filter((ev) => !unchecked.has(keyOf(ev)) && registered.get(keyOf(ev)) !== 'done');
   }
 
+  // 公開ページの「Googleカレンダーに追加」: 1件ずつ保存画面を開く
+  const opened = new Set();
+  function updateGoogleStep() {
+    const a = $('gNext');
+    const list = events.filter((ev) => !unchecked.has(keyOf(ev)));
+    const rest = list.filter((ev) => !opened.has(keyOf(ev)));
+    $('gReset').hidden = !opened.size;
+    if (!rest.length) {
+      a.removeAttribute('href');
+      a.classList.add('off');
+      a.textContent = list.length ? 'すべての予定を開きました' : '追加する予定がありません';
+      return;
+    }
+    const ev = rest[0];
+    a.classList.remove('off');
+    a.href = gcalUrl(ev, ScheduleParser.findMyStatus(ev, meEl.value.trim()));
+    a.dataset.key = keyOf(ev);
+    a.textContent = 'Googleカレンダーに追加（' + (list.length - rest.length + 1) + '/' + list.length + '件目・' + ev.month + '/' + ev.day + '）';
+  }
+
   function updateButton() {
+    updateGoogleStep();
     const n = targets().length;
     $('addAll').textContent = n ? 'Googleカレンダーに' + n + '件まとめて登録' : '登録する予定がありません';
     $('addAll').disabled = busy || !n || !cal;
@@ -791,6 +826,12 @@
   $('forceAdd').addEventListener('click', () => register(targets()));
   $('cancelAdd').addEventListener('click', () => { hideConfirm(); setStatus(''); });
   $('ics').addEventListener('click', downloadIcs);
+  $('gNext').addEventListener('click', () => {
+    const k = $('gNext').dataset.key;
+    // 新しいタブが開いてから次の予定に進める
+    if (k) setTimeout(() => { opened.add(k); render(); }, 300);
+  });
+  $('gReset').addEventListener('click', () => { opened.clear(); render(); });
 
   render();
 
@@ -808,20 +849,20 @@
     gsi.src = 'https://accounts.google.com/gsi/client';
     gsi.async = true;
     document.head.append(gsi);
+    $('wayIphone').insertBefore($('ics'), $('wayIphone').querySelector('.hint'));
+    $('wayIphone').hidden = false;
     $('ics').hidden = false;
     $('ics').classList.add('ghost');
-    $('ics').textContent = 'iPhoneのカレンダーに追加（.ics）';
     $('googleHint').hidden = false;
-    // Googleカレンダーを使わない人向けに .ics の説明も出す
-    $('icsHint').hidden = false;
     updateButton();
   } else {
     // claude.ai の外（普通のブラウザ）では .ics を使う
     $('addAll').hidden = true;
     $('check').hidden = true;
+    $('wayGoogle').hidden = false;
+    $('wayIphone').insertBefore($('ics'), $('wayIphone').querySelector('.hint'));
+    $('wayIphone').hidden = false;
     $('ics').hidden = false;
-    $('icsHint').hidden = false;
-    $('fallbackHint').hidden = false;
     // 色の指定はGoogleカレンダーへの直接登録でしか使えない
     document.querySelector('.colors').hidden = true;
   }
