@@ -155,9 +155,32 @@
       }
 
       if (cur) {
-        const pl = line.match(PLACE_LINE_RE);
-        if (pl && !cur.place) cur.place = pl[1].trim();
-        else cur.notes.push(line.replace(ARROW_RE, '') || line);
+        // 日付の下の行に時間が書かれている: 「⏰10時〜13時」「(時計)19時〜22時 (照明案用の動画撮影かも)」
+        if (cur.allDay && !cur.tentative) {
+          const tm = line.match(TIME_RE);
+          const t = tm && readTime(tm);
+          if (t) {
+            applyTime(cur, t);
+            const extra = line.slice(tm.index + tm[0].length).replace(/^[\s(（]+|[\s)）]+$/g, '');
+            if (extra) cur.notes.push(extra);
+            continue;
+          }
+        }
+        // 日付の下の行に場所が書かれている: 「📍未定」「@スタジオ」「場所: 渋谷」
+        const pl = line.match(PLACE_LINE_RE) || line.match(/^(?:[@＠]|📍)\s*(.+)$/u);
+        if (pl && !cur.place && !cur.placeTbd) {
+          const parts = pl[1].trim().split(/[、,，]\s*/);
+          const place = parts.shift().trim();
+          if (/^(未定|TBD|調整中)$/i.test(place)) cur.placeTbd = true;
+          else cur.place = place;
+          const extra = parts.join('、').trim();
+          if (extra) cur.notes.push(extra);
+          continue;
+        }
+        // 「内容:振り入れ」→ 予定名に入れる
+        const what = line.match(/^(?:内容|メニュー)\s*[:：]\s*(.+)$/);
+        if (what && !cur.label) { cur.label = what[1].trim(); continue; }
+        cur.notes.push(line.replace(ARROW_RE, '') || line);
       }
     }
     for (const ev of events) {

@@ -151,4 +151,31 @@ const s4 = parse('11/14-15 合宿', { today })[0];
 assert.strictEqual(s4.allDay, true);
 assert.deepStrictEqual(s4.lastDay, { year: 2026, month: 11, day: 15 });
 assert.strictEqual(s4.label, '合宿');
+const w = parse(`11月7日  
+(時計)10時〜13時
+📍未定
+内容:振り入れ
+
+11月17日　
+(時計)19時〜22時　(照明案用の動画撮影かも)
+📍未定
+内容: 立ち位置
+
+11月30日　
+⏰19:00〜21:00
+📍スパイラル2F
+内容:合わせる作業`, { today });
+assert.strictEqual(w.length, 3);
+assert.strictEqual(w[0].start, '2026-11-07T10:00:00+09:00');
+assert.strictEqual(w[0].end, '2026-11-07T13:00:00+09:00');
+assert.strictEqual(w[0].placeTbd, true);
+assert.strictEqual(w[0].label, '振り入れ');
+assert.deepStrictEqual(w[0].notes, []);
+assert.strictEqual(w[1].start, '2026-11-17T19:00:00+09:00');
+assert.strictEqual(w[1].end, '2026-11-17T22:00:00+09:00');
+assert.deepStrictEqual(w[1].notes, ['照明案用の動画撮影かも']);
+assert.strictEqual(w[1].label, '立ち位置');
+assert.strictEqual(w[1].maybeOff, false);
+assert.strictEqual(w[2].place, 'スパイラル2F');
+assert.strictEqual(w[2].start, '2026-11-30T19:00:00+09:00');
 console.log('ok');
