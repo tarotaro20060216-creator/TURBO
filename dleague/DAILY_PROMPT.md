@@ -18,6 +18,9 @@
    - `why`：なぜ今日この人なのか（2文程度）
    - `match`：直近の試合 `{round, date, work, us, usScore, them, themScore, note}`。得票率がわからなければ `usScore` と `themScore` は入れない
    - `nextRound`：次に行われるROUND `{block, round, at}`（at は `2026-11-09T18:20:00+09:00` の形）。前日の値がまだ先ならそのまま引き継ぎ、確認できなければ入れない。ページ上部のカウントダウン（「あと◯日」）に使う
+   - `predictions`：両BLOCKの次ROUNDの勝利予想 `[{block, round, date, matches:[{a, b, pick, prob, reason, winner?}]}]`。勝率は公式 TOTAL RANKING の「スコア」の差 d から `1/(1+exp(-d/25))` で出し、50〜85% に収める。終わったROUNDは `winner` を入れて「的中／ハズレ」を表示し、翌日に次のROUNDの予想へ入れ替える
+   - `predictionNote`：予想の出し方の一文
+   - `photo`：同じ人の過去の写真IDがあれば引き継ぐ（写真はページの「＋写真」から自分で追加）
    - `highlights`：実績や話題を3つ前後
    - `lookFor`：踊りの見どころ（1〜2文）
    - `trends`：今のDリーグの動きを3〜4件 `{title, body}`

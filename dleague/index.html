@@ -148,6 +148,57 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 .chip.team { background: var(--grad); border-color: transparent; }
 .why { padding: 16px 18px; margin: 0; }
 
+/* photo billboard (replaces the empty neon tube when a photo exists) */
+.board {
+  position: absolute; right: 18px; top: 18px; bottom: 112px; width: 44%; z-index: -1;
+  border-radius: 6px; overflow: hidden; background: #1b1040;
+  border: 2px solid rgba(240, 220, 255, .9);
+  box-shadow: 0 0 10px var(--magenta), 0 0 36px rgba(217,70,239,.55);
+}
+.board img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; display: block; }
+.board::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(12,8,38,.55)); }
+.hero.has-photo .hero-in > * { max-width: 100%; }
+.hero.has-photo .hero-in { min-height: 420px; }
+.hero.has-photo .name { text-shadow: 0 2px 18px rgba(8,4,30,.9), 0 0 28px rgba(185,120,255,.55); }
+.hero.has-photo .headline { text-shadow: 0 1px 12px rgba(8,4,30,.95); }
+.photo-btn {
+  position: absolute; z-index: 2; right: 26px; top: 26px;
+  font: inherit; font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  padding: 6px 10px; border-radius: 999px; cursor: pointer; color: #fff;
+  background: rgba(12, 8, 38, .7); border: 1px solid rgba(255,255,255,.35);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.photo-add {
+  position: absolute; right: 22px; top: 22px; width: 64px; bottom: 96px; z-index: 2;
+  font: inherit; cursor: pointer; color: #fff; background: transparent; border: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; padding-bottom: 10px;
+  font-size: 10px; font-weight: 700; letter-spacing: .04em;
+}
+.photo-add .plus { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 20px; line-height: 1; background: var(--grad); box-shadow: 0 0 12px var(--magenta); }
+.photo-msg { position: absolute; left: 18px; top: 18px; z-index: 2; font-size: 12px; padding: 4px 10px; border-radius: 8px; background: rgba(12,8,38,.8); }
+
+/* predictions */
+.pred-round { display: flex; flex-direction: column; gap: 8px; }
+.pred-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.pred-head .when { font-family: var(--latin); font-weight: 700; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.game { padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.game-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; }
+.game-row .tm { min-width: 0; font-size: 13px; font-weight: 700; line-height: 1.3; color: var(--muted); }
+.game-row .tm:last-child { text-align: right; }
+.game-row .tm.win { color: var(--fg); }
+.game-row .tm.win::before { content: "WIN "; font-family: var(--latin); font-weight: 800; font-size: 11px; letter-spacing: .08em; color: var(--green); text-shadow: 0 0 8px rgba(53,240,160,.6); }
+.game-row .tm:last-child.win::before { content: ""; }
+.game-row .tm:last-child.win::after { content: " WIN"; font-family: var(--latin); font-weight: 800; font-size: 11px; letter-spacing: .08em; color: var(--green); text-shadow: 0 0 8px rgba(53,240,160,.6); }
+.game-row .no { font-family: var(--latin); font-weight: 800; font-style: italic; font-size: 12px; color: var(--muted); }
+.pbar { position: relative; height: 6px; border-radius: 999px; background: rgba(255,255,255,.09); overflow: hidden; }
+.pbar span { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, #2ad9ff, #35f0a0); box-shadow: 0 0 10px rgba(53,240,160,.6); }
+.game-foot { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--muted); }
+.game-foot .p { font-family: var(--latin); font-weight: 800; font-size: 15px; color: var(--fg); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hit { font-family: var(--latin); font-weight: 800; font-size: 11px; letter-spacing: .08em; padding: 1px 8px; border-radius: 999px; }
+.hit.ok { background: rgba(53,240,160,.15); color: var(--green); }
+.hit.ng { background: rgba(255,95,168,.15); color: var(--pink); }
+.pred-note { margin: 0; font-size: 11.5px; color: var(--muted); }
+
 /* section */
 .sec { display: flex; flex-direction: column; gap: 12px; scroll-margin-top: 84px; }
 .sec-h { display: flex; align-items: baseline; gap: 10px; margin: 0; }
@@ -300,10 +351,12 @@ details.setup code { font-size: 12px; }
   <p class="fine">D.LEAGUE公式とは関係のない、個人のまとめページです。</p>
 </div>
 
+<input type="file" id="photoFile" accept="image/*" hidden>
+
 <nav class="dock" aria-label="セクション移動">
   <div class="dock-in">
     <button type="button" class="i1" data-go="top"><svg viewBox="0 0 28 28"><path d="M5 13 L14 5 L23 13 V23 H5 Z"/><path d="M11 23 V17 H17 V23"/></svg>TODAY</button>
-    <button type="button" class="i2" data-go="sec-round"><svg viewBox="0 0 28 28"><path d="M5 22 L12 4 L23 22"/><path d="M8.5 14 L19 14"/><path d="M5 22 H23"/></svg>ROUND</button>
+    <button type="button" class="i2" data-go="sec-pred sec-round"><svg viewBox="0 0 28 28"><path d="M5 22 L12 4 L23 22"/><path d="M8.5 14 L19 14"/><path d="M5 22 H23"/></svg>予想</button>
     <button type="button" class="i3" data-go="sec-trend"><svg viewBox="0 0 28 28"><path d="M7 25 V4"/><path d="M7 5 C11 3 14 8 18 6 C20 5 22 5 23 6 V15 C21 14 19 14 17 15 C13 17 11 12 7 14"/></svg>TREND</button>
     <button type="button" class="i4" data-go="sec-ig"><svg viewBox="0 0 28 28"><rect x="5" y="5" width="18" height="18" rx="5"/><circle cx="14" cy="14" r="4.2"/><circle cx="19.2" cy="8.8" r=".8" fill="currentColor"/></svg>INSTA</button>
     <button type="button" class="i5" data-go="sec-arch"><svg viewBox="0 0 28 28"><path d="M4 9 L9 15 L14 6 L19 15 L24 9 L22 22 H6 Z"/><path d="M6 22 L22 22"/></svg>ARCHIVE</button>
@@ -317,6 +370,7 @@ details.setup code { font-size: 12px; }
   const cd = document.getElementById("countdown");
   const WD = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
   let picks = [];
+  let db = null, assets = null, photoMsg = "", currentDate = null;
 
   const jstParts = (d) => {
     const s = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(d);
@@ -370,6 +424,8 @@ details.setup code { font-size: 12px; }
     const p = pickFromHash();
     const t = todayJST();
     const m = p.match || null;
+    const photoId = typeof p.photo === "string" && /^[0-9a-f]{32}$/.test(p.photo) ? p.photo : null;
+    currentDate = p.date;
     const usPct = m ? Number(m.usScore) : NaN;
     const themPct = m ? Number(m.themScore) : NaN;
     const hasPct = m && m.usScore != null && m.themScore != null && Number.isFinite(usPct) && Number.isFinite(themPct);
@@ -389,10 +445,16 @@ details.setup code { font-size: 12px; }
     app.innerHTML = `
       ${stale ? `<div class="glass notice">今日（${esc(fmtDate(t))}）の更新はまだです。最新のピックを表示しています。</div>` : ""}
 
-      <section class="hero rise" aria-label="今日の1人">
+      <section class="hero rise${photoId ? " has-photo" : ""}" aria-label="今日の1人">
         <div class="hero-bg"></div>
+        ${photoId ? `
+        <div class="tube b" style="right:calc(44% + 30px)"></div>
+        <div class="board"><img src="/_blob/${esc(photoId)}" alt="${esc(p.name)}の写真"></div>
+        ${assets ? `<button type="button" class="photo-btn" data-photo>写真を変える</button>` : ""}` : `
         <div class="tube a"></div><div class="tube b"></div>
-        <div class="vert" aria-hidden="true">PICK${p.dayNo ? " " + esc(String(p.dayNo).padStart(3, "0")) : ""}</div>
+        ${assets ? `<button type="button" class="photo-add" data-photo><span class="plus">＋</span>写真</button>`
+                 : `<div class="vert" aria-hidden="true">PICK${p.dayNo ? " " + esc(String(p.dayNo).padStart(3, "0")) : ""}</div>`}`}
+        ${photoMsg ? `<div class="photo-msg">${esc(photoMsg)}</div>` : ""}
         <div class="hero-in">
           <div class="eyebrow">TODAY'S PICK${p.block ? `<b>${esc(p.block)}</b>` : ""}</div>
           <h1 class="name">${esc(p.name)}</h1>
@@ -414,6 +476,27 @@ details.setup code { font-size: 12px; }
           <div class="bar" role="img" aria-label="得票率 ${esc(pctTxt(usPct))}% 対 ${esc(pctTxt(themPct))}%"><span style="width:${Math.max(0, Math.min(100, usPct))}%"></span></div>` : ""}
           ${m.note ? `<p class="note">${esc(m.note)}</p>` : ""}
         </div>
+      </section>` : ""}
+
+      ${arr(p.predictions).length ? `
+      <section class="sec" id="sec-pred" aria-label="次ラウンドの勝利予想">
+        <h2 class="sec-h"><span class="en">PREDICTION</span><span class="ja">次ROUNDの勝利予想</span></h2>
+        ${arr(p.predictions).map(r => `
+        <div class="pred-round">
+          <div class="pred-head"><span class="eyebrow">${esc(r.block || "")}<b>${esc(r.round || "")}</b></span><span class="when">${esc(fmtDate(r.date))}</span></div>
+          ${arr(r.matches).map((g, i) => {
+            const prob = Math.max(50, Math.min(99, Number(g.prob) || 50));
+            const aWin = g.pick === g.a;
+            const hit = g.winner ? (g.winner === g.pick ? `<span class="hit ok">的中</span>` : `<span class="hit ng">ハズレ</span>`) : "";
+            const left = aWin ? 0 : 100 - prob;
+            return `
+          <div class="glass game">
+            <div class="game-row"><span class="tm${aWin ? " win" : ""}">${esc(g.a)}</span><span class="no">${String(i + 1).padStart(2, "0")}</span><span class="tm${aWin ? "" : " win"}">${esc(g.b)}</span></div>
+            <div class="pbar" role="img" aria-label="${esc(g.pick)} の勝率予想 ${prob}%"><span style="left:${left}%;width:${prob}%"></span></div>
+            <div class="game-foot"><span>${esc(g.reason || "")}</span><span>${hit} <span class="p">${prob}%</span></span></div>
+          </div>`; }).join("")}
+        </div>`).join("")}
+        ${p.predictionNote ? `<p class="pred-note">${esc(p.predictionNote)}</p>` : ""}
       </section>` : ""}
 
       ${arr(p.highlights).length ? `
@@ -453,14 +536,55 @@ details.setup code { font-size: 12px; }
         <div class="glass sources">${arr(p.sources).map(s => { const u = safeUrl(s.url); return u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s.label || u)}</a>` : ""; }).join("")}</div>
       </section>` : ""}
     `;
+    app.querySelectorAll(".board img").forEach(i => i.addEventListener("error", () => { i.parentNode.hidden = true; }));
+    app.querySelectorAll("[data-photo]").forEach(b => b.addEventListener("click", () => document.getElementById("photoFile").click()));
   }
+
+  // shrink a phone photo to a light JPEG before storing it
+  function shrink(file) {
+    return new Promise((resolve) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const max = 1200, s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+        const c = document.createElement("canvas");
+        c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob(b => resolve(b || file), "image/jpeg", 0.86);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+      img.src = url;
+    });
+  }
+
+  document.getElementById("photoFile").addEventListener("change", async (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!file || !assets || !db || !currentDate) return;
+    const date = currentDate;
+    const old = picks.find(x => x.date === date)?.photo;
+    photoMsg = "写真をアップロード中…"; render();
+    try {
+      const blob = await shrink(file);
+      const type = blob.type === "image/png" ? "image/png" : "image/jpeg";
+      const res = await assets.upload(blob, { type });
+      await db.doc("picks/" + date).update({ photo: res.id });
+      photoMsg = "";
+      if (old && old !== res.id) assets.delete(old).catch(() => {});
+    } catch (err) {
+      photoMsg = "写真を保存できませんでした。JPEGかPNGの画像でもう一度試してください。";
+      setTimeout(() => { photoMsg = ""; render(); }, 5000);
+    }
+    render();
+  });
 
   window.addEventListener("hashchange", () => { render(); window.scrollTo({ top: 0 }); });
 
   document.querySelectorAll(".dock button").forEach(b => b.addEventListener("click", () => {
-    const id = b.dataset.go;
-    if (id === "top") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
-    const el = document.getElementById(id);
+    const ids = b.dataset.go.split(" ");
+    if (ids[0] === "top") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    const el = ids.map(id => document.getElementById(id)).find(Boolean);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }));
 
@@ -474,7 +598,8 @@ details.setup code { font-size: 12px; }
 
   (async () => {
     const timer = setTimeout(() => showState("読み込みに時間がかかっています", "通信状況を確認して、ページを開き直してください。"), 10000);
-    const db = window.claude ? await window.claude.use("db") : null;
+    db = window.claude ? await window.claude.use("db") : null;
+    window.claude?.use("assets").then(a => { assets = a; if (a && picks.length) render(); }).catch(() => {});
     if (!db) { clearTimeout(timer); showState("データを読み込めません", "claude.ai にログインした状態でこのページを開いてください。"); return; }
     db.collection("picks").orderBy("date", "desc").limit(120).onSnapshot((snap) => {
       clearTimeout(timer);
