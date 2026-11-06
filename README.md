@@ -26,3 +26,14 @@ Google の審査を受けるまでは、ログイン時に「このアプリはG
 - `parser.js` — テキストを予定に変換する処理
 - `config.js` — 公開ページ用の設定（Google のクライアントID）
 - `test/parser.test.js` — `node test/parser.test.js` で実行
+
+---
+
+# 今日のDリーガー（`dleague/`）
+
+Dリーグの注目ダンサーを毎日1人、スマホで見やすくまとめるページです。
+
+- 公開ページ: https://claude.ai/artifact/9pwdt19aCLG8ekq8UemYBA
+- `dleague/index.html` — ページ本体（データは Artifact のデータベース `picks` に1日1件）
+- `dleague/DAILY_PROMPT.md` — 毎朝5:17（日本時間）の自動更新で使う手順
+- Instagram を1日で初めて開いた時に表示する設定は、ページ下の「Instagramを開いた時に表示させる設定」に書いてあります
