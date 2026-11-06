@@ -2,210 +2,277 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;700&family=Barlow+Condensed:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,600;0,700;0,800;1,800&family=Noto+Sans+JP:wght@500;700;900&display=swap">
 <style>
-/* Layout: one phone-width column under a stage spotlight — date stamp, giant name, the match's vote split as a bar, then trends and the archive strip. */
+/* Layout: a night street lit by neon. Full-bleed violet haze, glass panels floating over it,
+   countdown + today's dancer up top, a neon icon dock fixed at the bottom. Single dark look by choice. */
 :root {
-  --bg: #15101c;        /* plum-ink stage floor */
-  --surface: #211a2b;
-  --line: #3a3046;
-  --fg: #f4efe8;
-  --muted: #a99fb6;
-  --accent: #ffb238;    /* amber spotlight */
-  --accent-ink: #1a1206;
-  --lose: #5d5168;
-  --glow: rgba(255, 178, 56, .22);
-  --display: "Dela Gothic One", "Hiragino Kaku Gothic StdN", "Yu Gothic", sans-serif;
-  --body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
-  --num: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --night: #0c0826;         /* sky */
+  --night-2: #160e3a;
+  --glass: rgba(14, 9, 38, .72);
+  --glass-hi: rgba(32, 22, 78, .55);
+  --edge: rgba(190, 170, 255, .16);
+  --fg: #f5f2ff;
+  --muted: #a69cd0;
+  --violet: #8b5cf6;
+  --magenta: #d946ef;
+  --blue: #5b6cff;
+  --cyan: #3fe3ff;
+  --green: #35f0a0;
+  --pink: #ff5fa8;
+  --gold: #ffd166;
+  --grad: linear-gradient(135deg, #b84ff0 0%, #6a5cff 100%);
+  --latin: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  --jp: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --dock-h: 68px;
   color-scheme: dark;
 }
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    --bg: #f6f2ee; --surface: #ffffff; --line: #e1d8e3; --fg: #1d1626; --muted: #6a5f75;
-    --accent: #c46d00; --accent-ink: #ffffff; --lose: #cfc4d4; --glow: rgba(255, 160, 40, .28);
-    color-scheme: light;
-  }
+* { box-sizing: border-box; }
+html { background: var(--night); }
+body {
+  background: var(--night);
+  color: var(--fg);
+  font-family: var(--jp);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100%;
 }
-:root[data-theme="light"] {
-  --bg: #f6f2ee; --surface: #ffffff; --line: #e1d8e3; --fg: #1d1626; --muted: #6a5f75;
-  --accent: #c46d00; --accent-ink: #ffffff; --lose: #cfc4d4; --glow: rgba(255, 160, 40, .28);
-  color-scheme: light;
+/* haze + street floor behind everything */
+.sky {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(60% 40% at 78% 8%, rgba(217, 70, 239, .38), transparent 70%),
+    radial-gradient(55% 45% at 10% 30%, rgba(91, 108, 255, .32), transparent 70%),
+    radial-gradient(70% 40% at 50% 100%, rgba(139, 92, 246, .30), transparent 70%),
+    linear-gradient(180deg, var(--night-2) 0%, var(--night) 55%, #07051a 100%);
+}
+.sky::after {
+  content: ""; position: absolute; left: -30%; right: -30%; bottom: 0; height: 42%;
+  background:
+    repeating-linear-gradient(90deg, rgba(160, 130, 255, .12) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(0deg, rgba(160, 130, 255, .10) 0 1px, transparent 1px 44px);
+  transform: perspective(380px) rotateX(58deg);
+  transform-origin: bottom;
+  mask-image: linear-gradient(to top, #000 10%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 90%);
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30;
+  background: var(--night-2);
 }
 
-* { box-sizing: border-box; }
-body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--body);
-  font-size: 15px;
-  line-height: 1.75;
-  -webkit-font-smoothing: antialiased;
-}
 .wrap {
-  max-width: 560px;
-  margin: 0 auto;
-  padding-block: 20px 56px;
+  position: relative; z-index: 1;
+  max-width: 560px; margin: 0 auto;
+  padding-block: 0 calc(var(--dock-h) + 36px + env(safe-area-inset-bottom, 0px));
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+  display: flex; flex-direction: column; gap: 22px;
 }
 a { color: inherit; }
-a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 6px; }
 
-/* masthead */
-.mast { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.brand { font-family: var(--num); font-weight: 700; letter-spacing: .18em; font-size: 13px; text-transform: uppercase; }
-.brand b { color: var(--accent); }
-.stamp { font-family: var(--num); font-weight: 500; letter-spacing: .08em; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+/* header */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  padding: 14px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px));
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: rgba(22, 14, 58, .82);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--edge);
+}
+.mark { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.mark svg { width: 34px; height: 34px; filter: drop-shadow(0 0 6px rgba(63, 227, 255, .55)); }
+.mark .w { font-family: var(--latin); font-weight: 800; font-size: 26px; letter-spacing: .01em; line-height: 1; }
+.mark .w i { font-style: normal; color: var(--cyan); }
+.mark small { display: block; white-space: nowrap; font-family: var(--latin); font-weight: 600; font-size: 10px; letter-spacing: .22em; color: var(--muted); margin-top: 3px; }
+.today {
+  font-family: var(--latin); font-weight: 700; font-size: 13px; letter-spacing: .08em;
+  padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(63, 227, 255, .5);
+  color: var(--fg); background: rgba(63, 227, 255, .08);
+  box-shadow: 0 0 14px rgba(63, 227, 255, .25) inset;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+
+/* glass */
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--edge);
+  border-radius: 16px;
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
+.eyebrow { font-family: var(--latin); font-weight: 700; font-size: 15px; letter-spacing: .04em; line-height: 1.1; }
+.eyebrow b { font-weight: 800; font-size: 1.25em; margin-left: .35em; }
+
+/* countdown */
+.count { padding: 18px 18px 16px; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: end; position: relative; overflow: hidden; }
+.count::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: var(--grad); box-shadow: 0 0 16px var(--magenta); }
+.count .what { grid-column: 1 / -1; font-family: var(--latin); font-weight: 800; font-size: 26px; line-height: 1.15; }
+.count .what span { font-family: var(--jp); font-weight: 900; font-size: .85em; margin-left: .3em; }
+.count .big { font-family: var(--jp); font-weight: 900; font-size: clamp(48px, 15vw, 68px); line-height: 1.05; letter-spacing: -.02em; text-shadow: 0 0 24px rgba(217, 70, 239, .45); }
+.count .big .n { font-family: var(--latin); font-weight: 800; font-size: 1.15em; font-variant-numeric: tabular-nums; }
+.count .when { grid-column: 1 / -1; font-family: var(--latin); font-weight: 700; font-size: 18px; letter-spacing: .03em; font-variant-numeric: tabular-nums; }
 
 /* hero */
-.hero {
-  position: relative;
-  padding-block: 28px 8px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 14px;
-  isolation: isolate;
+.hero { position: relative; overflow: hidden; border-radius: 20px; border: 1px solid var(--edge); isolation: isolate; }
+.hero-bg {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(80% 60% at 85% 15%, rgba(217, 70, 239, .55), transparent 65%),
+    radial-gradient(70% 60% at 0% 100%, rgba(91, 108, 255, .55), transparent 70%),
+    linear-gradient(160deg, #2a1666 0%, #120a35 60%, #0a0624 100%);
 }
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: -40px -20% auto;
-  height: 320px;
-  background: radial-gradient(ellipse 55% 70% at 50% 0%, var(--glow), transparent 70%);
-  z-index: -1;
-  pointer-events: none;
+.tube { position: absolute; z-index: -1; border-radius: 4px; }
+.tube.a { right: 22px; top: 22px; width: 64px; bottom: 96px; border: 2px solid rgba(240, 220, 255, .9); box-shadow: 0 0 10px var(--magenta), 0 0 32px rgba(217,70,239,.6), inset 0 0 18px rgba(217,70,239,.35); }
+.tube.b { left: 18px; right: 110px; top: 30px; height: 2px; background: #e9e3ff; box-shadow: 0 0 8px var(--cyan), 0 0 22px rgba(63,227,255,.7); }
+.vert {
+  position: absolute; right: 22px; top: 22px; width: 64px; bottom: 96px; z-index: -1;
+  writing-mode: vertical-rl; display: flex; align-items: center; justify-content: center;
+  font-family: var(--latin); font-weight: 800; font-size: 22px; letter-spacing: .3em; color: #f6eaff;
+  text-shadow: 0 0 10px var(--magenta);
 }
-.vlabel {
-  writing-mode: vertical-rl;
-  font-family: var(--display);
-  font-size: 13px;
-  letter-spacing: .3em;
-  color: var(--accent);
-  border-left: 1px solid var(--line);
-  padding-left: 8px;
-  align-self: start;
-}
-.hero-main { min-width: 0; display: flex; flex-direction: column; gap: 12px; }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip {
-  font-family: var(--num); font-weight: 700; font-size: 13px; letter-spacing: .06em;
-  padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg);
-}
-.chip.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.hero-in { padding: 64px 18px 20px; display: flex; flex-direction: column; gap: 10px; min-height: 340px; justify-content: flex-end; }
+.hero-in > * { max-width: calc(100% - 90px); }
+.hero-in .eyebrow { color: var(--cyan); text-shadow: 0 0 10px rgba(63,227,255,.5); }
 .name {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(56px, 19vw, 104px);
-  line-height: .95;
-  letter-spacing: -.01em;
-  margin: 0;
-  overflow-wrap: anywhere;
-  text-wrap: balance;
+  margin: 0; font-family: var(--latin); font-weight: 800; font-style: italic;
+  font-size: clamp(58px, 18vw, 96px); line-height: .92; letter-spacing: -.015em;
+  overflow-wrap: anywhere; text-wrap: balance;
+  text-shadow: 0 0 28px rgba(185, 120, 255, .55);
 }
-.headline { font-family: var(--display); font-size: 19px; line-height: 1.5; margin: 0; text-wrap: balance; }
-.why { margin: 0; color: var(--fg); max-width: 34em; }
+.headline { margin: 0; font-weight: 900; font-size: 19px; line-height: 1.45; text-wrap: balance; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; max-width: none !important; }
+.chip { font-family: var(--latin); font-weight: 700; font-size: 12px; letter-spacing: .08em; padding: 3px 11px; border-radius: 999px; border: 1px solid var(--edge); background: rgba(255,255,255,.05); }
+.chip.team { background: var(--grad); border-color: transparent; }
+.why { padding: 16px 18px; margin: 0; }
 
-/* section heads */
-.sec { display: flex; flex-direction: column; gap: 12px; }
-.sec h2 {
-  margin: 0; font-family: var(--num); font-weight: 700; font-size: 13px;
-  letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
-  display: flex; align-items: center; gap: 10px;
-}
-.sec h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+/* section */
+.sec { display: flex; flex-direction: column; gap: 12px; scroll-margin-top: 84px; }
+.sec-h { display: flex; align-items: baseline; gap: 10px; margin: 0; }
+.sec-h .en { font-family: var(--latin); font-weight: 800; font-size: 24px; letter-spacing: .02em; line-height: 1; }
+.sec-h .ja { font-size: 12px; color: var(--muted); font-weight: 700; }
+.sec-h::after { content: ""; flex: 1; height: 1px; align-self: center; background: linear-gradient(90deg, var(--edge), transparent); }
 
-/* vote split bar */
-.match { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-.match-top { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
-.match-top strong { color: var(--fg); font-family: var(--display); font-weight: 400; font-size: 15px; }
-.teams { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 8px; }
+/* match */
+.match { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.match-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+.match-top .work { font-size: 13px; color: var(--muted); }
+.match-top .work b { color: var(--fg); font-weight: 900; }
+.teams { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: end; }
 .teams .t { min-width: 0; font-weight: 700; font-size: 13px; line-height: 1.35; }
 .teams .t:last-child { text-align: right; color: var(--muted); }
-.teams .vs { font-family: var(--num); color: var(--muted); font-size: 12px; letter-spacing: .1em; }
-.pct { display: flex; justify-content: space-between; font-family: var(--num); font-weight: 700; font-variant-numeric: tabular-nums; }
-.pct .w { font-size: 34px; line-height: 1; color: var(--accent); }
-.pct .l { font-size: 22px; line-height: 1.4; color: var(--muted); }
-.bar { display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--lose); }
-.bar span { display: block; background: var(--accent); transition: width .8s cubic-bezier(.2,.8,.2,1); }
-.match-note { margin: 0; font-size: 13px; color: var(--muted); }
+.teams .vs { font-family: var(--latin); font-weight: 800; font-style: italic; color: var(--muted); }
+.pct { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--latin); font-weight: 800; font-variant-numeric: tabular-nums; }
+.pct .w { font-size: 40px; line-height: 1; text-shadow: 0 0 18px rgba(217,70,239,.5); }
+.pct .l { font-size: 22px; color: var(--muted); }
+.bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,.09); overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--grad); box-shadow: 0 0 14px var(--magenta); border-radius: inherit; transition: width .9s cubic-bezier(.2,.8,.2,1); }
+.note { margin: 0; font-size: 13px; color: var(--muted); }
 
 /* highlights */
-.hl { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-.hl li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; padding-block: 10px; border-bottom: 1px solid var(--line); }
+.hl { list-style: none; margin: 0; padding: 4px 16px; }
+.hl li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; padding-block: 12px; border-bottom: 1px solid var(--edge); }
 .hl li:last-child { border-bottom: 0; }
-.hl li::before { content: "◆"; color: var(--accent); font-size: 11px; line-height: 2.4; }
-.look { margin: 0; padding: 14px 16px; border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 12px 12px 0; }
+.hl li::before { content: ""; width: 8px; height: 8px; margin-top: 9px; border-radius: 2px; transform: rotate(45deg); background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+.look { margin: 0; padding: 14px 16px; }
+.look b { font-family: var(--latin); font-weight: 800; letter-spacing: .1em; color: var(--pink); margin-right: .6em; }
 
 /* trends */
-.trends { display: flex; flex-direction: column; gap: 14px; }
-.trend { display: grid; grid-template-columns: 2.2em 1fr; gap: 10px; }
-.trend .n { font-family: var(--num); font-weight: 700; color: var(--accent); font-size: 20px; line-height: 1.4; font-variant-numeric: tabular-nums; }
-.trend h3 { margin: 0; font-size: 15px; line-height: 1.5; }
-.trend p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+.trends { display: flex; flex-direction: column; gap: 10px; }
+.trend { padding: 14px 16px; display: grid; grid-template-columns: 34px 1fr; gap: 10px; }
+.trend .n { font-family: var(--latin); font-weight: 800; font-style: italic; font-size: 24px; line-height: 1.1; color: var(--cyan); text-shadow: 0 0 10px rgba(63,227,255,.5); font-variant-numeric: tabular-nums; }
+.trend h3 { margin: 0; font-size: 15px; line-height: 1.5; font-weight: 900; }
+.trend p { margin: 3px 0 0; color: var(--muted); font-size: 13.5px; }
 
 /* instagram */
-.ig { display: flex; flex-direction: column; gap: 8px; }
 .btn {
-  display: flex; justify-content: space-between; align-items: center; gap: 12px;
-  text-decoration: none; padding: 13px 16px; border-radius: 12px;
-  border: 1px solid var(--line); background: var(--surface); font-weight: 700;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; text-decoration: none;
+  padding: 15px 18px; border-radius: 14px; font-weight: 700;
+  background: var(--glass); border: 1px solid var(--edge);
 }
-.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-.btn small { font-family: var(--num); font-weight: 500; letter-spacing: .06em; opacity: .8; }
-.tags { display: flex; flex-wrap: wrap; gap: 6px 12px; font-family: var(--num); font-weight: 500; font-size: 15px; color: var(--muted); }
+.btn.primary { background: var(--grad); border-color: rgba(255,255,255,.25); box-shadow: 0 6px 24px rgba(139,92,246,.45); }
+.btn .go { font-family: var(--latin); font-weight: 800; letter-spacing: .1em; font-size: 13px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px 14px; font-family: var(--latin); font-weight: 700; font-size: 15px; color: var(--muted); }
 
 /* archive */
-.arch { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
-.arch a {
-  flex: 0 0 auto; scroll-snap-align: start; text-decoration: none;
-  border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; min-width: 112px;
-  display: flex; flex-direction: column; gap: 2px;
-}
-.arch a[aria-current="true"] { border-color: var(--accent); background: var(--surface); }
-.arch .d { font-family: var(--num); font-size: 12px; color: var(--muted); letter-spacing: .06em; font-variant-numeric: tabular-nums; }
-.arch .nm { font-family: var(--display); font-size: 15px; line-height: 1.3; }
+.arch { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
+.arch a { flex: 0 0 auto; scroll-snap-align: start; text-decoration: none; min-width: 120px; padding: 10px 14px; display: flex; flex-direction: column; gap: 2px; }
+.arch a[aria-current="true"] { border-color: var(--magenta); box-shadow: 0 0 16px rgba(217,70,239,.35); }
+.arch .d { font-family: var(--latin); font-weight: 700; font-size: 12px; color: var(--muted); letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.arch .nm { font-family: var(--latin); font-weight: 800; font-style: italic; font-size: 20px; line-height: 1.1; }
 
-.sources { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+.sources { padding: 12px 16px; font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
 .sources a { overflow-wrap: anywhere; }
 
-/* states */
-.state { background: var(--surface); border: 1px dashed var(--line); border-radius: 14px; padding: 20px 16px; display: flex; flex-direction: column; gap: 6px; }
-.state h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 20px; }
+.state { padding: 22px 18px; display: flex; flex-direction: column; gap: 6px; }
+.state h2 { margin: 0; font-weight: 900; font-size: 19px; }
 .state p { margin: 0; color: var(--muted); }
-.notice { font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+.notice { padding: 10px 14px; font-size: 13px; color: var(--muted); }
 
-/* setup guide */
-details.setup { border: 1px solid var(--line); border-radius: 14px; padding: 4px 16px; background: var(--surface); }
-details.setup summary { cursor: pointer; font-weight: 700; padding-block: 10px; }
-details.setup ol { margin: 0 0 12px; padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; }
+/* setup */
+details.setup { padding: 4px 16px; }
+details.setup summary { cursor: pointer; font-weight: 700; padding-block: 12px; }
 details.setup h3 { font-size: 14px; margin: 12px 0 6px; }
+details.setup ol { margin: 0 0 12px; padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; color: var(--fg); }
+details.setup code { font-size: 12px; }
 .urlbox { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
-.urlbox code { flex: 1; min-width: 0; overflow-wrap: anywhere; font-size: 12px; background: var(--bg); padding: 8px; border-radius: 8px; user-select: all; }
-.urlbox button { font: inherit; font-weight: 700; font-size: 13px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--accent); background: transparent; color: var(--fg); cursor: pointer; }
+.urlbox code { flex: 1; min-width: 0; overflow-wrap: anywhere; background: rgba(0,0,0,.35); padding: 8px; border-radius: 8px; user-select: all; }
+.urlbox button { font: inherit; font-weight: 700; font-size: 13px; padding: 8px 12px; border-radius: 10px; border: 0; background: var(--grad); color: #fff; cursor: pointer; }
+.fine { font-size: 11px; color: var(--muted); text-align: center; margin: 0; }
 
-.fade-in { animation: rise .5s ease-out both; }
-@keyframes rise { from { transform: translateY(8px); } to { transform: none; } }
-@media (prefers-reduced-motion: reduce) { .fade-in { animation: none; } .bar span { transition: none; } }
+/* dock */
+.dock {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 25;
+  padding: 8px max(10px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px));
+  background: rgba(10, 6, 30, .9); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--edge);
+}
+.dock-in { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); }
+.dock button {
+  font: inherit; background: none; border: 0; color: var(--fg); cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .02em;
+}
+.dock svg { width: 28px; height: 28px; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.dock .i1 svg { stroke: var(--violet); filter: drop-shadow(0 0 5px var(--violet)); }
+.dock .i2 svg { stroke: var(--cyan); filter: drop-shadow(0 0 5px var(--cyan)); }
+.dock .i3 svg { stroke: var(--green); filter: drop-shadow(0 0 5px var(--green)); }
+.dock .i4 svg { stroke: var(--pink); filter: drop-shadow(0 0 5px var(--pink)); }
+.dock .i5 svg { stroke: var(--gold); filter: drop-shadow(0 0 5px var(--gold)); }
+
+.rise { animation: rise .6s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes rise { from { transform: translateY(10px); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .rise { animation: none; } .bar span { transition: none; } }
 </style>
 
+<div class="sky" aria-hidden="true"></div>
+
 <div class="wrap">
-  <header class="mast">
-    <div class="brand"><b>D.</b>LEAGUE DAILY PICK</div>
-    <div class="stamp" id="stamp"></div>
+  <header class="top">
+    <a class="mark" href="#" aria-label="今日のDリーガー トップ">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <defs><linearGradient id="mk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe3ff"/><stop offset="1" stop-color="#b84ff0"/></linearGradient></defs>
+        <path d="M6 30 L20 6 L34 30" fill="none" stroke="url(#mk)" stroke-width="3.2" stroke-linejoin="round"/>
+        <path d="M12 30 L20 16 L28 30" fill="none" stroke="#f5f2ff" stroke-width="2.2" stroke-linejoin="round"/>
+        <circle cx="20" cy="34" r="2.2" fill="#3fe3ff"/>
+      </svg>
+      <span><span class="w">D<i>-</i>PICK</span><small>DAILY DANCER · UNOFFICIAL</small></span>
+    </a>
+    <span class="today" id="stamp"></span>
   </header>
 
-  <main id="app" class="wrap-inner" style="display:flex;flex-direction:column;gap:28px">
-    <div class="state" id="loading">
+  <section class="glass count" id="countdown" hidden aria-live="polite"></section>
+
+  <main id="app" style="display:flex;flex-direction:column;gap:22px">
+    <div class="glass state">
       <h2>今日の1人を呼び出し中…</h2>
       <p>毎朝5時ごろ、InstagramとWebのDリーグ情報から1人を選んでここに載せます。</p>
     </div>
   </main>
 
-  <details class="setup" id="setup">
+  <details class="glass setup" id="setup">
     <summary>Instagramを開いた時に表示させる設定</summary>
     <h3>このページのURL</h3>
     <div class="urlbox">
@@ -229,33 +296,50 @@ details.setup h3 { font-size: 14px; margin: 12px 0 6px; }
       <li>アクション「URLを開く」：上のURL</li>
     </ol>
   </details>
+
+  <p class="fine">D.LEAGUE公式とは関係のない、個人のまとめページです。</p>
 </div>
+
+<nav class="dock" aria-label="セクション移動">
+  <div class="dock-in">
+    <button type="button" class="i1" data-go="top"><svg viewBox="0 0 28 28"><path d="M5 13 L14 5 L23 13 V23 H5 Z"/><path d="M11 23 V17 H17 V23"/></svg>TODAY</button>
+    <button type="button" class="i2" data-go="sec-round"><svg viewBox="0 0 28 28"><path d="M5 22 L12 4 L23 22"/><path d="M8.5 14 L19 14"/><path d="M5 22 H23"/></svg>ROUND</button>
+    <button type="button" class="i3" data-go="sec-trend"><svg viewBox="0 0 28 28"><path d="M7 25 V4"/><path d="M7 5 C11 3 14 8 18 6 C20 5 22 5 23 6 V15 C21 14 19 14 17 15 C13 17 11 12 7 14"/></svg>TREND</button>
+    <button type="button" class="i4" data-go="sec-ig"><svg viewBox="0 0 28 28"><rect x="5" y="5" width="18" height="18" rx="5"/><circle cx="14" cy="14" r="4.2"/><circle cx="19.2" cy="8.8" r=".8" fill="currentColor"/></svg>INSTA</button>
+    <button type="button" class="i5" data-go="sec-arch"><svg viewBox="0 0 28 28"><path d="M4 9 L9 15 L14 6 L19 15 L24 9 L22 22 H6 Z"/><path d="M6 22 L22 22"/></svg>ARCHIVE</button>
+  </div>
+</nav>
 
 <script>
 (() => {
   const app = document.getElementById("app");
   const stamp = document.getElementById("stamp");
+  const cd = document.getElementById("countdown");
   const WD = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
   let picks = [];
 
-  const todayJST = () => {
-    const p = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
-    return p; // YYYY-MM-DD
+  const jstParts = (d) => {
+    const s = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(d);
+    const g = (t) => s.find(x => x.type === t)?.value;
+    return { date: `${g("year")}-${g("month")}-${g("day")}`, time: `${g("hour")}:${g("minute")}` };
   };
+  const todayJST = () => jstParts(new Date()).date;
   const fmtDate = (iso) => {
     if (!iso) return "";
     const [y, m, d] = iso.split("-").map(Number);
     const wd = WD[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
     return `${y}.${String(m).padStart(2,"0")}.${String(d).padStart(2,"0")} ${wd}`;
   };
+  const dayDiff = (a, b) => { const p = (s) => { const [y,m,d] = s.split("-").map(Number); return Date.UTC(y, m-1, d); }; return Math.round((p(b) - p(a)) / 864e5); };
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
   const safeUrl = (u) => /^https:\/\//.test(String(u || "")) ? String(u) : null;
   const arr = (v) => Array.isArray(v) ? v : [];
+  const pctTxt = (n) => n.toFixed(2).replace(/\.?0+$/, "");
 
   stamp.textContent = fmtDate(todayJST());
 
   function showState(title, body) {
-    app.innerHTML = `<div class="state"><h2>${esc(title)}</h2><p>${esc(body)}</p></div>`;
+    app.innerHTML = `<div class="glass state"><h2>${esc(title)}</h2><p>${esc(body)}</p></div>`;
   }
 
   function pickFromHash() {
@@ -265,101 +349,128 @@ details.setup h3 { font-size: 14px; margin: 12px 0 6px; }
     return picks.find(p => p.date <= t) || picks[0];
   }
 
+  function renderCountdown() {
+    const nr = picks.find(p => p.nextRound && p.nextRound.at)?.nextRound;
+    const at = nr ? new Date(nr.at) : null;
+    if (!nr || isNaN(at) || at.getTime() + 3 * 3600e3 < Date.now()) { cd.hidden = true; return; }
+    const { date, time } = jstParts(at);
+    const days = dayDiff(todayJST(), date);
+    const big = days > 0 ? `あと<span class="n">${days}</span>日` : (at > new Date() ? "今日開催" : "開催中");
+    cd.innerHTML = `
+      <div class="eyebrow">${esc(nr.block || "")}</div>
+      <div class="what">${esc(nr.round || "NEXT ROUND")}<span>まで</span></div>
+      <div class="big">${big}</div>
+      <div class="when">${esc(fmtDate(date))} ${esc(time)}~</div>`;
+    cd.hidden = false;
+  }
+
   function render() {
-    if (!picks.length) {
-      showState("まだピックアップがありません", "最初の1人は毎朝5時ごろの更新で届きます。");
-      return;
-    }
+    renderCountdown();
+    if (!picks.length) { showState("まだピックアップがありません", "最初の1人は毎朝5時ごろの更新で届きます。"); return; }
     const p = pickFromHash();
     const t = todayJST();
     const m = p.match || null;
     const usPct = m ? Number(m.usScore) : NaN;
     const themPct = m ? Number(m.themScore) : NaN;
-    const hasPct = Number.isFinite(usPct) && Number.isFinite(themPct);
+    const hasPct = m && m.usScore != null && m.themScore != null && Number.isFinite(usPct) && Number.isFinite(themPct);
     const stale = p.date !== t && !location.hash;
 
-    const chips = [p.team, p.block, p.role, p.genre].filter(Boolean)
-      .map((c, i) => `<span class="chip${i === 0 ? " on" : ""}">${esc(c)}</span>`).join("");
+    const chips = [
+      p.team && `<span class="chip team">${esc(p.team)}</span>`,
+      p.role && `<span class="chip">${esc(p.role)}</span>`,
+      p.genre && `<span class="chip">${esc(p.genre)}</span>`,
+    ].filter(Boolean).join("");
 
     const links = arr(p.links).map((l, i) => {
       const u = safeUrl(l.url); if (!u) return "";
-      return `<a class="btn${i === 0 ? " primary" : ""}" href="${esc(u)}" target="_blank" rel="noopener"><span>${esc(l.label)}</span><small>OPEN ↗</small></a>`;
+      return `<a class="btn${i === 0 ? " primary" : ""}" href="${esc(u)}" target="_blank" rel="noopener"><span>${esc(l.label)}</span><span class="go">OPEN ↗</span></a>`;
     }).join("");
 
-    const html = `
-      ${stale ? `<div class="notice">今日（${esc(fmtDate(t))}）の更新はまだです。最新のピックを表示しています。</div>` : ""}
-      <section class="hero fade-in" aria-label="今日の1人">
-        <div class="vlabel">本日の一人${p.dayNo ? `　№${esc(p.dayNo)}` : ""}</div>
-        <div class="hero-main">
-          <div class="chips">${chips}</div>
+    app.innerHTML = `
+      ${stale ? `<div class="glass notice">今日（${esc(fmtDate(t))}）の更新はまだです。最新のピックを表示しています。</div>` : ""}
+
+      <section class="hero rise" aria-label="今日の1人">
+        <div class="hero-bg"></div>
+        <div class="tube a"></div><div class="tube b"></div>
+        <div class="vert" aria-hidden="true">PICK${p.dayNo ? " " + esc(String(p.dayNo).padStart(3, "0")) : ""}</div>
+        <div class="hero-in">
+          <div class="eyebrow">TODAY'S PICK${p.block ? `<b>${esc(p.block)}</b>` : ""}</div>
           <h1 class="name">${esc(p.name)}</h1>
           ${p.headline ? `<p class="headline">${esc(p.headline)}</p>` : ""}
-          ${p.why ? `<p class="why">${esc(p.why)}</p>` : ""}
+          <div class="chips">${chips}</div>
         </div>
       </section>
 
+      ${p.why ? `<p class="glass why">${esc(p.why)}</p>` : ""}
+
       ${m ? `
-      <section class="sec" aria-label="直近の試合">
-        <h2>Latest Round</h2>
-        <div class="match">
-          <div class="match-top"><span>${esc(m.round || "")}${m.date ? "　" + esc(fmtDate(m.date)) : ""}</span>${m.work ? `<span>作品 <strong>「${esc(m.work)}」</strong></span>` : ""}</div>
+      <section class="sec" id="sec-round" aria-label="直近の試合">
+        <h2 class="sec-h"><span class="en">${esc(m.round || "LATEST ROUND")}</span><span class="ja">前回ROUNDの結果</span></h2>
+        <div class="glass match">
+          <div class="match-top"><span class="eyebrow" style="font-size:14px">${esc(fmtDate(m.date))}</span>${m.work ? `<span class="work">作品 <b>「${esc(m.work)}」</b></span>` : ""}</div>
           <div class="teams"><div class="t">${esc(m.us)}</div><div class="vs">VS</div><div class="t">${esc(m.them)}</div></div>
           ${hasPct ? `
-          <div class="pct"><span class="w">${usPct.toFixed(2).replace(/\.?0+$/,"")}%</span><span class="l">${themPct.toFixed(2).replace(/\.?0+$/,"")}%</span></div>
-          <div class="bar" role="img" aria-label="得票率 ${esc(usPct)}% 対 ${esc(themPct)}%"><span style="width:${Math.max(0, Math.min(100, usPct))}%"></span></div>` : ""}
-          ${m.note ? `<p class="match-note">${esc(m.note)}</p>` : ""}
+          <div class="pct"><span class="w">${pctTxt(usPct)}%</span><span class="l">${pctTxt(themPct)}%</span></div>
+          <div class="bar" role="img" aria-label="得票率 ${esc(pctTxt(usPct))}% 対 ${esc(pctTxt(themPct))}%"><span style="width:${Math.max(0, Math.min(100, usPct))}%"></span></div>` : ""}
+          ${m.note ? `<p class="note">${esc(m.note)}</p>` : ""}
         </div>
       </section>` : ""}
 
       ${arr(p.highlights).length ? `
       <section class="sec" aria-label="ここがすごい">
-        <h2>Why Now</h2>
-        <ul class="hl">${arr(p.highlights).map(h => `<li><span>${esc(h)}</span></li>`).join("")}</ul>
-        ${p.lookFor ? `<p class="look"><b>見どころ</b>　${esc(p.lookFor)}</p>` : ""}
+        <h2 class="sec-h"><span class="en">WHY NOW</span><span class="ja">ここがすごい</span></h2>
+        <ul class="glass hl">${arr(p.highlights).map(h => `<li><span>${esc(h)}</span></li>`).join("")}</ul>
+        ${p.lookFor ? `<p class="glass look"><b>LOOK</b>${esc(p.lookFor)}</p>` : ""}
       </section>` : ""}
 
       ${arr(p.trends).length ? `
-      <section class="sec" aria-label="今のDリーグ">
-        <h2>D.League Trend</h2>
+      <section class="sec" id="sec-trend" aria-label="今のDリーグ">
+        <h2 class="sec-h"><span class="en">TREND</span><span class="ja">今のDリーグ</span></h2>
         <div class="trends">${arr(p.trends).map((tr, i) => `
-          <div class="trend"><div class="n">${String(i + 1).padStart(2, "0")}</div>
+          <div class="glass trend"><div class="n">${String(i + 1).padStart(2, "0")}</div>
           <div><h3>${esc(tr.title)}</h3>${tr.body ? `<p>${esc(tr.body)}</p>` : ""}</div></div>`).join("")}
         </div>
       </section>` : ""}
 
       ${links || arr(p.tags).length ? `
-      <section class="sec ig" aria-label="Instagramで見る">
-        <h2>On Instagram</h2>
+      <section class="sec" id="sec-ig" aria-label="Instagramで見る">
+        <h2 class="sec-h"><span class="en">INSTAGRAM</span><span class="ja">投稿をチェック</span></h2>
         ${links}
         ${arr(p.tags).length ? `<div class="tags">${arr(p.tags).map(x => `<span>${esc(x)}</span>`).join("")}</div>` : ""}
       </section>` : ""}
 
-      ${picks.length > 1 ? `
-      <section class="sec" aria-label="これまでの1人">
-        <h2>Archive</h2>
+      <section class="sec" id="sec-arch" aria-label="これまでの1人">
+        <h2 class="sec-h"><span class="en">ARCHIVE</span><span class="ja">これまでの1人</span></h2>
         <nav class="arch">${picks.map(q => `
-          <a href="#d-${esc(q.date)}" aria-current="${q.date === p.date}">
+          <a class="glass" href="#d-${esc(q.date)}" aria-current="${q.date === p.date}">
             <span class="d">${esc(fmtDate(q.date))}</span><span class="nm">${esc(q.name)}</span>
           </a>`).join("")}</nav>
-      </section>` : ""}
+      </section>
 
       ${arr(p.sources).length ? `
       <section class="sec" aria-label="出典">
-        <h2>Sources</h2>
-        <div class="sources">${arr(p.sources).map(s => { const u = safeUrl(s.url); return u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s.label || u)}</a>` : ""; }).join("")}</div>
+        <h2 class="sec-h"><span class="en">SOURCES</span><span class="ja">出典</span></h2>
+        <div class="glass sources">${arr(p.sources).map(s => { const u = safeUrl(s.url); return u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s.label || u)}</a>` : ""; }).join("")}</div>
       </section>` : ""}
     `;
-    app.innerHTML = html;
   }
 
   window.addEventListener("hashchange", () => { render(); window.scrollTo({ top: 0 }); });
 
-  // copy page URL
+  document.querySelectorAll(".dock button").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.go;
+    if (id === "top") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
+
   document.getElementById("copyUrl").addEventListener("click", async (e) => {
     const code = document.getElementById("pageUrl");
     try { await navigator.clipboard.writeText(code.textContent); e.target.textContent = "コピーしました"; }
     catch { const r = document.createRange(); r.selectNodeContents(code); const s = getSelection(); s.removeAllRanges(); s.addRange(r); e.target.textContent = "選択しました"; }
   });
+
+  setInterval(renderCountdown, 60000);
 
   (async () => {
     const timer = setTimeout(() => showState("読み込みに時間がかかっています", "通信状況を確認して、ページを開き直してください。"), 10000);

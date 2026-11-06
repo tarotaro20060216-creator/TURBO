@@ -17,6 +17,7 @@
    - `headline`：25字前後のかっこいいキャッチコピー
    - `why`：なぜ今日この人なのか（2文程度）
    - `match`：直近の試合 `{round, date, work, us, usScore, them, themScore, note}`。得票率がわからなければ `usScore` と `themScore` は入れない
+   - `nextRound`：次に行われるROUND `{block, round, at}`（at は `2026-11-09T18:20:00+09:00` の形）。前日の値がまだ先ならそのまま引き継ぎ、確認できなければ入れない。ページ上部のカウントダウン（「あと◯日」）に使う
    - `highlights`：実績や話題を3つ前後
    - `lookFor`：踊りの見どころ（1〜2文）
    - `trends`：今のDリーグの動きを3〜4件 `{title, body}`
