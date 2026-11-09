@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>空き時間で日程調整</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="みんなの空き時間を入力して、全員がそろう時間を見つける日程調整ページ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+  :root {
+    --bg: #f3f5f4; --surface: #ffffff; --ink: #17201d; --muted: #5d6b66; --line: #d9e0dd;
+    --accent: #0c7c6f; --accent-ink: #ffffff; --accent-soft: #dcefeb;
+    --warn: #b25e00; --warn-soft: #fff1d6; --bad: #b3261e; --done: #2f7d32;
+    --free: #7fc4b8; --track: #eef2f0;
+    --display: "Dela Gothic One", "Hiragino Kaku Gothic StdN", "Yu Gothic", sans-serif;
+    --body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #121816; --surface: #1b2320; --ink: #e7eeeb; --muted: #9aaaa4;
+      --line: #2e3a36; --accent: #3cc2ae; --accent-ink: #0b1412; --accent-soft: #173a34;
+      --warn: #ffb65c; --warn-soft: #3a2a12; --bad: #ff8a80; --done: #81c784;
+      --free: #2b6f64; --track: #232d2a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #121816; --surface: #1b2320; --ink: #e7eeeb; --muted: #9aaaa4;
+    --line: #2e3a36; --accent: #3cc2ae; --accent-ink: #0b1412; --accent-soft: #173a34;
+    --warn: #ffb65c; --warn-soft: #3a2a12; --bad: #ff8a80; --done: #81c784;
+    --free: #2b6f64; --track: #232d2a;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.7 var(--body); }
+  .wrap { max-width: 720px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 24px; }
+  header h1 { font: 400 clamp(24px, 6vw, 34px)/1.25 var(--display); margin: 0; text-wrap: balance; letter-spacing: .02em; }
+  header p { margin: 8px 0 0; color: var(--muted); max-width: 60ch; }
+  h2 { margin: 0; font-size: 17px; font-weight: 700; }
+  .section { display: grid; gap: 12px; }
+  .hint { font-size: 13px; color: var(--muted); margin: 0; }
+  label { display: grid; gap: 4px; font-size: 12px; color: var(--muted); letter-spacing: .04em; }
+  input[type="text"], select {
+    width: 100%; font: 15px/1.6 var(--body); color: var(--ink); background: var(--surface);
+    border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+  }
+  select { padding-right: 8px; }
+  input:focus, select:focus, button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 480px) { .fields { grid-template-columns: 1fr 1fr; } .fields .wide { grid-column: 1 / -1; } }
+
+  button, a.btn {
+    font: 700 15px var(--body); border-radius: 10px; padding: 12px 18px; cursor: pointer;
+    border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
+    text-decoration: none; display: inline-block; text-align: center;
+  }
+  button.ghost, a.btn.ghost { background: transparent; color: var(--accent); }
+  button.small, a.btn.small { font-size: 13px; padding: 6px 12px; border-radius: 8px; }
+  button.link { background: none; border: 0; padding: 0; color: var(--accent); font: 13px var(--body); text-decoration: underline; }
+  button.danger { background: transparent; border-color: var(--bad); color: var(--bad); }
+  button:disabled { opacity: .45; cursor: default; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .line-btn { background: #06c755; border-color: #06c755; color: #fff; }
+
+  .notice { border: 1px solid var(--warn); background: var(--warn-soft); border-radius: 10px; padding: 10px 14px; font-size: 13px; }
+  .notice p { margin: 0; }
+  .status { font-size: 14px; margin: 0; min-height: 1.7em; }
+  .status.bad { color: var(--bad); font-weight: 700; }
+  .status.ok { color: var(--done); font-weight: 700; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 10px; }
+
+  /* 候補日カレンダー */
+  .cal { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 8px; }
+  .cal-head { display: flex; align-items: center; justify-content: space-between; }
+  .cal-head b { font-size: 15px; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+  .cal-grid .wd { font-size: 11px; color: var(--muted); }
+  .cal-grid .wd.sun, .cal-day.sun { color: var(--bad); }
+  .cal-grid .wd.sat, .cal-day.sat { color: #2f6db3; }
+  .cal-day {
+    font: 500 14px var(--mono); padding: 8px 0; border-radius: 8px; border: 1px solid transparent;
+    background: transparent; color: var(--ink);
+  }
+  .cal-day.past { opacity: .35; }
+  .cal-day.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 13px; background: var(--accent-soft); color: var(--ink); border-radius: 999px; padding: 2px 10px; }
+
+  /* 入力 */
+  .day { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; gap: 10px; }
+  .day-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .day-head b { font-size: 16px; }
+  .day-head .sum { font-size: 13px; color: var(--muted); }
+  .day-head .sum.none { color: var(--bad); }
+  .range { display: grid; grid-template-columns: 1fr auto 1fr auto; gap: 6px; align-items: center; }
+  .range select { padding: 8px; font-family: var(--mono); font-size: 15px; }
+  .range .del { background: transparent; border: 0; color: var(--muted); font-size: 20px; padding: 4px 8px; line-height: 1; }
+  .day-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  /* 時間の帯 */
+  .track { position: relative; height: 18px; background: var(--track); border-radius: 5px; overflow: hidden; }
+  .track .bar { position: absolute; top: 0; bottom: 0; background: var(--free); }
+  .track .bar.all { background: var(--accent); }
+  .axis { position: relative; height: 16px; font: 500 10px/16px var(--mono); color: var(--muted); }
+  .axis span { position: absolute; transform: translateX(-50%); }
+  .axis span:first-child { transform: none; }
+  .axis span:last-child { transform: translateX(-100%); }
+
+  /* 結果 */
+  .cand { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; cursor: pointer; }
+  .cand input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--accent); }
+  .cand .when { font-weight: 700; font-size: 16px; }
+  .cand .when .len { font-weight: 400; font-size: 13px; color: var(--muted); margin-left: 6px; }
+  .cand .who { grid-column: 2; font-size: 13px; color: var(--muted); }
+  .tag { font-size: 12px; font-weight: 700; border-radius: 6px; padding: 1px 8px; margin-left: 6px; vertical-align: 2px; }
+  .tag.all { background: var(--accent); color: var(--accent-ink); }
+  .tag.one { background: var(--warn-soft); color: var(--warn); border: 1px solid var(--warn); }
+  .cand:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; padding: 16px; color: var(--muted); margin: 0; }
+
+  details.date { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  details.date summary { cursor: pointer; padding: 12px 14px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; list-style: none; }
+  details.date summary::-webkit-details-marker { display: none; }
+  details.date summary b::before { content: "▸ "; color: var(--muted); }
+  details.date[open] summary b::before { content: "▾ "; }
+  details.date summary span { font-size: 13px; color: var(--muted); }
+  .gantt { display: grid; grid-template-columns: minmax(3.5em, 6.5em) 1fr; gap: 6px 10px; align-items: center; padding: 0 14px 14px; }
+  .gantt .nm { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gantt .nm.all { font-weight: 700; color: var(--accent); }
+  .gantt .nm button { font-size: 13px; }
+
+  .members { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .members button { font: 500 13px var(--body); padding: 4px 12px; border-radius: 999px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+  .members button.me { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+  textarea.out { width: 100%; min-height: 140px; font: 14px/1.6 var(--mono); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; resize: vertical; }
+  .sticky { position: sticky; bottom: 0; background: linear-gradient(transparent, var(--bg) 30%); padding-top: 18px; padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+  footer { font-size: 13px; color: var(--muted); }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <h1 id="pageTitle">空き時間で日程調整</h1>
+    <p id="lead">○△×ではなく「何時から何時まで空いているか」をみんなに入れてもらって、全員がそろう時間を探します。</p>
+  </header>
+
+  <div class="notice" id="demoNote" hidden>
+    <p><b>お試しモード：</b>まだ保存先（Firebase）が設定されていないので、回答はこの端末にだけ保存されます。ほかの人とは共有できません。設定方法は README を見てください。</p>
+  </div>
+  <p class="status" id="status" role="status"></p>
+
+  <!-- 1. 調整を作る -->
+  <section class="section" id="createView" hidden>
+    <h2>調整を作る</h2>
+    <label class="wide">タイトル
+      <input type="text" id="cTitle" maxlength="40" placeholder="例: 11月の練習">
+    </label>
+    <div class="section">
+      <div class="cal">
+        <div class="cal-head">
+          <button type="button" class="ghost small" id="calPrev" aria-label="前の月">‹</button>
+          <b id="calMonth"></b>
+          <button type="button" class="ghost small" id="calNext" aria-label="次の月">›</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <p class="hint">候補日をタップして選んでください（もう一度タップで外せます）。</p>
+      <div class="chips" id="picked"></div>
+    </div>
+    <div class="fields">
+      <label>何時から
+        <select id="cStart"></select>
+      </label>
+      <label>何時まで
+        <select id="cEnd"></select>
+      </label>
+      <label class="wide">最低でも続けて
+        <select id="cMin">
+          <option value="60">1時間</option>
+          <option value="90">1時間半</option>
+          <option value="120" selected>2時間</option>
+          <option value="180">3時間</option>
+          <option value="240">4時間</option>
+        </select>
+      </label>
+    </div>
+    <p class="hint">「何時から・何時まで」は、みんなが入力できる時間の範囲です。候補には「最低でも続けて」以上空いている時間だけが出ます。</p>
+    <div class="actions">
+      <button type="button" id="create">作成してURLをもらう</button>
+    </div>
+  </section>
+
+  <!-- 2. 調整のページ -->
+  <section class="section" id="eventView" hidden>
+    <div class="card" id="shareBox">
+      <b>このページのURLを、グループに送ってください</b>
+      <div class="actions">
+        <a class="btn line-btn small" id="lineShare" target="_blank" rel="noopener">LINEで送る</a>
+        <button type="button" class="ghost small" id="copyUrl">URLをコピー</button>
+        <span class="hint" id="copyDone" hidden>コピーしました</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="members" id="members"></div>
+      <div class="actions">
+        <button type="button" id="openForm">自分の空き時間を入力する</button>
+      </div>
+    </div>
+
+    <!-- 結果 -->
+    <div class="section" id="results">
+      <h2 id="candHead">候補の時間</h2>
+      <p class="hint" id="candHint"></p>
+      <div class="section" id="cands"></div>
+      <div class="section" id="outBox" hidden>
+        <h2>決まった日程を送る</h2>
+        <p class="hint">チェックした時間を、練習日程の形にしています。LINEに貼るか、そのままカレンダー登録ページで開けます。</p>
+        <textarea class="out" id="outText" readonly></textarea>
+        <div class="actions">
+          <button type="button" class="small" id="copyOut">テキストをコピー</button>
+          <a class="btn ghost small" id="toCalendar" target="_blank" rel="noopener">カレンダー登録ページで開く</a>
+          <span class="hint" id="copyOutDone" hidden>コピーしました</span>
+        </div>
+      </div>
+      <h2>みんなの空き時間</h2>
+      <div class="section" id="dates"></div>
+    </div>
+  </section>
+
+  <!-- 3. 空き時間を入力 -->
+  <section class="section" id="formView" hidden>
+    <h2 id="formHead">空き時間を入力</h2>
+    <label>名前
+      <input type="text" id="fName" maxlength="20" placeholder="例: なな" autocomplete="nickname">
+    </label>
+    <p class="hint">空いている時間帯を入れてください。何も入れない日は「空きなし」になります。1日に何個でも追加できます。</p>
+    <div class="section" id="days"></div>
+    <div class="sticky">
+      <div class="actions">
+        <button type="button" id="save">この内容で回答する</button>
+        <button type="button" class="ghost" id="cancelForm">やめる</button>
+        <button type="button" class="danger small" id="deleteAnswer" hidden>この回答を消す</button>
+      </div>
+    </div>
+  </section>
+
+  <footer id="foot"><a href="index.html">練習日程かんたん登録</a> ・ <a href="chousei.html">新しい日程調整を作る</a></footer>
+</main>
+
+<script src="config.js"></script>
+<script src="availability.js"></script>
+<script>
+(function () {
+  const A = window.Availability;
+  const $ = (id) => document.getElementById(id);
+  const CFG = (window.PRACTICE_CONFIG && window.PRACTICE_CONFIG.firebase) || null;
+  const USE_FIREBASE = !!(CFG && CFG.apiKey && CFG.projectId);
+
+  function store(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function el(tag, cls, text) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function setStatus(msg, kind) {
+    $('status').textContent = msg || '';
+    $('status').className = 'status' + (kind ? ' ' + kind : '');
+  }
+  function z(n) { return String(n).padStart(2, '0'); }
+  function isoOf(d) { return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()); }
+  function randomId() {
+    const b = new Uint8Array(12);
+    crypto.getRandomValues(b);
+    return Array.from(b, (x) => 'abcdefghijklmnopqrstuvwxyz0123456789'[x % 36]).join('');
+  }
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return; } catch (e) {}
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.append(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e2) {}
+    ta.remove();
+  }
+
+  // ---------- 保存先 ----------
+  // Firebase（Firestore）が設定されていればそれを使い、なければこの端末の localStorage に保存する。
+  function localBackend() {
+    const KEY = 'chousei:data';
+    const listeners = new Set();
+    function read() { try { return JSON.parse(load(KEY) || '{}'); } catch (e) { return {}; } }
+    function write(d) { store(KEY, JSON.stringify(d)); listeners.forEach((f) => f()); }
+    window.addEventListener('storage', (e) => { if (e.key === KEY) listeners.forEach((f) => f()); });
+    function watch(fn) { listeners.add(fn); fn(); return () => listeners.delete(fn); }
+    return {
+      async createEvent(data) {
+        const d = read(); const id = randomId();
+        d[id] = { event: data, answers: {} }; write(d); return id;
+      },
+      watchEvent(id, cb) { return watch(() => { const d = read()[id]; cb(d ? d.event : null); }); },
+      watchAnswers(id, cb) {
+        return watch(() => {
+          const d = read()[id];
+          cb(d ? Object.entries(d.answers).map(([k, v]) => Object.assign({ id: k }, v)) : []);
+        });
+      },
+      async saveAnswer(eid, aid, data) {
+        const d = read(); if (!d[eid]) throw new Error('not-found');
+        const id = aid || randomId(); d[eid].answers[id] = data; write(d); return id;
+      },
+      async deleteAnswer(eid, aid) { const d = read(); if (d[eid]) { delete d[eid].answers[aid]; write(d); } },
+    };
+  }
+
+  async function firebaseBackend(cfg) {
+    const V = '10.12.2';
+    const appMod = await import('https://www.gstatic.com/firebasejs/' + V + '/firebase-app.js');
+    const fs = await import('https://www.gstatic.com/firebasejs/' + V + '/firebase-firestore.js');
+    const db = fs.getFirestore(appMod.initializeApp(cfg));
+    return {
+      async createEvent(data) {
+        const ref = await fs.addDoc(fs.collection(db, 'events'), Object.assign({}, data, { createdAt: fs.serverTimestamp() }));
+        return ref.id;
+      },
+      watchEvent(id, cb, onErr) {
+        return fs.onSnapshot(fs.doc(db, 'events', id), (s) => cb(s.exists() ? s.data() : null), onErr);
+      },
+      watchAnswers(id, cb, onErr) {
+        return fs.onSnapshot(fs.collection(db, 'events', id, 'answers'),
+          (qs) => cb(qs.docs.map((d) => Object.assign({ id: d.id }, d.data()))), onErr);
+      },
+      async saveAnswer(eid, aid, data) {
+        const body = Object.assign({}, data, { updatedAt: fs.serverTimestamp() });
+        if (aid) { await fs.setDoc(fs.doc(db, 'events', eid, 'answers', aid), body); return aid; }
+        const ref = await fs.addDoc(fs.collection(db, 'events', eid, 'answers'), body);
+        return ref.id;
+      },
+      async deleteAnswer(eid, aid) { await fs.deleteDoc(fs.doc(db, 'events', eid, 'answers', aid)); },
+    };
+  }
+
+  function explain(err) {
+    const code = (err && (err.code || err.message)) || '';
+    if (/permission/i.test(code)) return '保存先に書き込めませんでした（Firestore のルールを確認してください）。';
+    if (/unavailable|offline|network/i.test(code)) return '通信できませんでした。電波のよいところでもう一度試してください。';
+    return 'うまくいきませんでした（' + code + '）。';
+  }
+
+  // ---------- 共通の部品 ----------
+  function timeOptions(sel, from, to, value) {
+    sel.textContent = '';
+    for (let t = from; t <= to; t += A.STEP) {
+      const o = el('option', null, A.fmt(t));
+      o.value = t;
+      if (t === value) o.selected = true;
+      sel.append(o);
+    }
+  }
+
+  // 時間の帯（空いている時間を色で）
+  function track(ranges, lo, hi, cls) {
+    const t = el('div', 'track');
+    for (const r of ranges) {
+      const b = el('div', 'bar' + (cls ? ' ' + cls : ''));
+      b.style.left = ((r[0] - lo) / (hi - lo) * 100) + '%';
+      b.style.width = ((r[1] - r[0]) / (hi - lo) * 100) + '%';
+      t.append(b);
+    }
+    return t;
+  }
+  function axis(lo, hi) {
+    const a = el('div', 'axis');
+    const span = hi - lo;
+    const step = span > 12 * 60 ? 180 : span > 6 * 60 ? 120 : 60;
+    const marks = [lo];
+    for (let t = Math.ceil((lo + 1) / step) * step; t < hi; t += step) if (t - lo >= step / 2 && hi - t >= step / 2) marks.push(t);
+    marks.push(hi);
+    for (const t of marks) {
+      const s = el('span', null, String(t / 60 % 1 ? A.fmt(t) : t / 60));
+      s.style.left = ((t - lo) / span * 100) + '%';
+      a.append(s);
+    }
+    return a;
+  }
+  function rangesLabel(ranges) {
+    return ranges.length ? ranges.map((r) => A.fmt(r[0]) + '〜' + A.fmt(r[1])).join('、') : '空きなし';
+  }
+  function hoursLabel(min) {
+    const h = Math.floor(min / 60), m = min % 60;
+    return (h ? h + '時間' : '') + (m ? m + '分' : '');
+  }
+
+  // ---------- 1. 調整を作る ----------
+  const picked = new Set();
+  let calMonth;
+  function renderCal() {
+    const y = calMonth.getFullYear(), m = calMonth.getMonth();
+    $('calMonth').textContent = y + '年' + (m + 1) + '月';
+    const grid = $('calGrid');
+    grid.textContent = '';
+    ['日', '月', '火', '水', '木', '金', '土'].forEach((w, i) =>
+      grid.append(el('div', 'wd' + (i === 0 ? ' sun' : i === 6 ? ' sat' : ''), w)));
+    const first = new Date(y, m, 1).getDay();
+    for (let i = 0; i < first; i++) grid.append(el('div'));
+    const today = isoOf(new Date());
+    const days = new Date(y, m + 1, 0).getDate();
+    for (let d = 1; d <= days; d++) {
+      const iso = isoOf(new Date(y, m, d));
+      const wd = new Date(y, m, d).getDay();
+      const b = el('button', 'cal-day' + (wd === 0 ? ' sun' : wd === 6 ? ' sat' : '') +
+        (iso < today ? ' past' : '') + (picked.has(iso) ? ' on' : ''), String(d));
+      b.type = 'button';
+      b.setAttribute('aria-pressed', picked.has(iso));
+      b.setAttribute('aria-label', A.dateLabel(iso));
+      b.addEventListener('click', () => {
+        if (picked.has(iso)) picked.delete(iso); else picked.add(iso);
+        renderCal();
+      });
+      grid.append(b);
+    }
+    const chips = $('picked');
+    chips.textContent = '';
+    const list = [...picked].sort();
+    if (!list.length) chips.append(el('span', 'hint', 'まだ選ばれていません'));
+    for (const iso of list) chips.append(el('span', 'chip', A.dateLabel(iso)));
+  }
+
+  function initCreate() {
+    $('createView').hidden = false;
+    const now = new Date();
+    calMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    renderCal();
+    $('calPrev').addEventListener('click', () => { calMonth.setMonth(calMonth.getMonth() - 1); renderCal(); });
+    $('calNext').addEventListener('click', () => { calMonth.setMonth(calMonth.getMonth() + 1); renderCal(); });
+    timeOptions($('cStart'), 0, 23 * 60 + 30, 9 * 60);
+    timeOptions($('cEnd'), 60, 24 * 60, 24 * 60);
+    $('cTitle').value = load('chousei:lastTitle') || '';
+    $('create').addEventListener('click', async () => {
+      const dates = [...picked].sort();
+      const lo = Number($('cStart').value), hi = Number($('cEnd').value);
+      if (!dates.length) { setStatus('候補日を1日以上選んでください。', 'bad'); return; }
+      if (dates.length > 60) { setStatus('候補日は60日までにしてください。', 'bad'); return; }
+      if (hi - lo < 60) { setStatus('「何時まで」は「何時から」より1時間以上あとにしてください。', 'bad'); return; }
+      const title = $('cTitle').value.trim() || '日程調整';
+      store('chousei:lastTitle', $('cTitle').value.trim());
+      $('create').disabled = true;
+      setStatus('作成しています…');
+      try {
+        const id = await backend.createEvent({
+          title, dates, dayStart: A.hhmm(lo), dayEnd: A.hhmm(hi), minMinutes: Number($('cMin').value),
+        });
+        store('chousei:owner:' + id, '1');
+        location.href = location.pathname + '?e=' + encodeURIComponent(id);
+      } catch (err) {
+        setStatus(explain(err), 'bad');
+        $('create').disabled = false;
+      }
+    });
+  }
+
+  // ---------- 2. 調整のページ ----------
+  let eventId, event = null, answers = [], editingId = null, draft = null;
+  const chosen = new Set(); // チェックした候補
+  const openDates = new Set();
+
+  function myId() { return load('chousei:me:' + eventId); }
+  function bounds() { return A.bounds(event); }
+  function pageUrl() { return location.origin + location.pathname + '?e=' + encodeURIComponent(eventId); }
+
+  function renderEvent() {
+    if (!event) return;
+    document.title = event.title + '｜空き時間で日程調整';
+    $('pageTitle').textContent = event.title;
+    const [lo, hi] = bounds();
+    $('lead').textContent = event.dates.length + '日の候補から、' + A.fmt(lo) + '〜' + A.fmt(hi) +
+      'の間で' + hoursLabel(event.minMinutes) + '以上そろう時間を探します。';
+
+    const shareText = '「' + event.title + '」の日程調整です。空いている時間を入れてください！\n' + pageUrl();
+    $('lineShare').href = 'https://line.me/R/share?text=' + encodeURIComponent(shareText);
+
+    // 回答した人
+    const mem = $('members');
+    mem.textContent = '';
+    mem.append(el('span', 'hint', '回答 ' + answers.length + '人' + (answers.length ? '：' : '')));
+    for (const a of answers) {
+      const b = el('button', a.id === myId() ? 'me' : '', a.name);
+      b.type = 'button';
+      b.title = a.name + 'さんの回答を直す';
+      b.addEventListener('click', () => openForm(a.id));
+      mem.append(b);
+    }
+    $('openForm').textContent = myId() && answers.some((a) => a.id === myId())
+      ? '自分の回答を直す' : '自分の空き時間を入力する';
+
+    renderCandidates();
+    renderDates();
+  }
+
+  function candKey(c) { return c.date + '|' + c.start + '|' + c.end; }
+
+  function renderCandidates() {
+    const box = $('cands');
+    box.textContent = '';
+    if (!answers.length) {
+      $('candHint').textContent = '';
+      box.append(el('p', 'empty', 'まだ誰も回答していません。URLを送って、空き時間を入れてもらいましょう。'));
+      $('outBox').hidden = true;
+      return;
+    }
+    const list = A.candidates(event, answers);
+    const all = list.filter((c) => !c.missing.length).length;
+    $('candHint').textContent = answers.length + '人の回答から、' + hoursLabel(event.minMinutes) +
+      '以上続けて空いている時間です。' + (answers.length > 1 ? '全員そろう時間のあとに、1人だけ欠ける時間も出しています。' : '');
+    if (!list.length) {
+      box.append(el('p', 'empty', answers.length > 1
+        ? '全員、または1人欠けでそろう時間は見つかりませんでした。下の「みんなの空き時間」で確認してみてください。'
+        : '候補の時間がありません。'));
+    } else if (!all && answers.length > 1) {
+      box.append(el('p', 'hint', '全員そろう時間はありませんでした。1人だけ欠ける時間はこちらです。'));
+    }
+    const keys = new Set(list.map(candKey));
+    for (const k of [...chosen]) if (!keys.has(k)) chosen.delete(k);
+    for (const c of list) {
+      const lab = el('label', 'cand');
+      const cb = el('input');
+      cb.type = 'checkbox';
+      cb.checked = chosen.has(candKey(c));
+      cb.addEventListener('change', () => {
+        if (cb.checked) chosen.add(candKey(c)); else chosen.delete(candKey(c));
+        renderOut(list);
+      });
+      const when = el('div', 'when', A.dateLabel(c.date) + ' ' + A.fmt(c.start) + '〜' + A.fmt(c.end));
+      when.append(el('span', 'len', hoursLabel(c.end - c.start)));
+      if (!c.missing.length) when.append(el('span', 'tag all', '全員OK'));
+      else when.append(el('span', 'tag one', c.missing[0].name + '以外'));
+      lab.append(cb, when);
+      if (c.missing.length) {
+        const m = c.missing[0];
+        const text = m.kind === '欠席' ? m.name + 'さんはこの時間は空いていません'
+          : m.name + 'さんは' + rangesLabel(m.free) + 'だけ空いています';
+        lab.append(el('div', 'who', text));
+      }
+      box.append(lab);
+    }
+    renderOut(list);
+  }
+
+  function renderOut(list) {
+    const sel = list.filter((c) => chosen.has(candKey(c)));
+    $('outBox').hidden = !sel.length;
+    if (!sel.length) return;
+    const text = A.toPracticeText(sel);
+    $('outText').value = text;
+    const q = new URLSearchParams({ t: text, title: event.title });
+    $('toCalendar').href = 'index.html?' + q.toString();
+  }
+
+  function renderDates() {
+    const box = $('dates');
+    box.textContent = '';
+    const [lo, hi] = bounds();
+    for (const date of event.dates) {
+      const d = el('details', 'date');
+      d.open = openDates.has(date);
+      d.addEventListener('toggle', () => { if (d.open) openDates.add(date); else openDates.delete(date); });
+      const sum = el('summary');
+      sum.append(el('b', null, A.dateLabel(date)));
+      const segs = A.segments(answers, date, lo, hi);
+      const allRanges = answers.length ? A.windows(segs, (f) => f.length === answers.length) : [];
+      const best = segs.reduce((m, s) => Math.max(m, s.free.length), 0);
+      sum.append(el('span', null, !answers.length ? '回答なし'
+        : allRanges.length ? '全員OK ' + rangesLabel(allRanges)
+        : '最大 ' + best + '/' + answers.length + '人'));
+      d.append(sum);
+
+      const g = el('div', 'gantt');
+      g.append(el('div'), axis(lo, hi));
+      for (const a of answers) {
+        const rs = A.clip(A.rangesOf(a, date), lo, hi);
+        const nm = el('div', 'nm', a.name);
+        nm.title = a.name + '：' + rangesLabel(rs);
+        g.append(nm);
+        const t = track(rs, lo, hi);
+        t.title = nm.title;
+        t.setAttribute('aria-label', nm.title);
+        g.append(t);
+      }
+      if (answers.length > 1) {
+        g.append(el('div', 'nm all', '全員'));
+        const t = track(allRanges, lo, hi, 'all');
+        t.setAttribute('aria-label', '全員：' + rangesLabel(allRanges));
+        g.append(t);
+      }
+      d.append(g);
+      box.append(d);
+    }
+  }
+
+  // ---------- 3. 空き時間を入力 ----------
+  function openForm(aid) {
+    const a = aid && answers.find((x) => x.id === aid);
+    editingId = a ? a.id : null;
+    draft = { name: a ? a.name : (load('chousei:name') || ''), at: a ? a.at : Date.now(), slots: {} };
+    for (const date of event.dates) draft.slots[date] = a ? A.rangesOf(a, date) : [];
+    $('fName').value = draft.name;
+    $('formHead').textContent = a ? a.name + 'さんの回答を直す' : '空き時間を入力';
+    $('deleteAnswer').hidden = !a;
+    renderDays();
+    $('eventView').hidden = true;
+    $('formView').hidden = false;
+    setStatus('');
+    window.scrollTo(0, 0);
+    if (!draft.name) $('fName').focus();
+  }
+  function closeForm() {
+    $('formView').hidden = true;
+    $('eventView').hidden = false;
+    draft = null;
+    renderEvent();
+    window.scrollTo(0, 0);
+  }
+
+  function renderDays() {
+    const box = $('days');
+    box.textContent = '';
+    event.dates.forEach((date, i) => {
+      const card = el('div', 'day');
+      card.dataset.date = date;
+      box.append(card);
+      renderDay(card, date, i);
+    });
+  }
+
+  function renderDay(card, date, i) {
+    const [lo, hi] = bounds();
+    const rs = draft.slots[date];
+    card.textContent = '';
+    const head = el('div', 'day-head');
+    head.append(el('b', null, A.dateLabel(date)));
+    const merged = A.mergeRanges(rs);
+    head.append(el('span', 'sum' + (merged.length ? '' : ' none'), rangesLabel(merged)));
+    card.append(head);
+    card.append(track(merged, lo, hi), axis(lo, hi));
+
+    rs.forEach((r, k) => {
+      const row = el('div', 'range');
+      const s = el('select'), e = el('select');
+      s.setAttribute('aria-label', A.dateLabel(date) + ' 開始');
+      e.setAttribute('aria-label', A.dateLabel(date) + ' 終了');
+      timeOptions(s, lo, hi - A.STEP, r[0]);
+      timeOptions(e, lo + A.STEP, hi, r[1]);
+      s.addEventListener('change', () => {
+        r[0] = Number(s.value);
+        if (r[1] <= r[0]) r[1] = Math.min(hi, r[0] + 60);
+        renderDay(card, date, i);
+      });
+      e.addEventListener('change', () => {
+        r[1] = Number(e.value);
+        if (r[0] >= r[1]) r[0] = Math.max(lo, r[1] - 60);
+        renderDay(card, date, i);
+      });
+      const del = el('button', 'del', '×');
+      del.type = 'button';
+      del.setAttribute('aria-label', 'この時間帯を消す');
+      del.addEventListener('click', () => { rs.splice(k, 1); renderDay(card, date, i); });
+      row.append(s, el('span', 'hint', '〜'), e, del);
+      card.append(row);
+    });
+
+    const btns = el('div', 'day-btns');
+    const add = (label, fn, cls) => {
+      const b = el('button', 'small ' + (cls || 'ghost'), label);
+      b.type = 'button';
+      b.addEventListener('click', () => { fn(); renderDay(card, date, i); });
+      btns.append(b);
+    };
+    add('＋時間帯を追加', () => {
+      const last = rs.length ? Math.max(...rs.map((r) => r[1])) : null;
+      let s = last == null ? Math.max(lo, Math.min(18 * 60, hi - 180)) : last + 60;
+      if (s >= hi) s = lo;
+      rs.push([s, Math.min(hi, s + 180)]);
+    }, rs.length ? 'ghost' : '');
+    add('終日OK', () => { rs.splice(0, rs.length, [lo, hi]); });
+    if (i > 0) add('前の日と同じ', () => {
+      const prev = draft.slots[event.dates[i - 1]];
+      rs.splice(0, rs.length, ...prev.map((r) => [r[0], r[1]]));
+    });
+    if (rs.length) add('空きなし', () => { rs.splice(0, rs.length); });
+    card.append(btns);
+  }
+
+  async function saveForm() {
+    const name = $('fName').value.trim();
+    if (!name) { setStatus('名前を入れてください。', 'bad'); $('fName').focus(); window.scrollTo(0, 0); return; }
+    const dup = answers.find((a) => a.name === name && a.id !== editingId);
+    if (dup && !confirm('「' + name + '」さんの回答はもうあります。上書きしますか？')) return;
+    const id = dup ? dup.id : editingId;
+    const slots = {};
+    for (const date of event.dates) slots[date] = A.mergeRanges(draft.slots[date]).map(A.rangeText);
+    $('save').disabled = true;
+    setStatus('保存しています…');
+    try {
+      const saved = await backend.saveAnswer(eventId, id, { name, at: draft.at, slots });
+      if (!editingId || editingId === myId() || !myId()) store('chousei:me:' + eventId, saved);
+      store('chousei:name', name);
+      closeForm();
+      setStatus('回答を保存しました。', 'ok');
+    } catch (err) {
+      setStatus(explain(err), 'bad');
+      window.scrollTo(0, 0);
+    } finally {
+      $('save').disabled = false;
+    }
+  }
+
+  async function deleteForm() {
+    if (!editingId) return;
+    const a = answers.find((x) => x.id === editingId);
+    if (!confirm((a ? a.name + 'さんの' : '') + '回答を消しますか？')) return;
+    try {
+      await backend.deleteAnswer(eventId, editingId);
+      if (editingId === myId()) store('chousei:me:' + eventId, '');
+      closeForm();
+      setStatus('回答を消しました。', 'ok');
+    } catch (err) { setStatus(explain(err), 'bad'); }
+  }
+
+  function initEvent(id) {
+    eventId = id;
+    $('eventView').hidden = false;
+    setStatus('読み込んでいます…');
+    let gotAnswers = false, autoOpened = false;
+    // まだ回答していない人には、最初から入力画面を出す（作った本人は結果画面から）
+    function maybeAutoOpen() {
+      if (autoOpened || !event || !gotAnswers) return;
+      autoOpened = true;
+      if (!answers.some((a) => a.id === myId()) && !load('chousei:owner:' + id)) openForm(null);
+    }
+    const onErr = (err) => setStatus(explain(err), 'bad');
+    backend.watchEvent(id, (ev) => {
+      if (!ev) {
+        setStatus('この日程調整は見つかりませんでした。URLを確認してください。', 'bad');
+        $('eventView').hidden = true;
+        return;
+      }
+      const isFirst = !event;
+      event = ev;
+      if (isFirst && $('status').textContent === '読み込んでいます…') setStatus('');
+      if (isFirst && event.dates.length) openDates.add(event.dates[0]);
+      if (!draft) renderEvent();
+      maybeAutoOpen();
+    }, onErr);
+    backend.watchAnswers(id, (list) => {
+      answers = list.filter((a) => a && a.name).sort((p, q) => (p.at || 0) - (q.at || 0));
+      gotAnswers = true;
+      if (event && !draft) renderEvent();
+      maybeAutoOpen();
+    }, onErr);
+
+    $('copyUrl').addEventListener('click', async () => { await copyText(pageUrl()); $('copyDone').hidden = false; });
+    $('openForm').addEventListener('click', () => {
+      openForm(answers.some((a) => a.id === myId()) ? myId() : null);
+    });
+    $('cancelForm').addEventListener('click', closeForm);
+    $('save').addEventListener('click', saveForm);
+    $('deleteAnswer').addEventListener('click', deleteForm);
+    $('fName').addEventListener('input', () => { if (draft) draft.name = $('fName').value; });
+    $('copyOut').addEventListener('click', async () => { await copyText($('outText').value); $('copyOutDone').hidden = false; });
+  }
+
+  // ---------- 起動 ----------
+  let backend;
+  (async function start() {
+    try {
+      backend = USE_FIREBASE ? await firebaseBackend(CFG) : localBackend();
+    } catch (err) {
+      setStatus('保存先（Firebase）を読み込めませんでした。通信状況を確認してください。', 'bad');
+      return;
+    }
+    $('demoNote').hidden = USE_FIREBASE;
+    const id = new URLSearchParams(location.search).get('e');
+    if (id) initEvent(id); else initCreate();
+  })();
+})();
+</script>
+</body>
+</html>
