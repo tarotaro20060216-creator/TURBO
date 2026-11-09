@@ -178,4 +178,21 @@ assert.strictEqual(w[1].label, '立ち位置');
 assert.strictEqual(w[1].maybeOff, false);
 assert.strictEqual(w[2].place, 'スパイラル2F');
 assert.strictEqual(w[2].start, '2026-11-30T19:00:00+09:00');
+const h = parse(`11月21日
+(時計)19時30〜21時30
+📍八王子Buzz1st
+内容:振り入れ＆立ち位置
+
+11月7日
+(時計)10時〜12時30
+📍吉祥寺Buzz301
+
+11/8 9時15分〜11時半`, { today });
+assert.strictEqual(h[0].start, '2026-11-21T19:30:00+09:00');
+assert.strictEqual(h[0].end, '2026-11-21T21:30:00+09:00');
+assert.strictEqual(h[0].place, '八王子Buzz1st');
+assert.strictEqual(h[1].start, '2026-11-07T10:00:00+09:00');
+assert.strictEqual(h[1].end, '2026-11-07T12:30:00+09:00');
+assert.strictEqual(h[2].start, '2026-11-08T09:15:00+09:00');
+assert.strictEqual(h[2].end, '2026-11-08T11:30:00+09:00');
 console.log('ok');

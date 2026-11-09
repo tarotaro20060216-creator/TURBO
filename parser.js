@@ -15,9 +15,9 @@
   );
   // 補足行の先頭の矢印: 「→ファスユニ」
   const ARROW_RE = /^[→⇒➡️▶︎▷>＞\s]+/u;
-  // 時刻: 「21-23」「11:00~14:00」「12時〜14時半」など
-  const TIME_RE =
-    /(\d{1,2})(?:[:：](\d{2})|時(半)?)?\s*[-~〜～ー−–—]\s*(\d{1,2})(?:[:：](\d{2})|時(半)?)?/;
+  // 時刻: 「21-23」「11:00~14:00」「12時〜14時半」「19時30〜21時30分」など
+  const T = '(\\d{1,2})(?:[:：](\\d{2})|時(?:(\\d{1,2})分?|(半))?)?';
+  const TIME_RE = new RegExp('(?<!\\d)' + T + '\\s*[-~〜～ー−–—]\\s*' + T);
   const PLACE_RE = /(?:[@＠]|📍)\s*(.+)$/u;
   // 「11/14-15」の「-15」（2日にまたがる予定）
   const RANGE_DAY_RE = /^\s*[-~〜～]\s*(?:(\d{1,2})\s*[/／月]\s*)?(\d{1,2})日?(?![\d:：時])\s*(?:[(（][月火水木金土日祝・]+[)）])?/;
@@ -40,11 +40,12 @@
 
   // 「13-17」などの一致から時刻を取り出す
   function readTime(tm) {
-    const sh = +tm[1], sm = tm[2] ? +tm[2] : tm[3] ? 30 : 0;
-    let eh = +tm[4]; const em = tm[5] ? +tm[5] : tm[6] ? 30 : 0;
+    const min = (colon, jp, half) => (colon ? +colon : jp ? +jp : half ? 30 : 0);
+    const sh = +tm[1], sm = min(tm[2], tm[3], tm[4]);
+    let eh = +tm[5]; const em = min(tm[6], tm[7], tm[8]);
     // 「23-1」のように日付をまたぐ場合
     if (eh * 60 + em <= sh * 60 + sm) eh += 24;
-    if (sh > 30 || eh > 48 || sm > 59 || em > 59) return null;
+    if (sh > 29 || eh > 48 || sm > 59 || em > 59) return null;
     return { sh, sm, eh, em };
   }
 
