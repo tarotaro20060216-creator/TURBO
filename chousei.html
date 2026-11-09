@@ -179,7 +179,7 @@
       <label>何時まで
         <select id="cEnd"></select>
       </label>
-      <label class="wide">最低でも続けて
+      <label class="wide">練習に必要な時間
         <select id="cMin">
           <option value="60">1時間</option>
           <option value="90">1時間半</option>
@@ -189,9 +189,10 @@
         </select>
       </label>
     </div>
-    <p class="hint">「何時から・何時まで」は、みんなが入力できる時間の範囲です。候補には「最低でも続けて」以上空いている時間だけが出ます。</p>
+    <p class="hint">「何時から・何時まで」は、みんなが入力できる時間の範囲です。「練習に必要な時間」より短い空きは候補に出しません。</p>
     <div class="actions">
-      <button type="button" id="create">作成してURLをもらう</button>
+      <button type="button" id="create">作成する</button>
+      <span class="hint">次の画面でLINEに送れます</span>
     </div>
   </section>
 
