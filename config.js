@@ -8,14 +8,12 @@
 // 空（null）のままだと、回答はその端末にだけ保存される「お試しモード」になる。
 window.PRACTICE_CONFIG = {
   googleClientId: '',
-  firebase: null,
-  // 例:
-  // firebase: {
-  //   apiKey: 'AIza...',
-  //   authDomain: 'your-project.firebaseapp.com',
-  //   projectId: 'your-project',
-  //   storageBucket: 'your-project.appspot.com',
-  //   messagingSenderId: '1234567890',
-  //   appId: '1:1234567890:web:abcdef',
-  // },
+  firebase: {
+    apiKey: 'AIzaSyCrFjVZ3l76qMInxGI99uzopCSUQYFQmEc',
+    authDomain: 'rensyuu-58bc8.firebaseapp.com',
+    projectId: 'rensyuu-58bc8',
+    storageBucket: 'rensyuu-58bc8.firebasestorage.app',
+    messagingSenderId: '505517631749',
+    appId: '1:505517631749:web:f5f14376927b5c26d02f6c',
+  },
 };
