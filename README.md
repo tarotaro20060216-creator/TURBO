@@ -20,20 +20,48 @@ Googleカレンダーに登録できるページです。
 
 Google の審査を受けるまでは、ログイン時に「このアプリはGoogleで確認されていません」と表示され、利用できる人数は100人までです。
 
+## 空き時間で日程調整（`chousei.html`）
+
+LINEの○△×の日程調整だと「△の人が何時から何時まで空いているか」が分からないので、
+各自に日付ごとの空き時間（例: 19:00〜23:00）を入れてもらい、全員がそろう時間を探すページです。
+
+1. 候補日・時間の範囲・最低何時間必要かを決めて作成し、URLを「LINEで送る」でグループに送る
+2. 受け取った人は名前と、日付ごとの空き時間を入力する（「終日OK」「前の日と同じ」ボタンあり、1日に複数の時間帯も可）
+3. 「全員OK」の時間と、「◯◯以外」（1人だけ欠ける）時間が候補として出る。1人欠ける候補には、その人が遅刻・早退で来られるかも表示
+4. 候補にチェックすると【練習日程】の形のテキストができる（欠ける人は「欠席:」「遅刻:」「早退:」の行付き）。そのままLINEに貼るか、カレンダー登録ページで開ける
+
+アカウント登録やログインは不要で、URLを知っている人なら誰でも回答・修正できます。
+
+### 回答の保存先（Firebase）の設定
+
+みんなの回答を共有するには、無料の Firebase（Cloud Firestore）を使います。設定しないうちは、回答がその端末にだけ保存される「お試しモード」になります。
+
+1. [Firebase コンソール](https://console.firebase.google.com/)でプロジェクトを作る（Google アナリティクスはオフでよい）
+2. 「構築 → Firestore Database」で「データベースを作成」。場所は `asia-northeast1`（東京）、「本番環境モード」で作る
+3. 「ルール」タブに、このリポジトリの `firestore.rules` の中身を貼り付けて「公開」
+4. 「プロジェクトの設定 → マイアプリ」でウェブアプリ（`</>`）を追加し、表示された `firebaseConfig` を `config.js` の `firebase` に貼る
+
+無料枠（Spark プラン）は1日あたり読み取り5万回・書き込み2万回なので、サークルや友だち同士で使う分には足ります。
+
 ## ファイル
 
 - `index.html` — ページ本体
 - `parser.js` — テキストを予定に変換する処理
-- `config.js` — 公開ページ用の設定（Google のクライアントID）
-- `test/parser.test.js` — `node test/parser.test.js` で実行
+- `chousei.html` — 空き時間で日程調整するページ
+- `availability.js` — 空き時間の重なり・候補を計算する処理
+- `firestore.rules` — 日程調整の保存先（Firestore）のルール
+- `config.js` — 公開ページ用の設定（Google のクライアントID、Firebase の設定）
+- `test/parser.test.js`、`test/availability.test.js` — `node test/parser.test.js` などで実行
 
 ---
 
 # 今日のDリーガー（`dleague/`）
 
-Dリーグの注目ダンサーを毎日1人、スマホで見やすくまとめるページです。
+Dリーグの注目ダンサーを毎日1人、公式YouTubeのパフォーマンス動画つきでスマホ向けにまとめるページです。
 
-- 公開ページ: https://claude.ai/artifact/9pwdt19aCLG8ekq8UemYBA
-- `dleague/index.html` — ページ本体（データは Artifact のデータベース `picks` に1日1件）
-- `dleague/DAILY_PROMPT.md` — 毎朝5:17（日本時間）の自動更新で使う手順
+- 公開ページ: https://tarotaro20060216-creator.github.io/TURBO/dleague/
+- `dleague/index.html` — ページ本体
+- `dleague/data/picks.json` — 毎日のピック（新しい順）。毎朝5:17（日本時間）の自動更新がここに1件ずつ追加する
+- `dleague/tools/youtube_search.py` — D.LEAGUE公式チャンネルの動画を探す（`python3 dleague/tools/youtube_search.py "D.LEAGUE 26-27 ROUND.3 KOSÉ 8ROCKS"`）
+- `dleague/DAILY_PROMPT.md` — 毎朝の自動更新の手順
 - Instagram を1日で初めて開いた時に表示する設定は、ページ下の「Instagramを開いた時に表示させる設定」に書いてあります
