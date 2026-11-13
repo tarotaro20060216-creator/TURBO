@@ -1,5 +1,204 @@
 [
  {
+  "date": "2026-11-14",
+  "dayNo": 8,
+  "name": "Lil'Bomb",
+  "team": "Anker XEED",
+  "block": "BLOCK HYPE",
+  "role": "BBOY #32",
+  "genre": "BREAKING",
+  "headline": "パワームーブで、XEEDの反撃に火をつけろ。",
+  "why": "10月のJDSF BREAKING JAPAN OPEN 2026でオープンBBOY部門を制した、今季加入のBBOY。チームはROUND.3でdip BATTLESに1.4ポイント差で競り負け、ROUND.4では同じ6ptのMedical Concierge I'moonと当たる。",
+  "videos": [
+   {
+    "id": "ZizO3WvvmLQ",
+    "title": "ROUND.3 Anker XEED「Texture Exploration」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "FjzaV6r6IuU",
+    "title": "ROUND.2 Anker XEED「Cultural Exchange」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "lGHa96DfoKI",
+    "title": "ROUND.1 Anker XEED「THIS IS XEED」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-09",
+   "work": "Texture Exploration",
+   "us": "Anker XEED",
+   "usScore": 49.3,
+   "them": "dip BATTLES",
+   "themScore": 50.7,
+   "note": "49.3%対50.7%の接戦で敗れ、開幕からの連勝は2で止まった。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "at": "2026-11-25T18:30:00+09:00",
+   "block": "BLOCK VIBE",
+   "round": "ROUND.4"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "JDSF BREAKING JAPAN OPEN 2026（10月18日・横浜赤レンガ倉庫）のオープンBBOY部門で優勝",
+   "決勝は同じAnker XEEDのSnowmanとの接戦。準決勝ではLalzを下した",
+   "26-27 SEASONからAnker XEEDに加入（背番号32）。チームはROUND.3終了時点で6pt、BLOCK HYPE 3位"
+  ],
+  "lookFor": "回転系の大技、パワームーブの種類の多さと完成度に注目。大会レポートでも「バリエーションとクオリティが段違い」と評された。",
+  "trends": [
+   {
+    "title": "HYPEはKADOKAWA DREAMSとCyberAgent Legitが3連勝",
+    "body": "ROUND.3でDREAMSはValuence INFINITIESに63.85%、LegitはList::Xに62.1%で勝利。スコア合計はDREAMS 212.25%、Legit 205.9%で並走する。"
+   },
+   {
+    "title": "dip BATTLESがAnker XEEDの連勝を止める",
+    "body": "ROUND.3の5th Matchは50.7%対49.3%の大接戦。dip BATTLESは今季2勝目で6ptに並んだ。"
+   },
+   {
+    "title": "負けてもMVD、MONOLIZのkeijiro",
+    "body": "Benefit one MONOLIZはMedical Concierge I'moonに47.0%で敗れたが、エースのkeijiroがROUND.3 BLOCK HYPEのMVDに選ばれた。"
+   },
+   {
+    "title": "ROUND.4は11月25日・26日",
+    "body": "25日（水）にBLOCK VIBE、26日（木）にBLOCK HYPE。開演18:30。XEEDは26日の2nd MatchでI'moonと対戦する。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#AnkerXEED の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/ankerxeed/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   },
+   {
+    "label": "#bboy の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/bboy/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#AnkerXEED",
+   "#LilBomb",
+   "#ブレイキン",
+   "#BBOY"
+  ],
+  "sources": [
+   {
+    "label": "FINEPLAY｜D.LEAGUE 26-27 SEASON 開幕（Lil'BombのJDSF BREAKING JAPAN OPEN 2026優勝を含む）",
+    "url": "https://fineplay.me/dance/142903/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK HYPE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/hype/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK HYPE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/hype/"
+   },
+   {
+    "label": "二宮スポーツ｜DREAMとLegitが全勝キープ BATTLESがXEEDの連勝止める",
+    "url": "https://www.ninomiyasports.com/archives/141591"
+   },
+   {
+    "label": "Wikipedia｜Anker XEED（メンバー・背番号）",
+    "url": "https://ja.wikipedia.org/wiki/Anker_XEED"
+   }
+  ],
+  "updatedAt": "2026-11-14T05:30:00+09:00"
+ },
+ {
   "block": "BLOCK VIBE",
   "date": "2026-11-13",
   "dayNo": 7,
