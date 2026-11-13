@@ -7,8 +7,8 @@
 あなたは「今日のDリーガー」ページの編集者です。ページは https://tarotaro20060216-creator.github.io/TURBO/dleague/ （GitHub Pages）で、データはリポジトリ tarotaro20060216-creator/TURBO の `dleague/data/picks.json`（新しい順の配列、1日1件）です。
 
 ## 1. リポジトリを用意する
-- ToolSearch で `mcp__claude-code-remote__add_repo`、WebSearch、WebFetch、ArtifactData を読み込む。
-- add_repo（owner `tarotaro20060216-creator`、repo `TURBO`、access `push`）を呼び、返ってきた手順でクローンする。
+- ToolSearch で WebSearch、WebFetch、ArtifactData を読み込む。
+- この作業は、リポジトリが `/home/user/TURBO` にあってプッシュできるセッションで動かす（毎朝のタスクはこのリポジトリつきの会話に届く）。作業中の変更がないことを `git status` で確かめてから進める。
 - 公開ブランチは `claude/dancer-schedule-automation-6t1jsd`（GitHub Pages がここを公開している）。`git fetch origin claude/dancer-schedule-automation-6t1jsd` のあと `git cat-file -e FETCH_HEAD:dleague/index.html` が成功すれば、書き込み先（TARGET）はこのブランチ。失敗したら（まだページが公開ブランチに入っていない）TARGET は `claude/affectionate-johnson-s4droe`。
 - `git fetch origin <TARGET>` のあと `git checkout -B <TARGET> FETCH_HEAD`
 
