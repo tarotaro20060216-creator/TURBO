@@ -1,5 +1,206 @@
 [
  {
+  "date": "2026-11-15",
+  "dayNo": 9,
+  "name": "KOUU",
+  "team": "dip BATTLES",
+  "block": "BLOCK HYPE",
+  "role": "DANCER #85",
+  "headline": "「Dipなめんな」その言葉を、踊りで証明する。",
+  "why": "ROUND.2でエースを務め、Benefit one MONOLIZに57.3%で勝利。勝利者インタビューで「Dipなめんな」と言い切り、チームはROUND.3でもAnker XEEDに競り勝って2連勝、6ptに並んだ。",
+  "videos": [
+   {
+    "id": "OlFpxjq4nJM",
+    "title": "ROUND.3 dip BATTLES「J.O.L.T.」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "OjTIdspPYcM",
+    "title": "ROUND.2 dip BATTLES「condense」（KOUUがエース）",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "H6hyZMhOrYo",
+    "title": "ROUND.1 dip BATTLES「DAWN」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-09",
+   "work": "J.O.L.T.",
+   "us": "dip BATTLES",
+   "usScore": 50.7,
+   "them": "Anker XEED",
+   "themScore": 49.3,
+   "note": "1.4ポイント差の接戦を制し、開幕2連勝だったXEEDを止めた。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "at": "2026-11-25T18:30:00+09:00",
+   "block": "BLOCK VIBE",
+   "round": "ROUND.4"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "26-27 ROUND.2でエースパフォーマンスを担当。チームはMONOLIZに57.3%対42.7%で今季初勝利",
+   "勝利者インタビューで「Dipなめんなって、マジで俺は思ってる」と宣言",
+   "24-25 SEASONに加入（背番号85、当時の登録名は「Kouuuuu」）"
+  ],
+  "lookFor": "ROUND.2「condense」で1人になるエースパートに注目。ROUND.3「J.O.L.T.」と見比べると、主力が抜けたあとのチームの変化もわかる。",
+  "trends": [
+   {
+    "title": "dip BATTLESが2連勝で6ptに",
+    "body": "開幕戦は黒星だったが、ROUND.2でMONOLIZに57.3%、ROUND.3でAnker XEEDに50.7%で勝った。昨オフに健世らが退団し、新メンバー5人を迎えた新体制。"
+   },
+   {
+    "title": "HYPEはKADOKAWA DREAMSとCyberAgent Legitが3連勝",
+    "body": "スコア合計はDREAMS 212.25%、Legit 205.9%。dip BATTLESはROUND.4の5th MatchでLegitに挑む。"
+   },
+   {
+    "title": "VIBEはKOSÉ 8ROCKSとDYM MESSENGERSが9ptで並ぶ",
+    "body": "ROUND.3で8ROCKSはONODERA USER RUNBULLSに81.6%、DYMはBREXA EDGEに64.0%で勝利。MVDは8ROCKSのYU-KI。"
+   },
+   {
+    "title": "ROUND.4は11月25日・26日",
+    "body": "25日（水）にBLOCK VIBE、26日（木）にBLOCK HYPE。開演18:30、TOYOTA ARENA TOKYO。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#dipbattles の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dipbattles/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#dipBATTLES",
+   "#KOUU",
+   "#Dipなめんな"
+  ],
+  "sources": [
+   {
+    "label": "二宮スポーツ｜BATTLES、共創のシーズンへ",
+    "url": "https://www.ninomiyasports.com/archives/138383"
+   },
+   {
+    "label": "二宮スポーツ｜DREAMとLegitが全勝キープ BATTLESがXEEDの連勝止める",
+    "url": "https://www.ninomiyasports.com/archives/141591"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.2 BLOCK HYPE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round2/hype/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK HYPE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/hype/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK HYPE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/hype/"
+   },
+   {
+    "label": "Wikipedia｜dip BATTLES（メンバー・背番号）",
+    "url": "https://ja.wikipedia.org/wiki/Dip_BATTLES"
+   }
+  ],
+  "updatedAt": "2026-11-15T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-14",
   "dayNo": 8,
   "name": "Lil'Bomb",
