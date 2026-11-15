@@ -1,5 +1,194 @@
 [
  {
+  "date": "2026-11-16",
+  "dayNo": 10,
+  "name": "TAKI",
+  "team": "SEGA SAMMY LUX",
+  "block": "BLOCK VIBE",
+  "role": "LEADER #2",
+  "headline": "創設メンバーのリーダーが、LUXの逆襲を率いる。",
+  "why": "D.LEAGUE初年度の20-21 SEASONから在籍し、21-22 SEASONからリーダーを務める。新ディレクターSHINJIを迎えた今季、チームはROUND.3でM＆A SOUKEN QUANTSに68.2%で勝って2連勝し、ROUND.4では3連勝中のDYM MESSENGERSに挑む。",
+  "videos": [
+   {
+    "id": "CK9RaowuFhc",
+    "title": "ROUND.3 SEGA SAMMY LUX「PAYBACK」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "s3q7R-uOGJA",
+    "title": "ROUND.2 SEGA SAMMY LUX「THE BEGINNING」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "hYWWBs10n6E",
+    "title": "ROUND.1 SEGA SAMMY LUX「BACK TO THE B」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-10",
+   "work": "PAYBACK",
+   "us": "SEGA SAMMY LUX",
+   "usScore": 68.2,
+   "them": "M＆A SOUKEN QUANTS",
+   "themScore": 31.8,
+   "note": "36.4ポイント差の快勝で今季2勝目。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "at": "2026-11-25T18:30:00+09:00",
+   "block": "BLOCK VIBE",
+   "round": "ROUND.4"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "D.LEAGUE初年度の20-21 SEASONからの創設メンバー（背番号2）。21-22 SEASONからリーダー",
+   "20-21 SEASON ROUND.12でMVDを獲得",
+   "26-27 SEASONはROUND.3終了時点で6pt、BLOCK VIBE 4位（スコア合計169.0%）"
+  ],
+  "lookFor": "ROUND.1「BACK TO THE B」からROUND.3「PAYBACK」まで、新ディレクターのもとで作品がどう変わったかを見比べたい。ROUND.4のDYM戦は、上位争いに残れるかがかかる一戦。",
+  "trends": [
+   {
+    "title": "SEGA SAMMY LUXが2連勝で6pt",
+    "body": "ROUND.3でM＆A SOUKEN QUANTSに68.2%で勝ち、BLOCK VIBE 4位。今季はSHINJIがディレクターに就き、SENA・RINO・chibisakuが加わった。"
+   },
+   {
+    "title": "VIBEはKOSÉ 8ROCKSとDYM MESSENGERSが3連勝",
+    "body": "8ROCKSはONODERA USER RUNBULLSに81.6%で勝って首位に。ROUND.3のMVDは8ROCKSのYU-KIで、満票の12.5%を集めた。"
+   },
+   {
+    "title": "avex ROYALBRATSが初勝利、FULLCAST RAISERZは2勝目",
+    "body": "ROYALBRATSはSBC NAIL the NAMEに74.7%、RAISERZはLDH SCREAMに56.9%で勝った。"
+   },
+   {
+    "title": "ROUND.4は11月25日・26日",
+    "body": "25日（水）にBLOCK VIBE、26日（木）にBLOCK HYPE。開演18:30。LUX対DYMは25日の3rd Match。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#segasammylux の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/segasammylux/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#SEGASAMMYLUX",
+   "#TAKI",
+   "#LUX"
+  ],
+  "sources": [
+   {
+    "label": "Wikipedia｜SEGA SAMMY LUX（メンバー・背番号・成績）",
+    "url": "https://ja.wikipedia.org/wiki/SEGA_SAMMY_LUX"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK VIBE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/vibe/"
+   },
+   {
+    "label": "二宮スポーツ｜8ROCKS、８割超の票獲得で開幕３連勝＆首位浮上！",
+    "url": "https://www.ninomiyasports.com/archives/141601"
+   }
+  ],
+  "updatedAt": "2026-11-16T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-15",
   "dayNo": 9,
   "name": "KOUU",
