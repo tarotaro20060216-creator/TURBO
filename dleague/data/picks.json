@@ -1,5 +1,198 @@
 [
  {
+  "date": "2026-11-17",
+  "dayNo": 11,
+  "name": "TAKUMI",
+  "team": "CyberAgent Legit",
+  "block": "BLOCK HYPE",
+  "role": "LEADER #1",
+  "headline": "昨季のMVD OF THE YEARが、王者Legitを全勝で引っぱる。",
+  "why": "D.LEAGUE初年度の20-21 SEASONから在籍するLegitのリーダーで、25-26 SEASONのMVD OF THE YEAR。チームは今季も開幕3連勝で、ROUND.3ではList::Xに62.1%で勝った。",
+  "videos": [
+   {
+    "id": "5XlQLkf4seM",
+    "title": "ROUND.3 CyberAgent Legit「Paint in style」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "VhVzZ5gAqKs",
+    "title": "ROUND.2 CyberAgent Legit「Unleash」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "KuNsfyVfskg",
+    "title": "ROUND.1 CyberAgent Legit「Go Harder」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-09",
+   "work": "Paint in style",
+   "us": "CyberAgent Legit",
+   "usScore": 62.1,
+   "them": "List::X",
+   "themScore": 37.9,
+   "note": "24.2ポイント差で勝って開幕3連勝。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "at": "2026-11-25T18:30:00+09:00",
+   "block": "BLOCK VIBE",
+   "round": "ROUND.4"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "25-26 SEASONのMVD OF THE YEARとBEST8に選ばれた",
+   "D.LEAGUE初年度の20-21 SEASONからの創設メンバーで、背番号1のリーダー",
+   "Legitはレギュラーシーズン優勝4回でD.LEAGUE史上最多。24-25 SEASONはCHAMPIONSHIPも制した"
+  ],
+  "lookFor": "ROUND.1「Go Harder」からROUND.3「Paint in style」まで、3作品ともスタイルが違う。リーダーがどの場面で前に出るかに注目したい。",
+  "trends": [
+   {
+    "title": "CyberAgent LegitとKADOKAWA DREAMSが3連勝",
+    "body": "LegitはROUND.3でList::Xに62.1%、DREAMSはValuence INFINITIESに63.85%で勝利。スコア合計はDREAMS 212.25%、Legit 205.9%。"
+   },
+   {
+    "title": "ROUND.4でLegitはdip BATTLESと対戦",
+    "body": "26日の5th Match。dip BATTLESはROUND.2・3と2連勝中で、ROUND.3ではAnker XEEDに50.7%で競り勝った。"
+   },
+   {
+    "title": "VIBEはKOSÉ 8ROCKSとDYM MESSENGERSが9ptで首位争い",
+    "body": "ROUND.3のMVDは8ROCKSのYU-KI。ROUND.4ではDYMがSEGA SAMMY LUX、8ROCKSがavex ROYALBRATSと当たる。"
+   },
+   {
+    "title": "ROUND.4は11月25日・26日",
+    "body": "25日（水）にBLOCK VIBE、26日（木）にBLOCK HYPE。開演18:30、TOYOTA ARENA TOKYO。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#cyberagentlegit の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/cyberagentlegit/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#CyberAgentLegit",
+   "#Legit",
+   "#TAKUMI"
+  ],
+  "sources": [
+   {
+    "label": "Wikipedia｜CyberAgent Legit（メンバー・成績・個人賞）",
+    "url": "https://ja.wikipedia.org/wiki/CyberAgent_Legit"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK HYPE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/hype/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK HYPE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/hype/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK VIBE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/vibe/"
+   },
+   {
+    "label": "二宮スポーツ｜DREAMとLegitが全勝キープ BATTLESがXEEDの連勝止める",
+    "url": "https://www.ninomiyasports.com/archives/141591"
+   }
+  ],
+  "updatedAt": "2026-11-17T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-16",
   "dayNo": 10,
   "name": "TAKI",
