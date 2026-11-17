@@ -1,5 +1,203 @@
 [
  {
+  "date": "2026-11-18",
+  "dayNo": 12,
+  "name": "AKI",
+  "team": "BREXA EDGE",
+  "block": "BLOCK VIBE",
+  "role": "LEADER #30",
+  "headline": "D.LEAGUEに帰ってきた。新チームの先頭に立って。",
+  "why": "20-21 SEASONの途中から21-22 SEASONまでSEPTENI RAPTURESで戦い、今季は新チームBREXA EDGEのリーダーとして戻ってきた。チームは開幕2連勝のあとROUND.3でDYM MESSENGERSに敗れ、ROUND.4では同じ新顔のSBC NAIL the NAMEと当たる。",
+  "videos": [
+   {
+    "id": "lWCu2kZZlNE",
+    "title": "ROUND.3 BREXA EDGE「burn up」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "1ofGEtqz6-0",
+    "title": "ROUND.2 BREXA EDGE「raw soul」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "4qfu4dFT8OI",
+    "title": "ROUND.1 BREXA EDGE「joyride」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "t838kxcxfy8",
+    "title": "26-27 PV BREXA EDGE「like a siren」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-10",
+   "work": "burn up",
+   "us": "BREXA EDGE",
+   "usScore": 36.0,
+   "them": "DYM MESSENGERS",
+   "themScore": 64.0,
+   "note": "2連勝同士の対決で3連勝のDYMに敗れ、今季初黒星。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "at": "2026-11-25T18:30:00+09:00",
+   "block": "BLOCK VIBE",
+   "round": "ROUND.4"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "20-21 SEASON途中から21-22 SEASONまでSEPTENI RAPTURESに所属したD.LEAGUE経験者",
+   "26-27 SEASONから新規参入のBREXA EDGEでリーダー（背番号30）",
+   "チームは公開オーディション「JOURNEY TO THE EDGE」の14名とスカウト2名で結成。開幕2連勝で、ROUND.3終了時点は6ptでBLOCK VIBE 5位"
+  ],
+  "lookFor": "ROUND.2「raw soul」はavex ROYALBRATSに50.2%対49.8%で競り勝った一戦。ほぼ全員がD.LEAGUE初挑戦のチームを、リーダーがどうまとめているかに注目。",
+  "trends": [
+   {
+    "title": "新チームBREXA EDGEが6ptで5位",
+    "body": "ROUND.1・2を連勝。ROUND.3はDYM MESSENGERSに36.0%で敗れた。ディレクターはCyberAgent Legitでエグゼクティブコーチを務めたakihic☆彡。"
+   },
+   {
+    "title": "ROUND.4は新顔同士のBREXA EDGE対SBC NAIL the NAME",
+    "body": "25日のBLOCK VIBE 1st Match。SBC NAIL the NAMEはここまで1勝（3pt、8位）。"
+   },
+   {
+    "title": "VIBEはKOSÉ 8ROCKSとDYM MESSENGERSが3連勝で9pt",
+    "body": "8ROCKSはスコア合計197.8%、DYMは189.45%。ROUND.4でDYMはSEGA SAMMY LUX、8ROCKSはavex ROYALBRATSと当たる。"
+   },
+   {
+    "title": "ROUND.4は11月25日・26日",
+    "body": "25日（水）にBLOCK VIBE、26日（木）にBLOCK HYPE。開演18:30、TOYOTA ARENA TOKYO。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#brexaedge の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/brexaedge/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#BREXAEDGE",
+   "#AKI",
+   "#新チーム"
+  ],
+  "sources": [
+   {
+    "label": "Wikipedia｜BREXA EDGE（メンバー・経歴・成績）",
+    "url": "https://ja.wikipedia.org/wiki/BREXA_EDGE"
+   },
+   {
+    "label": "マイナビニュース｜BREXA EDGEがD.LEAGUEに参入",
+    "url": "https://news.mynavi.jp/article/20260702-4653743/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.2 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round2/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK VIBE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/vibe/"
+   }
+  ],
+  "updatedAt": "2026-11-18T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-17",
   "dayNo": 11,
   "name": "TAKUMI",
