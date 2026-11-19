@@ -1,5 +1,199 @@
 [
  {
+  "date": "2026-11-20",
+  "dayNo": 14,
+  "name": "fu-ka",
+  "team": "SBC NAIL the NAME",
+  "block": "BLOCK VIBE",
+  "role": "DANCER",
+  "headline": "デビュー戦で王者に挑んだエース。名前を刻むのはこれから。",
+  "why": "新チームSBC NAIL the NAMEの開幕戦で、昨季王者FULLCAST RAISERZを相手にエースパフォーマンスを担当した。チームはROUND.2でONODERA USER RUNBULLSに55.4%で初勝利を挙げ、ROUND.4では同じ新顔のBREXA EDGEと当たる。",
+  "videos": [
+   {
+    "id": "A7are89DlG4",
+    "title": "ROUND.3 SBC NAIL the NAME「BAD GAL」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "6z3bY9afBa0",
+    "title": "ROUND.1 SBC NAIL the NAME「NAME TO KNOW」（fu-kaがエース）",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "inSmm5nc9_Q",
+    "title": "ROUND.2 SBC NAIL the NAME",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "aQWYtqJ5qXk",
+    "title": "26-27 PV SBC NAIL the NAME「GIRLS!」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-10",
+   "work": "BAD GAL",
+   "us": "SBC NAIL the NAME",
+   "usScore": 25.3,
+   "them": "avex ROYALBRATS",
+   "themScore": 74.7,
+   "note": "avex ROYALBRATSの今季初勝利を許した。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "at": "2026-11-25T18:30:00+09:00",
+   "block": "BLOCK VIBE",
+   "round": "ROUND.4"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "開幕戦（10月7日）で、昨季王者FULLCAST RAISERZを相手にエースパフォーマンスを担当",
+   "ソロに切り替わるパートで、ヒップホップらしい力強いダンスを見せた",
+   "チームはROUND.2でONODERA USER RUNBULLSに55.4%対44.6%で勝ち、D.LEAGUE初勝利"
+  ],
+  "lookFor": "ROUND.1「NAME TO KNOW」で、全員の踊りからソロに切り替わるエースパートに注目。デビュー戦の作品はニュースクールヒップホップ。",
+  "trends": [
+   {
+    "title": "SBC NAIL the NAMEは16〜25歳の女性15人で参戦",
+    "body": "オーディションから生まれたフィメールチームで、ディレクターは振付師のKANU。最終審査は4月に両国国技館で行われた。"
+   },
+   {
+    "title": "ROUND.2で初勝利、ROUND.3はROYALBRATSに敗戦",
+    "body": "ONODERA USER RUNBULLSに55.4%で勝って3pt。ROUND.3はavex ROYALBRATSに25.3%で敗れ、BLOCK VIBE 8位。"
+   },
+   {
+    "title": "ROUND.4は新顔同士の対決",
+    "body": "25日の1st MatchでBREXA EDGEと対戦。BREXA EDGEは2勝1敗の6ptで5位。"
+   },
+   {
+    "title": "ROUND.4は11月25日・26日",
+    "body": "25日（水）にBLOCK VIBE、26日（木）にBLOCK HYPE。開演18:30、TOYOTA ARENA TOKYO。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#nailthename の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/nailthename/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#SBCNAILtheNAME",
+   "#fuka",
+   "#フィメールチーム"
+  ],
+  "sources": [
+   {
+    "label": "ソフトバンクニュース｜「SBC NAIL the NAME」の開幕戦に密着",
+    "url": "https://www.softbank.jp/sbnews/entry/20261105_02"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.2 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round2/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK VIBE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/vibe/"
+   }
+  ],
+  "updatedAt": "2026-11-20T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-19",
   "dayNo": 13,
   "name": "Yuna",
