@@ -1,5 +1,204 @@
 [
  {
+  "date": "2026-11-22",
+  "dayNo": 16,
+  "name": "IBUKI",
+  "team": "ONODERA USER RUNBULLS",
+  "block": "BLOCK VIBE",
+  "role": "LEADER #01",
+  "genre": "HIPHOP",
+  "headline": "大阪から初めてのDリーグ。初勝利は、リーダーの足もとから。",
+  "why": "D.LEAGUE史上初の大阪拠点チームでリーダーを務める兵庫県出身のダンサー。チームは開幕3連敗だが、ROUND.4ではまだ勝ちのないLDH SCREAMと当たり、初勝利をつかむ好機を迎える。",
+  "videos": [
+   {
+    "id": "T4ztftuPqBk",
+    "title": "ROUND.3 ONODERA USER RUNBULLS「AWAKENING」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "SasEzvWi-rU",
+    "title": "ROUND.2 ONODERA USER RUNBULLS「IGNITE」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "fv91Q1p2ZMo",
+    "title": "ROUND.1 ONODERA USER RUNBULLS「WEST TRIBE」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "CkW8eNiLsJM",
+    "title": "26-27 PV ONODERA USER RUNBULLS「Ready To RUNBULL」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-10",
+   "work": "AWAKENING",
+   "us": "ONODERA USER RUNBULLS",
+   "usScore": 18.4,
+   "them": "KOSÉ 8ROCKS",
+   "themScore": 81.6,
+   "note": "3連勝の首位8ROCKSに敗れた。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "at": "2026-11-25T18:30:00+09:00",
+   "block": "BLOCK VIBE",
+   "round": "ROUND.4"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "兵庫県出身。HIPHOPを軸に、POPやLOCKの要素を織り交ぜた独自のスタイル",
+   "バスケットボール経験で培った瞬発力と、音楽を目に見える形にするミュージカリティが持ち味",
+   "背番号01のリーダー。ディレクターは日本のKRUMPを牽引してきたJUN"
+  ],
+  "lookFor": "HIPHOPの中にPOPやLOCKのキレがどう混ざるかに注目。ROUND.1「WEST TRIBE」からROUND.3「AWAKENING」まで、大阪の新チームの色が作品ごとに見えてくる。",
+  "trends": [
+   {
+    "title": "RUNBULLSはD.LEAGUE初の大阪拠点チーム",
+    "body": "4月のオーディションで選ばれた14名で参戦。ディレクターのJUNは20-21から3シーズン、FULLCAST RAISERZのディレクターを務めた。"
+   },
+   {
+    "title": "ROUND.4は未勝利同士のLDH SCREAM対RUNBULLS",
+    "body": "25日のBLOCK VIBE 2nd Match。RUNBULLSはROUND.2でSBC NAIL the NAMEに44.6%、ROUND.3でKOSÉ 8ROCKSに18.4%で敗れた。"
+   },
+   {
+    "title": "VIBE首位争いはKOSÉ 8ROCKSとDYM MESSENGERS",
+    "body": "ともに3連勝で9pt。ROUND.4で8ROCKSはavex ROYALBRATS、DYMはSEGA SAMMY LUXと当たる。"
+   },
+   {
+    "title": "ROUND.4は11月25日・26日",
+    "body": "25日（水）にBLOCK VIBE、26日（木）にBLOCK HYPE。開演18:30、TOYOTA ARENA TOKYO。"
+   }
+  ],
+  "links": [
+   {
+    "label": "ONODERA USER RUNBULLS 公式Instagram",
+    "url": "https://www.instagram.com/runbulls_official/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#RUNBULLS",
+   "#IBUKI",
+   "#大阪"
+  ],
+  "sources": [
+   {
+    "label": "スポーツマニア｜ONODERA USER RUNBULLS 26-27 SEASONを戦う14名が決定",
+    "url": "https://sportsmania.jp/361520/"
+   },
+   {
+    "label": "Wikipedia｜ONODERA USER RUNBULLS",
+    "url": "https://ja.wikipedia.org/wiki/ONODERA_USER_RUNBULLS"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.2 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round2/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK VIBE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/vibe/"
+   }
+  ],
+  "updatedAt": "2026-11-22T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-21",
   "dayNo": 15,
   "name": "Runa Miura",
