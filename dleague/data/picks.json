@@ -1,5 +1,199 @@
 [
  {
+  "date": "2026-11-23",
+  "dayNo": 17,
+  "name": "TATSUKI",
+  "team": "Valuence INFINITIES",
+  "block": "BLOCK HYPE",
+  "role": "LEADER",
+  "headline": "加入2年目で主将に。「PROVE」を踊りで証明する。",
+  "why": "25-26 SEASONに加入し、2年目の今季リーダーに抜擢された。チームは開幕戦でdip BATTLESに56.3%で勝ったあと2連敗し、ROUND.4では新チームのJTCC OVERRIDESと当たる。",
+  "videos": [
+   {
+    "id": "6vLmV4vrnCo",
+    "title": "ROUND.3 Valuence INFINITIES「Up and Down」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "hfmp4xLUPJ8",
+    "title": "ROUND.2 Valuence INFINITIES",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "UyhoyTxD130",
+    "title": "ROUND.1 Valuence INFINITIES「PROVE」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "Kc83uYP8z-Y",
+    "title": "ROUND.3 Practice（チーム公式チャンネル）",
+    "channel": "Valuence INFINITIES"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-09",
+   "work": "Up and Down",
+   "us": "Valuence INFINITIES",
+   "usScore": 36.15,
+   "them": "KADOKAWA DREAMS",
+   "themScore": 63.85,
+   "note": "首位KADOKAWA DREAMSに敗れて2連敗。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "at": "2026-11-25T18:30:00+09:00",
+   "block": "BLOCK VIBE",
+   "round": "ROUND.4"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "25-26 SEASONにレギュラーダンサーとして加入し、2年目の26-27 SEASONでリーダーに抜擢",
+   "チームスローガンは「PROVE」。個々の実力とチームの力をダンスで証明するという決意",
+   "開幕戦でdip BATTLESに56.3%対43.7%で勝利。ROUND.3終了時点で3pt、BLOCK HYPE 8位"
+  ],
+  "lookFor": "BREAKINとHIPHOPを中心に集めたチームの作品。ROUND.1「PROVE」から、オーディションで加わった6人を含む新体制がどう固まってきたかを見比べたい。",
+  "trends": [
+   {
+    "title": "Valuence INFINITIESは「PROVE」を掲げた新体制",
+    "body": "ディレクターはBREAKINがルーツのKATSUYAが続投。オーディションを勝ち抜いたRENTO、HAL、SAKIRA、KAIRI、SHIZKU、NAKIの6人が加わった。"
+   },
+   {
+    "title": "ROUND.4はValuence対JTCC OVERRIDES",
+    "body": "26日の3rd Match。JTCCはここまで3連敗で、スコア合計33.1%と苦しんでいる。"
+   },
+   {
+    "title": "HYPE首位はKADOKAWA DREAMSとCyberAgent Legit",
+    "body": "ともに3連勝で9pt。6ptでAnker XEED、Medical Concierge I'moon、dip BATTLESが続く。"
+   },
+   {
+    "title": "ROUND.4は11月25日・26日",
+    "body": "25日（水）にBLOCK VIBE、26日（木）にBLOCK HYPE。開演18:30、TOYOTA ARENA TOKYO。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#valuenceinfinities の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/valuenceinfinities/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#ValuenceINFINITIES",
+   "#TATSUKI",
+   "#PROVE"
+  ],
+  "sources": [
+   {
+    "label": "バリュエンス｜Valuence INFINITIES、26-27 SEASON 新体制決定",
+    "url": "https://www.valuence.inc/news/2026/08/31/valuence-infinities_26-27season/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.1 BLOCK HYPE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round1/hype/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK HYPE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/hype/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK HYPE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/hype/"
+   }
+  ],
+  "updatedAt": "2026-11-23T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-22",
   "dayNo": 16,
   "name": "IBUKI",
