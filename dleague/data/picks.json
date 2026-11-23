@@ -1,5 +1,198 @@
 [
  {
+  "date": "2026-11-24",
+  "dayNo": 18,
+  "name": "RYU-SEI",
+  "team": "LDH SCREAM",
+  "block": "BLOCK VIBE",
+  "role": "DANCER #39",
+  "headline": "明日、初勝利へ。悔しさを知る19歳がステージに立つ。",
+  "why": "昨季はROUND.3で初めてエースに選ばれ、チーム初の個人白星を挙げた静岡県出身の19歳。今季はROUND.1からスタメンに入り、ここまで3連敗のチームは明日のROUND.4で、同じく未勝利のONODERA USER RUNBULLSと当たる。",
+  "videos": [
+   {
+    "id": "reMQyzXuD9s",
+    "title": "ROUND.3 LDH SCREAM「STEP BACK」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "t43SAv4QhUI",
+    "title": "ROUND.2 LDH SCREAM「L's Up pt2」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "ivyNuAst_I0",
+    "title": "ROUND.1 LDH SCREAM「Up set」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-10",
+   "work": "STEP BACK",
+   "us": "LDH SCREAM",
+   "usScore": 43.1,
+   "them": "FULLCAST RAISERZ",
+   "themScore": 56.9,
+   "note": "昨季王者に13.8ポイント差で敗れて3連敗。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "at": "2026-11-25T18:30:00+09:00",
+   "block": "BLOCK VIBE",
+   "round": "ROUND.4"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "25-26 SEASON ROUND.3で初めてエースに選ばれ、チームとして初の個人白星を獲得",
+   "「ROUND.1〜2はエース選定から外れて悔しかった」と振り返り、最終戦のエースを志願した",
+   "26-27 SEASONはROUND.1のスターティングメンバー（No.39）。静岡県出身の19歳"
+  ],
+  "lookFor": "ROUND.1「Up set」でのスタメン8人の中の動きと、ROUND.3「STEP BACK」の作品の違いに注目。明日のRUNBULLS戦は、チームの今季初勝利がかかる。",
+  "trends": [
+   {
+    "title": "LDH SCREAMは14人の新体制で3連敗",
+    "body": "オーディションで7人が加入。ROUND.1は僅差で敗れ、ROUND.2はSEGA SAMMY LUXに40.3%、ROUND.3はFULLCAST RAISERZに43.1%で敗れた。"
+   },
+   {
+    "title": "明日25日のROUND.4、2nd Matchは未勝利同士",
+    "body": "LDH SCREAM対ONODERA USER RUNBULLS。BLOCK VIBEは開演18:30、TOYOTA ARENA TOKYO。"
+   },
+   {
+    "title": "VIBE首位争いの直接の相手は",
+    "body": "3連勝のDYM MESSENGERSはSEGA SAMMY LUX、KOSÉ 8ROCKSはavex ROYALBRATSと対戦。"
+   },
+   {
+    "title": "BLOCK HYPEのROUND.4は26日",
+    "body": "3連勝のKADOKAWA DREAMSはBenefit one MONOLIZ、CyberAgent Legitはdip BATTLESと当たる。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#ldhscream の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/ldhscream/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#LDHSCREAM",
+   "#RYUSEI",
+   "#LDH"
+  ],
+  "sources": [
+   {
+    "label": "リアルサウンド｜LDH SCREAM、怒涛のリーグ参入を振り返る",
+    "url": "https://realsound.jp/2026/04/post-2374154_2.html"
+   },
+   {
+    "label": "日刊エンタメクリップ｜LDH SCREAM ROUND.1「Up set feat.Reichi」",
+    "url": "https://entameclip.com/news/490861/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.2 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round2/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK VIBE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/vibe/"
+   }
+  ],
+  "updatedAt": "2026-11-24T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-23",
   "dayNo": 17,
   "name": "TATSUKI",
