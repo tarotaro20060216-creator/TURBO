@@ -1,5 +1,199 @@
 [
  {
+  "date": "2026-11-25",
+  "dayNo": 19,
+  "name": "GORIKING",
+  "team": "M＆A SOUKEN QUANTS",
+  "block": "BLOCK VIBE",
+  "role": "DANCER",
+  "genre": "ANIMATION",
+  "headline": "作る側から、踊る側へ。今夜、王者に挑む。",
+  "why": "昨季はQUANTSのクリエイティブディレクター兼SPダンサーとして作品づくりを担い、今季からレギュラーダンサーに。チームは今夜のROUND.4で、昨季王者のFULLCAST RAISERZと当たる。",
+  "videos": [
+   {
+    "id": "kNLiwCpLQpw",
+    "title": "ROUND.3 M&A SOUKEN QUANTS「FACTORY」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "9kvr7n8kWf0",
+    "title": "ROUND.2 M&A SOUKEN QUANTS「COSMIC ARMY」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "mA99Zms5Nx8",
+    "title": "ROUND.1 M&A SOUKEN QUANTS「THE ORCHESTRA」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-10",
+   "work": "FACTORY",
+   "us": "M＆A SOUKEN QUANTS",
+   "usScore": 31.8,
+   "them": "SEGA SAMMY LUX",
+   "themScore": 68.2,
+   "note": "SEGA SAMMY LUXに敗れて2連敗。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "at": "2026-11-25T18:30:00+09:00",
+   "block": "BLOCK VIBE",
+   "round": "ROUND.4"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "アニメーションダンスチーム「TRIQSTAR」のメンバー。世界的なダンスコンテストで優勝経験がある",
+   "25-26 SEASONはQUANTSのクリエイティブディレクター兼SPダンサー",
+   "26-27 SEASONからレギュラーダンサーとしてQUANTSに加入"
+  ],
+  "lookFor": "QUANTSはアニメーションダンスを軸にしたチーム。体の一部だけが機械のように動く、アニメーションならではの錯覚に注目。ROUND.3「FACTORY」は工場がテーマの作品。",
+  "trends": [
+   {
+    "title": "今夜はBLOCK VIBEのROUND.4",
+    "body": "開演18:30、TOYOTA ARENA TOKYO。QUANTS対FULLCAST RAISERZは4th Match。"
+   },
+   {
+    "title": "QUANTSは参入2年目、ここまで1勝2敗",
+    "body": "ROUND.2はDYM MESSENGERSに29.3%、ROUND.3はSEGA SAMMY LUXに31.8%で敗れて3pt、BLOCK VIBE 7位。"
+   },
+   {
+    "title": "首位争いのDYMと8ROCKSも今夜登場",
+    "body": "3連勝同士のDYM MESSENGERSはSEGA SAMMY LUX、KOSÉ 8ROCKSはavex ROYALBRATSと対戦する。"
+   },
+   {
+    "title": "未勝利同士の一戦も",
+    "body": "2nd MatchはLDH SCREAM対ONODERA USER RUNBULLS。どちらかが今季初勝利を挙げる。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#quants の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/quants/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#QUANTS",
+   "#GORIKING",
+   "#アニメーションダンス"
+  ],
+  "sources": [
+   {
+    "label": "M&A SOUKEN QUANTS公式X｜GORIKINGのレギュラーダンサー加入",
+    "url": "https://x.com/masoukenquants/status/2072253389539582313"
+   },
+   {
+    "label": "二宮スポーツ｜M&A SOUKEN QUANTS、最適解を探し分析中（25-26 SEASON）",
+    "url": "https://www.ninomiyasports.com/archives/135094"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.2 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round2/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK VIBE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/vibe/"
+   }
+  ],
+  "updatedAt": "2026-11-25T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-24",
   "dayNo": 18,
   "name": "RYU-SEI",
