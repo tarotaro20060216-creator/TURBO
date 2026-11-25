@@ -1,5 +1,208 @@
 [
  {
+  "date": "2026-11-26",
+  "dayNo": 20,
+  "name": "YOU",
+  "team": "JTCC OVERRIDES",
+  "block": "BLOCK HYPE",
+  "role": "DIRECTOR",
+  "headline": "世界を獲ったダンサーが、ゼロからのチームを率いる。",
+  "why": "JAPAN DANCE DELIGHTで優勝し、翌年UK B-Boy Championshipの初代王者に。Hilty & Boschとして世界で踊ってきた男が、新チームJTCC OVERRIDESのディレクターとして初のD.LEAGUEに挑む。チームは3連敗のまま、今夜のROUND.4でValuence INFINITIESと当たる。",
+  "videos": [
+   {
+    "id": "RJV63NTH9Xc",
+    "title": "ROUND.3 JTCC OVERRIDES「RELENTLESS」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "FWtKEB8th0c",
+    "title": "ROUND.2 JTCC OVERRIDES「FRENZY」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "fF4b7SHYTPo",
+    "title": "ROUND.1 JTCC OVERRIDES「STEP INTO IT / STRAIGHT AHEAD」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "6ovekI3QOVw",
+    "title": "ROUND.4に向けたレギュラーメンバー再選考オーディション（チーム公式チャンネル）",
+    "channel": "JTCC OVERRIDES"
+   }
+  ],
+  "match": {
+   "round": "ROUND.3",
+   "date": "2026-11-09",
+   "work": "RELENTLESS",
+   "us": "JTCC OVERRIDES",
+   "usScore": 14.2,
+   "them": "CHANGE RAPTURES",
+   "themScore": 85.8,
+   "note": "CHANGE RAPTURESに敗れて開幕3連敗。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "block": "BLOCK HYPE",
+   "round": "ROUND.4",
+   "at": "2026-11-26T18:30:00+09:00"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "date": "2026-11-25",
+    "matches": [
+     {
+      "a": "BREXA EDGE",
+      "b": "SBC NAIL the NAME",
+      "pick": "BREXA EDGE",
+      "prob": 82,
+      "reason": "6ptで5位。スコア合計で38.1ポイント上回る",
+      "winner": "SBC NAIL the NAME"
+     },
+     {
+      "a": "LDH SCREAM",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "LDH SCREAM",
+      "prob": 74,
+      "reason": "ともに未勝利。スコア合計はSCREAMが26ポイント上",
+      "winner": "LDH SCREAM"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SEGA SAMMY LUX",
+      "pick": "DYM MESSENGERS",
+      "prob": 69,
+      "reason": "3連勝の2位。ジャッジ票61.0%はVIBE最高",
+      "winner": "DYM MESSENGERS"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 85,
+      "reason": "王者RAISERZが2勝目。スコア合計で61.1ポイント差",
+      "winner": "M＆A SOUKEN QUANTS"
+     },
+     {
+      "a": "avex ROYALBRATS",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 75,
+      "reason": "3連勝の首位8ROCKS。ROYALBRATSは会場票51.7%",
+      "winner": "avex ROYALBRATS"
+     }
+    ],
+    "round": "ROUND.4"
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "大阪府出身。15歳で、プロダンサーの父の影響でストリートダンスを始めた",
+   "JAPAN DANCE DELIGHTで優勝し、翌年イギリスのUK B-Boy Championshipで初代王者に",
+   "ZINとのデュオHilty & Boschで世界各国をまわり、YouTube公式チャンネルの累計再生は2,500万回超"
+  ],
+  "lookFor": "YOUは就任時に「3年くらい」かけてチームを育てると語った。ROUND.1からROUND.3の作品の変化と、チームが公開したROUND.4に向けたメンバー再選考の動画にも注目。",
+  "trends": [
+   {
+    "title": "昨日のMVDはQUANTSのGORIKING",
+    "body": "ROUND.4 BLOCK VIBEで、M＆A SOUKEN QUANTSが昨季王者FULLCAST RAISERZに51.9%で勝利。11月25日に紹介したGORIKINGがMVDに選ばれた。"
+   },
+   {
+    "title": "DYMが4連勝で単独首位、8ROCKSは初黒星",
+    "body": "DYM MESSENGERSはSEGA SAMMY LUXに64.6%で勝って12pt。KOSÉ 8ROCKSはavex ROYALBRATSに46.85%で敗れた。"
+   },
+   {
+    "title": "LDH SCREAMとSBC NAIL the NAMEが勝利",
+    "body": "LDH SCREAMはONODERA USER RUNBULLSに67.5%で今季初勝利。SBC NAIL the NAMEはBREXA EDGEに50.8%で競り勝った。"
+   },
+   {
+    "title": "今夜はBLOCK HYPEのROUND.4",
+    "body": "開演18:30。3連勝のKADOKAWA DREAMSはBenefit one MONOLIZ、CyberAgent Legitはdip BATTLESと対戦。JTCC対Valuenceは3rd Match。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#jtccoverrides の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/jtccoverrides/"
+   },
+   {
+    "label": "#hiltyandbosch の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/hiltyandbosch/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#JTCCOVERRIDES",
+   "#HiltyandBosch",
+   "#YOU"
+  ],
+  "sources": [
+   {
+    "label": "PR TIMES｜プロダンスチーム「JTCC OVERRIDES」を発足",
+    "url": "https://prtimes.jp/main/html/rd/p/000000027.000171622.html"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.3 BLOCK HYPE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round3/hype/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK HYPE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/hype/"
+   }
+  ],
+  "updatedAt": "2026-11-26T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-25",
   "dayNo": 19,
   "name": "GORIKING",
