@@ -1,5 +1,207 @@
 [
  {
+  "date": "2026-11-27",
+  "dayNo": 21,
+  "name": "KELO",
+  "team": "KADOKAWA DREAMS",
+  "block": "BLOCK HYPE",
+  "role": "DANCER #11",
+  "genre": "ANIMATION / POPPING",
+  "headline": "アポロシアターを制した男が、首位DREAMSを4連勝へ。",
+  "why": "ROUND.4 BLOCK HYPEのMVD。KADOKAWA DREAMSはBenefit one MONOLIZに62.3%で勝ち、CyberAgent Legitと並ぶ4連勝で首位を守った。NYアポロシアター・アマチュアナイトの年間チャンピオンという経歴を持つ。",
+  "videos": [
+   {
+    "id": "IQgvcTw1JFY",
+    "title": "ROUND.3 KADOKAWA DREAMS「BLACK MOON-新月-」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "xh9ECvi0XvA",
+    "title": "ROUND.4 BLOCK HYPE 配信アーカイブ（KELOがMVDの回）",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "aHVUvf1was8",
+    "title": "ROUND.2 KADOKAWA DREAMS「RE-GENE」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.4",
+   "date": "2026-11-26",
+   "us": "KADOKAWA DREAMS",
+   "usScore": 62.3,
+   "them": "Benefit one MONOLIZ",
+   "themScore": 37.7,
+   "note": "開幕4連勝。KELOがMVD。ROUND.4のチーム単体の公式動画はまだ出ていないため、動画は配信アーカイブ。"
+  },
+  "nextRound": {
+   "block": "BLOCK HYPE",
+   "round": "ROUND.5",
+   "at": "2026-12-10T18:30:00+09:00"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "date": "2026-11-26",
+    "matches": [
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "List::X",
+      "pick": "CHANGE RAPTURES",
+      "prob": 69,
+      "reason": "ROUND.3で初勝利。スコア合計で20.2ポイント上回る",
+      "winner": "CHANGE RAPTURES"
+     },
+     {
+      "a": "Medical Concierge I’moon",
+      "b": "Anker XEED",
+      "pick": "Anker XEED",
+      "prob": 62,
+      "reason": "ともに6pt。スコア合計はXEEDが12ポイント上",
+      "winner": "Anker XEED"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "Valuence INFINITIES",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "JTCCは3戦全敗、スコア合計33.1%と苦戦中",
+      "winner": "Valuence INFINITIES"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Benefit one MONOLIZ",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "3連勝の首位。MONOLIZはまだ勝ちなし",
+      "winner": "KADOKAWA DREAMS"
+     },
+     {
+      "a": "CyberAgent Legit",
+      "b": "dip BATTLES",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "3連勝の2位。dipはROUND.3でXEEDに競り勝った",
+      "winner": "CyberAgent Legit"
+     }
+    ],
+    "round": "ROUND.4"
+   },
+   {
+    "block": "BLOCK VIBE",
+    "round": "ROUND.5",
+    "date": "2026-12-11",
+    "matches": [
+     {
+      "a": "avex ROYALBRATS",
+      "b": "LDH SCREAM",
+      "pick": "avex ROYALBRATS",
+      "prob": 72,
+      "reason": "8ROCKSを破り2連勝。会場票64.1%はVIBE最高"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SBC NAIL the NAME",
+      "pick": "DYM MESSENGERS",
+      "prob": 85,
+      "reason": "4連勝で単独首位。スコア合計で97.35ポイント上"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "M＆A SOUKEN QUANTS",
+      "prob": 75,
+      "reason": "王者RAISERZを破り2勝目。RUNBULLSは未勝利"
+     },
+     {
+      "a": "BREXA EDGE",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 85,
+      "reason": "3勝1敗の2位。スコア合計で51.45ポイント上"
+     },
+     {
+      "a": "SEGA SAMMY LUX",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 67,
+      "reason": "ともに6pt。スコア合計はRAISERZが18.1ポイント上"
+     }
+    ]
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "26-27 SEASON ROUND.4 BLOCK HYPEのMVD",
+   "NYアポロシアター・アマチュアナイトで年間チャンピオン。「ダンス甲子園」では2連覇",
+   "24-25 SEASONにKADOKAWA DREAMSへ加入し、D.LEAGUE史上初の2ROUND連続MVDを達成"
+  ],
+  "lookFor": "ジャンルはアニメーションとポッピング。体を止めたり滑らせたりする細かい動きで、1人の場面を一気に持っていく。三浦大知、サカナクション、PerfumeなどのMVにも出演している。",
+  "trends": [
+   {
+    "title": "HYPEの勝利予想は5試合すべて的中",
+    "body": "KADOKAWA DREAMSとCyberAgent Legitが4連勝で12pt。Legitはdip BATTLESに58.0%で勝った。"
+   },
+   {
+    "title": "Anker XEEDが0.2ポイント差でI'moonに勝利",
+    "body": "50.1%対49.9%。昨季I'moonでBEST ROOKIEだったMEMEのいるXEEDが9ptで3位に上がった。"
+   },
+   {
+    "title": "CHANGE RAPTURESとValuenceも勝利",
+    "body": "RAPTURESはList::Xに50.6%、Valuence INFINITIESはJTCC OVERRIDESに81.0%で勝った。"
+   },
+   {
+    "title": "ROUND.5は12月10日・11日",
+    "body": "10日（木）にBLOCK HYPE、11日（金）にBLOCK VIBE。開演18:30。HYPEはDREAMS対Anker XEED、Legit対I'moonに注目。"
+   }
+  ],
+  "links": [
+   {
+    "label": "#kadokawadreams の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/kadokawadreams/"
+   },
+   {
+    "label": "#kelo の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/kelo/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#KADOKAWADREAMS",
+   "#KELO",
+   "#MVD"
+  ],
+  "sources": [
+   {
+    "label": "KADOKAWA DREAMS公式｜KELO プロフィール",
+    "url": "https://kadokawa-dreams.com/member/kelo-2/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK HYPE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/hype/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.5 BLOCK HYPE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round5/hype/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.5 BLOCK VIBE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round5/vibe/"
+   }
+  ],
+  "updatedAt": "2026-11-27T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-26",
   "dayNo": 20,
   "name": "YOU",
