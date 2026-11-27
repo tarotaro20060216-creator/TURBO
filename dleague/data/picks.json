@@ -1,5 +1,201 @@
 [
  {
+  "date": "2026-11-28",
+  "dayNo": 22,
+  "name": "GEN ROC",
+  "team": "DYM MESSENGERS",
+  "block": "BLOCK VIBE",
+  "role": "DANCER #96",
+  "genre": "BREAKING",
+  "instagram": "https://instagram.com/genrocreative",
+  "profileUrl": "https://home.dleague.co.jp/teams/t5fa/dancers/sv2w/",
+  "headline": "開幕のエースから4連勝へ。浮遊するBBOYが首位を支える。",
+  "why": "開幕戦でDYM MESSENGERSのエースを務めた、日本を代表するBBOYの1人。チームはROUND.4でもSEGA SAMMY LUXに64.6%で勝ち、BLOCK VIBEでただ1チームの4連勝を続けている。",
+  "videos": [
+   {
+    "id": "AefjLGsmdUs",
+    "title": "ROUND.4 DYM MESSENGERS「RUNAWAY CITY」",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "ZF_nfZuA48c",
+    "title": "ROUND.1 DYM MESSENGERS「STORM」（GEN ROCがエース）",
+    "channel": "D.LEAGUE公式YouTube"
+   },
+   {
+    "id": "ejKPJMrDxaM",
+    "title": "ROUND.3 DYM MESSENGERS「Next Station」",
+    "channel": "D.LEAGUE公式YouTube"
+   }
+  ],
+  "match": {
+   "round": "ROUND.4",
+   "date": "2026-11-25",
+   "work": "RUNAWAY CITY",
+   "us": "DYM MESSENGERS",
+   "usScore": 64.6,
+   "them": "SEGA SAMMY LUX",
+   "themScore": 35.4,
+   "note": "4連勝で12pt、BLOCK VIBE単独首位。動画はチームのパフォーマンス。"
+  },
+  "nextRound": {
+   "block": "BLOCK HYPE",
+   "round": "ROUND.5",
+   "at": "2026-12-10T18:30:00+09:00"
+  },
+  "predictions": [
+   {
+    "block": "BLOCK HYPE",
+    "round": "ROUND.5",
+    "date": "2026-12-10",
+    "matches": [
+     {
+      "a": "CyberAgent Legit",
+      "b": "Medical Concierge I’moon",
+      "pick": "CyberAgent Legit",
+      "prob": 85,
+      "reason": "4連勝で並ぶ首位。I'moonはXEEDに0.2ポイント差で惜敗"
+     },
+     {
+      "a": "JTCC OVERRIDES",
+      "b": "List::X",
+      "pick": "List::X",
+      "prob": 85,
+      "reason": "JTCCは4連敗。List::Xは1勝3敗"
+     },
+     {
+      "a": "KADOKAWA DREAMS",
+      "b": "Anker XEED",
+      "pick": "KADOKAWA DREAMS",
+      "prob": 85,
+      "reason": "4連勝の首位。XEEDは3勝1敗で3位"
+     },
+     {
+      "a": "CHANGE RAPTURES",
+      "b": "dip BATTLES",
+      "pick": "CHANGE RAPTURES",
+      "prob": 75,
+      "reason": "ともに6pt。スコア合計はRAPTURESが27.2ポイント上"
+     },
+     {
+      "a": "Valuence INFINITIES",
+      "b": "Benefit one MONOLIZ",
+      "pick": "Valuence INFINITIES",
+      "prob": 85,
+      "reason": "MONOLIZはまだ勝ちなし。Valuenceは2勝目を挙げた"
+     }
+    ]
+   },
+   {
+    "block": "BLOCK VIBE",
+    "round": "ROUND.5",
+    "date": "2026-12-11",
+    "matches": [
+     {
+      "a": "avex ROYALBRATS",
+      "b": "LDH SCREAM",
+      "pick": "avex ROYALBRATS",
+      "prob": 72,
+      "reason": "8ROCKSを破り2連勝。会場票64.1%はVIBE最高"
+     },
+     {
+      "a": "DYM MESSENGERS",
+      "b": "SBC NAIL the NAME",
+      "pick": "DYM MESSENGERS",
+      "prob": 85,
+      "reason": "4連勝で単独首位。スコア合計で97.35ポイント上"
+     },
+     {
+      "a": "M＆A SOUKEN QUANTS",
+      "b": "ONODERA USER RUNBULLS",
+      "pick": "M＆A SOUKEN QUANTS",
+      "prob": 75,
+      "reason": "王者RAISERZを破り2勝目。RUNBULLSは未勝利"
+     },
+     {
+      "a": "BREXA EDGE",
+      "b": "KOSÉ 8ROCKS",
+      "pick": "KOSÉ 8ROCKS",
+      "prob": 85,
+      "reason": "3勝1敗の2位。スコア合計で51.45ポイント上"
+     },
+     {
+      "a": "SEGA SAMMY LUX",
+      "b": "FULLCAST RAISERZ",
+      "pick": "FULLCAST RAISERZ",
+      "prob": 67,
+      "reason": "ともに6pt。スコア合計はRAISERZが18.1ポイント上"
+     }
+    ]
+   }
+  ],
+  "predictionNote": "ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。",
+  "highlights": [
+   "群馬県桐生市出身。浮遊感と音楽性を武器にするBBOY",
+   "2022年のFreestyle Sessionで日本代表に。Red Bull BC ONEやDANCE ALIVEなど国内外のバトルで優勝・入賞",
+   "26-27 SEASONの開幕戦（ROUND.1）でDYM MESSENGERSのエースパフォーマーを担当"
+  ],
+  "lookFor": "ブレイキンの中でも、宙に浮いているように見える軽さと、音にぴったり合わせる動きが持ち味。開幕戦「STORM」のエースパートに注目。",
+  "trends": [
+   {
+    "title": "DYM MESSENGERSが4連勝で単独首位",
+    "body": "ROUND.4でSEGA SAMMY LUXに64.6%で勝利。BLOCK VIBEで全勝はDYMだけになった。"
+   },
+   {
+    "title": "HYPEのROUND.5は全勝対決に注目",
+    "body": "12月10日、4連勝で並ぶKADOKAWA DREAMSはAnker XEED、CyberAgent LegitはMedical Concierge I'moonと当たる。"
+   },
+   {
+    "title": "ROUND.4の勝利予想は10試合中7試合的中",
+    "body": "BLOCK HYPEは5試合すべて的中。BLOCK VIBEはQUANTSとNAIL the NAME、ROYALBRATSの勝利が予想外れだった。"
+   },
+   {
+    "title": "ROUND.5は12月10日・11日",
+    "body": "10日（木）にBLOCK HYPE、11日（金）にBLOCK VIBE。開演18:30、TOYOTA ARENA TOKYO。DYMは11日にSBC NAIL the NAMEと対戦。"
+   }
+  ],
+  "links": [
+   {
+    "label": "DYM MESSENGERS 公式Instagram",
+    "url": "https://www.instagram.com/dym_messengers/"
+   },
+   {
+    "label": "#dleague の投稿を見る",
+    "url": "https://www.instagram.com/explore/tags/dleague/"
+   }
+  ],
+  "tags": [
+   "#Dリーグ",
+   "#DLEAGUE",
+   "#DYMMESSENGERS",
+   "#GENROC",
+   "#BBOY"
+  ],
+  "sources": [
+   {
+    "label": "D.LEAGUE公式｜GEN ROC プロフィール",
+    "url": "https://home.dleague.co.jp/teams/t5fa/dancers/sv2w/"
+   },
+   {
+    "label": "スポーツマニア｜DYM MESSENGERS、新体制で挑んだ開幕戦で勝利（GEN ROCがエース）",
+    "url": "https://sportsmania.jp/368276/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK VIBE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/vibe/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.4 BLOCK HYPE 結果",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round4/hype/result/"
+   },
+   {
+    "label": "D.LEAGUE公式｜ROUND.5 BLOCK HYPE 対戦表",
+    "url": "https://home.dleague.co.jp/games/season/26-27/round5/hype/"
+   }
+  ],
+  "updatedAt": "2026-11-28T05:30:00+09:00"
+ },
+ {
   "date": "2026-11-27",
   "dayNo": 21,
   "name": "KELO",
