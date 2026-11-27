@@ -167,7 +167,25 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
   background: #0a0620; border: 2px solid rgba(240, 220, 255, .9);
   box-shadow: 0 0 10px var(--magenta), 0 0 34px rgba(217,70,239,.55);
 }
-.screen iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* scale the player up a little so YouTube's title bar and logo fall outside the frame */
+.screen iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; transform: scale(1.32); pointer-events: none; }
+.vctl { position: absolute; right: 8px; bottom: 8px; z-index: 2; display: flex; gap: 6px; }
+.vctl button {
+  font: inherit; font-size: 12px; font-weight: 700; color: #fff; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 4px; min-height: 34px; padding: 0 10px; border-radius: 999px;
+  background: rgba(10, 6, 30, .72); border: 1px solid rgba(255,255,255,.3);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.vctl button svg { width: 16px; height: 16px; }
+.me-links { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.me-links .ig {
+  display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 700; font-size: 14px;
+  padding: 7px 14px 7px 10px; border-radius: 999px; color: #fff;
+  background: linear-gradient(135deg, #f9a13b 0%, #e1306c 45%, #8a3ab9 100%);
+  box-shadow: 0 0 16px rgba(225, 48, 108, .45);
+}
+.me-links .ig svg { width: 18px; height: 18px; }
+.me-links .prof { font-size: 12.5px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
 .vcap {
   margin-top: 10px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
   font-size: 13px; line-height: 1.4;
@@ -374,6 +392,14 @@ details.setup code { font-size: 12px; }
   const cd = document.getElementById("countdown");
   const WD = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
   let picks = [];
+  const svg = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+  const ICON = {
+    play: svg('<path d="M8 5v14l11-7z" fill="currentColor"/>'),
+    pause: svg('<path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/>'),
+    muted: svg('<path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>'),
+    sound: svg('<path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>'),
+    ig: svg('<rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/>'),
+  };
 
   const jstParts = (d) => {
     const s = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(d);
@@ -440,7 +466,11 @@ details.setup code { font-size: 12px; }
       p.genre && `<span class="chip">${esc(p.genre)}</span>`,
     ].filter(Boolean).join("");
 
-    const links = arr(p.links).map((l, i) => {
+    const igUrl = /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9._]+\/?$/.test(p.instagram || "") ? p.instagram : null;
+    const igHandle = igUrl ? igUrl.replace(/\/$/, "").split("/").pop() : "";
+    const profUrl = /^https:\/\/home\.dleague\.co\.jp\//.test(p.profileUrl || "") ? p.profileUrl : null;
+    const linkList = (igUrl ? [{ label: `@${igHandle} をInstagramで開く`, url: igUrl }] : []).concat(arr(p.links));
+    const links = linkList.map((l, i) => {
       const u = safeUrl(l.url); if (!u) return "";
       return `<a class="btn${i === 0 ? " primary" : ""}" href="${esc(u)}" target="_blank" rel="noopener"><span>${esc(l.label)}</span><span class="go">OPEN ↗</span></a>`;
     }).join("");
@@ -453,9 +483,13 @@ details.setup code { font-size: 12px; }
         ${main ? `
         <div class="stage">
           <div class="screen" id="screen">
-            <iframe src="https://www.youtube-nocookie.com/embed/${esc(main.id)}?playsinline=1&rel=0"
+            <iframe id="ytFrame" src="https://www.youtube-nocookie.com/embed/${esc(main.id)}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${esc(main.id)}&controls=0&rel=0&iv_load_policy=3&disablekb=1&fs=0&enablejsapi=1&origin=${encodeURIComponent(location.origin)}"
               title="${esc(main.title || "パフォーマンス動画")}" referrerpolicy="strict-origin-when-cross-origin"
-              allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+              allow="autoplay; encrypted-media; picture-in-picture" tabindex="-1"></iframe>
+            <div class="vctl">
+              <button type="button" id="ytPlay" aria-label="一時停止">${ICON.pause}</button>
+              <button type="button" id="ytSound" aria-label="音を出す">${ICON.muted}<span>音を出す</span></button>
+            </div>
           </div>
           <div class="vcap"><b>${esc(main.title || "")}</b><span>PERFORMANCE</span></div>
         </div>` : `
@@ -466,6 +500,10 @@ details.setup code { font-size: 12px; }
           <h1 class="name">${esc(p.name)}</h1>
           ${p.headline ? `<p class="headline">${esc(p.headline)}</p>` : ""}
           <div class="chips">${chips}</div>
+          ${igUrl || profUrl ? `<div class="me-links">
+            ${igUrl ? `<a class="ig" href="${esc(igUrl)}" target="_blank" rel="noopener">${ICON.ig}<span>@${esc(igHandle)}</span></a>` : ""}
+            ${profUrl ? `<a class="prof" href="${esc(profUrl)}" target="_blank" rel="noopener">公式プロフィール・写真 ↗</a>` : ""}
+          </div>` : ""}
         </div>
       </section>
 
@@ -554,6 +592,32 @@ details.setup code { font-size: 12px; }
       </section>` : ""}
     `;
     app.querySelectorAll(".more-v img").forEach(i => i.addEventListener("error", () => { i.style.visibility = "hidden"; }));
+    wirePlayer();
+  }
+
+  // ---- hero video: muted autoplay + our own sound / pause buttons (YouTube iframe postMessage API)
+  function wirePlayer() {
+    const f = document.getElementById("ytFrame");
+    if (!f) return;
+    let muted = true, playing = true;
+    const cmd = (func, args) => { try { f.contentWindow.postMessage(JSON.stringify({ event: "command", func, args: args || [] }), "*"); } catch {} };
+    f.addEventListener("load", () => {
+      try { f.contentWindow.postMessage(JSON.stringify({ event: "listening", id: 1, channel: "widget" }), "*"); } catch {}
+      setTimeout(() => { cmd("mute"); cmd("playVideo"); }, 400);
+    });
+    const snd = document.getElementById("ytSound"), ply = document.getElementById("ytPlay");
+    snd.addEventListener("click", () => {
+      muted = !muted;
+      if (muted) cmd("mute"); else { cmd("unMute"); cmd("setVolume", [100]); cmd("playVideo"); playing = true; ply.innerHTML = ICON.pause; ply.setAttribute("aria-label", "一時停止"); }
+      snd.innerHTML = muted ? `${ICON.muted}<span>音を出す</span>` : `${ICON.sound}<span>音を消す</span>`;
+      snd.setAttribute("aria-label", muted ? "音を出す" : "音を消す");
+    });
+    ply.addEventListener("click", () => {
+      playing = !playing;
+      cmd(playing ? "playVideo" : "pauseVideo");
+      ply.innerHTML = playing ? ICON.pause : ICON.play;
+      ply.setAttribute("aria-label", playing ? "一時停止" : "再生");
+    });
   }
 
   window.addEventListener("hashchange", () => { render(); window.scrollTo({ top: 0 }); });

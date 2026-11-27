@@ -22,33 +22,39 @@
 ## 4. 今日の1人を選ぶ
 - 過去30日に選んだ人は選ばない。直近の活躍（MVD、エース、話題の投稿、大会優勝）がある人を優先し、チームやジャンルが偏らないようにする。
 
-## 5. 動画を探す
+## 5. 公式プロフィールと本人のInstagramを調べる
+- `python3 dleague/tools/dleaguer_profile.py "<チーム名>" "<名前>"` で、D.LEAGUE公式サイトの選手データから `profileUrl`（公式プロフィール）と `instagram`（本人のアカウント）を取る。見つかった値はそのまま使う（公式に載っている本人のリンクなので確認済みとして扱ってよい）。
+- 選ぶ人を決める前に、チーム全員を `python3 dleague/tools/dleaguer_profile.py "<チーム名>"` で一覧してもよい。
+
+## 6. 動画を探す
 - `python3 dleague/tools/youtube_search.py "D.LEAGUE 26-27 ROUND.<N> <チーム名>"` で、D.LEAGUE公式チャンネル（"official": true）の、その人のチームの直近ROUNDのパフォーマンス動画（2分台）を探す。タイトルのROUNDとチーム名が合っていることを確かめる。
 - 1本目がメイン。ほかに同じチームの前のROUNDの公式パフォーマンス動画や、チーム公式チャンネルの舞台裏動画（`--all` で探し、channel がチーム名のもの）があれば最大3本まで足す。
 - 公式でない人の再アップロード動画は使わない。見つからなければ `videos` は空にする。
 
-## 6. データを書く
+## 7. データを書く
 `picks.json` の先頭に次の形の項目を1件足す（ほかの項目は変えない）。
 - `date`, `dayNo`（これまでの件数＋1）, `name`, `team`, `block`, `role`（例: ACE PERFORMER）, `genre`（英大文字）
 - `headline`：25字前後のかっこいいキャッチコピー
 - `why`：なぜ今日この人なのか（2文程度）
+- `instagram`：手順5で取れた本人のInstagramのURL（なければ入れない）。ページでは名前の下と、INSTAGRAMの一番上のボタンになる
+- `profileUrl`：手順5で取れた公式プロフィールのURL（写真はこのページで見てもらう。画像ファイルはコピーしない）
 - `videos`：`[{id, title, channel}]`。id は YouTube の11文字のID、title は「ROUND.3 KOSÉ 8ROCKS「THE KEY」」の形、channel は "D.LEAGUE公式YouTube" かチームのチャンネル名
 - `match`：その人のチームの直近の試合 `{round, date, work, us, usScore, them, themScore, note}`。work は公式動画のタイトルの作品名と合わせる。得票率がわからなければ usScore と themScore は入れない
 - `nextRound`：次に行われるROUND `{block, round, at}`（at は `2026-11-25T18:30:00+09:00` の形）。前日の値がまだ先なら引き継ぐ。時刻がわからなければ前日と同じ時刻
 - `predictions`：両BLOCKの次ROUNDの勝利予想 `[{block, round, date, matches:[{a, b, pick, prob, reason, winner?}]}]`。a と b は公式の対戦表の左右の順。勝率は公式 TOTAL RANKING の「スコア」の差 d（a − b）から `1/(1+exp(-d/25))` で出し、勝つ側の確率を 50〜85 の整数で prob に入れる。reason は公式やニュースで確認できる事実を20〜30字で。前日の予想のROUNDがまだ終わっていなければ引き継ぐ。終わったROUNDは結果ページで勝ったチーム名を winner に入れ、翌日までは残し、それ以降は次のROUNDの予想に入れ替える
 - `predictionNote`：「ROUNDごとの得票率の合計（公式の順位表のスコア）の差から勝率を出しています。あくまで予想です。」
 - `highlights`（3つ前後）、`lookFor`（1〜2文）、`trends`（3〜4件 `{title, body}`）
-- `links`：Instagram へのリンク `[{label, url}]`（https のみ）。本人のアカウントは、記事や公式で確認できたときだけ。確認できないときはチーム公式アカウントや `https://www.instagram.com/explore/tags/〇〇/`
+- `links`：本人以外のInstagramへのリンク `[{label, url}]`（https のみ）。チーム公式アカウントや `https://www.instagram.com/explore/tags/〇〇/` など。本人のアカウントは `instagram` に入れる
 - `tags`（4〜6個）、`sources`（使った記事やページ `[{label, url}]`）、`updatedAt`（ISO 8601、+09:00）
 
 書く事実はすべて sources のどれかで確認できるものだけにする。確認できない数字やアカウント名は作らない。画像ファイルはリポジトリに保存しない（動画は YouTube の埋め込みで表示する）。
 
 JSON は UTF-8、`ensure_ascii=False`、`indent=1` で書き、`python3 -c "import json;json.load(open('dleague/data/picks.json'))"` で壊れていないことを確かめる。
 
-## 7. 保存する
+## 8. 保存する
 - `git add dleague/data/picks.json` だけをコミットする（メッセージ例: `Add D.LEAGUE pick for 2026-11-14`）。
 - `git push -u origin <TARGET>`。拒否されたら `git pull --rebase origin <TARGET>` してからもう一度。ネットワークエラーなら 2・4・8・16 秒あけて4回まで再試行。強制プッシュはしない。
 - TARGET が `claude/affectionate-johnson-s4droe` のとき（まだ公開ページに入っていないとき）は、同じ内容を ArtifactData `set`（url https://claude.ai/artifact/9pwdt19aCLG8ekq8UemYBA、collection `picks`、doc_id = 今日の日付）にも書く。
 
-## 8. 報告
+## 9. 報告
 選んだ人と理由、動画、予想の要約を3行で報告する。
