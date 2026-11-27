@@ -63,5 +63,6 @@ Dリーグの注目ダンサーを毎日1人、公式YouTubeのパフォーマ�
 - `dleague/index.html` — ページ本体
 - `dleague/data/picks.json` — 毎日のピック（新しい順）。毎朝5:17（日本時間）の自動更新がここに1件ずつ追加する
 - `dleague/tools/youtube_search.py` — D.LEAGUE公式チャンネルの動画を探す（`python3 dleague/tools/youtube_search.py "D.LEAGUE 26-27 ROUND.3 KOSÉ 8ROCKS"`）
+- `dleague/tools/dleaguer_profile.py` — D.LEAGUE公式サイトの選手データから、公式プロフィールと本人のInstagramを探す（`python3 dleague/tools/dleaguer_profile.py "KADOKAWA DREAMS" "KELO"`）
 - `dleague/DAILY_PROMPT.md` — 毎朝の自動更新の手順
 - Instagram を1日で初めて開いた時に表示する設定は、ページ下の「Instagramを開いた時に表示させる設定」に書いてあります
