@@ -52,3 +52,16 @@ LINEの○△×の日程調整だと「△の人が何時から何時まで空�
 - `firestore.rules` — 日程調整の保存先（Firestore）のルール
 - `config.js` — 公開ページ用の設定（Google のクライアントID、Firebase の設定）
 - `test/parser.test.js`、`test/availability.test.js` — `node test/parser.test.js` などで実行
+
+---
+
+# 今日のDリーガー（`dleague/`）
+
+Dリーグの注目ダンサーを毎日1人、公式YouTubeのパフォーマンス動画つきでスマホ向けにまとめるページです。
+
+- 公開ページ: https://tarotaro20060216-creator.github.io/TURBO/dleague/
+- `dleague/index.html` — ページ本体
+- `dleague/data/picks.json` — 毎日のピック（新しい順）。毎朝5:17（日本時間）の自動更新がここに1件ずつ追加する
+- `dleague/tools/youtube_search.py` — D.LEAGUE公式チャンネルの動画を探す（`python3 dleague/tools/youtube_search.py "D.LEAGUE 26-27 ROUND.3 KOSÉ 8ROCKS"`）
+- `dleague/DAILY_PROMPT.md` — 毎朝の自動更新の手順
+- Instagram を1日で初めて開いた時に表示する設定は、ページ下の「Instagramを開いた時に表示させる設定」に書いてあります
